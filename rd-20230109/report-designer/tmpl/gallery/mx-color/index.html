@@ -1,0 +1,43 @@
+<div class="color simulator-container border-radius-x flex align-items-center pr{{if disabled}} cursor-not-allowed notallowed simulator-container-disabled{{/if}}{{if dark}} dark-mode{{else}} light-mode{{/if}}" id="_mx_root_{{=$viewId}}" mx-contextmenu="@:{prevent}()">
+    <!-- {{if text}}
+    <div class="text unselectable{{if !disabled}} cursor-pointer{{/if}}" style="{{if textWidth}}width:{{=textWidth}}px{{/if}}" mx-click="@:{toggle}()">{{=text}}</div>
+    {{/if}} -->
+    <div class="picker pr unselectable{{if !disabled}} cursor-pointer{{/if}}{{if !text}} wp100{{/if}}" mx-click="@:{toggle}()" style="{{if color}}background:{{=color}};{{/if}}" title="{{=color}}">
+    </div>
+    {{if clear && color}}
+    <i class="iconfont remove fontsize-12 pa{{if !disabled}} cursor-pointer{{/if}}" mx-click="@:{clear.color}()" title="{{=i18n('@:{lang#remove.color}')}}">&#xe624;</i>
+    {{/if}}
+    <div id="_mx_bd_{{=$viewId}}" class="color-zone background-color-fff padding-4 border-radius-x z-index-1 unselectable none pa placement--{{=placement}}" style="{{=align}}:-1px">
+        {{if renderUI}}
+        <ul class="tag-ul padding-0 margin-0 shortcuts flex cursor-pointer flex-wrap-wrap" id="_mx_scs_{{=$viewId}}">
+            {{each shortcuts as sc}}
+            <li class="shortcuts-item pr fl" id="_mx_sc_{{=sc}}_{{=$viewId}}" style="background:#{{=sc}}" mx-click="@:{shortcuts.picked}({color:'#{{=sc}}'})"></li>
+            {{/each}}
+        </ul>
+        <div class="body">
+            <div class="cpicker pr fl touch-action-none" id="_mx_cz_{{=$viewId}}" mx-pointerdown="@:{color.zone.drag}()">
+                <div class="full-fill pa white-panel"></div>
+                <div class="full-fill pa black-panel"></div>
+                <div class="cpicker-indicator pa cursor-default" id="_mx_ci_{{=$viewId}}"></div>
+            </div>
+            <div class="slide pr fl touch-action-none" mx-pointerdown="@:{slide.drag}()">
+                <div class="slide-indicator height-4 left-2 pa cursor-default" id="_mx_si_{{=$viewId}}"></div>
+            </div>
+        </div>
+        {{if alpha}}
+        <div class="alpha pr">
+            <div class="hp100 pr touch-action-none" id="_mx_at_{{=$viewId}}" mx-pointerdown="@:{alpha.drag}()">
+                <div class="alpha-indicator width-4 pa cursor-default" id="_mx_ai_{{=$viewId}}"></div>
+            </div>
+        </div>
+        {{/if}}
+        <div class="foot flex align-items-center">
+            <span class="bgcolor simulator-container border-radius-x" id="_mx_bc_{{=$viewId}}"></span>
+            <input spellcheck="false" class="margin-0 input color-value{{if nativeEye}} color-eye-value{{/if}}" id="_mx_v_{{=$viewId}}" mx-input="@:{color.input}()" mx-change="@:{stop}()" mx-pointerup="@:{color.focus}()" mx-paste="@:{color.paste}()" title="{{=i18n('@:{lang#mx-gallery.color.input.or.paste.hex.value}')}}"/>
+            {{if nativeEye}}
+                <i class="iconfont cursor-pointer eye-dropper border-radius-x tc{{if eyeOpen}} color-brand{{else}} color-secondary{{/if}}" title="{{=i18n('@:{lang#mx-gallery.color.use.eye.dropper}')}}" mx-click="@:{open.eye.dropper}()">&#xe670;</i>
+            {{/if}}
+        </div>
+        {{/if}}
+    </div>
+</div>

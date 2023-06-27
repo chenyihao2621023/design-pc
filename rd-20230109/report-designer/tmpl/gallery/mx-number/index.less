@@ -1,0 +1,62 @@
+@import "../../assets/_vars.less";
+.ipt {
+    border: none;
+    background: none;
+    padding: 0 10px 0 0;
+    font-size: 100%;
+}
+
+.ipt:disabled {
+    cursor: not-allowed;
+    color: @color-third;
+    background: @color-disabled;
+}
+
+.up, .down {
+    width: 16px;
+    height: 50%;
+    border: 2px solid #fff;
+}
+
+.up:hover, .down:hover {
+    background-color: @color-hover;
+}
+
+.up {
+    top: 1px;
+}
+
+.down {
+    bottom: 1px;
+}
+
+.arrow::after {
+    width: 0;
+    height: 0;
+    position: absolute;
+    .inset-dock(0, 0, 0, 0);
+    border-left: 4px solid rgba(0, 0, 0, 0);
+    border-right: 4px solid rgba(0, 0, 0, 0);
+    content: '';
+    display: block;
+    margin: auto;
+}
+
+.down:after {
+    border-top: 4px solid @color-border-hover;
+}
+
+.up:after {
+    border-bottom: 4px solid @color-border-hover;
+}
+
+.up.notallowed, .down.notallowed {
+    border-color: #0000;
+    &:hover {
+        background: none;
+    }
+}
+
+.fore-color-border {
+    color: @color-border;
+}

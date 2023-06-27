@@ -1,0 +1,16 @@
+<div class="pa z-index-1 flex{{if props.overflow=='hidden'}} overflow-hidden{{else if props.overflow=='visible'}} overflow-visible{{else}} overflow-auto{{/if}}{{if props.rank=='column'}} flex-direction-column{{/if}}{{if enter}} hod-drop-tip{{/if}}" style="left:{{=props.x}}{{=unit}};top:{{=props.y}}{{=unit}};height:{{=props.height}}{{=unit}};opacity:{{=props.alpha}};width:{{=props.width}}{{=unit}};transform:rotate({{=props.rotate}}deg);{{=am(props.animations)}}" mx-dragenter="@:{when.data.field.enter}()" mx-dragleave="@:{when.data.field.leave}()" mx-drop="@:{when.data.field.drop}()">
+    {{if props.bind && props.bind.fields && props.bind.fields.length}}
+        <div class="flex align-items-center justify-content-center wp100 hp100">
+            [bind:{{=props.bind.fields[0].key}}]
+        </div>
+    {{else}}
+        <select multiple="{{=props.multipleSelect}}?" class="wp100 hp100{{if props.className}} {{=props.className}}{{/if}}" style="color:{{=props.forecolor}};font-size:{{=props.fontsize}}{{=unit}};letter-spacing:{{=props.letterspacing}}{{=unit}};font-family:{{=props.fontfamily}}" name="{{=props.inputName}}">
+            {{each props.items as item}}
+            <option disabled="{{=item.disabled}}?" selected="{{=item.checked}}?" value="{{=item.value}}">
+                {{=item.text}}
+            </option>
+            {{/each}}
+        </select>
+    {{/if}}
+    <div class="pa full-fill z-index-6"></div>
+</div>

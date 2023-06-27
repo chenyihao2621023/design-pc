@@ -1,0 +1,20 @@
+<div class="pa z-index-1" style="left:{{=props.x}}{{=unit}};top:{{=props.y}}{{=unit}};opacity:{{=props.alpha}};width:{{=props.width}}{{=unit}};height:{{=props.height}}{{=unit}};{{=am(props.animations)}}">
+    {{set {borderwidth,bordertype,bordercolor,borderdeed,rows}=props}}
+    <table class="wp100 table" style="border-collapse:{{=borderdeed}}">
+        <tbody>
+        {{each rows as row ri}}
+        <tr>
+            {{each row.cols as col ci}}
+            <td class="table-cell padding-0 word-break-break-all pr" colspan="{{=col.colspan!=1}}?{{=col.colspan}}" rowspan="{{=col.rowspan!=1}}?{{=col.rowspan}}" style="width:{{=col.width}}{{=unit}};height:{{=col.height}}{{=unit}};border-left:{{=borderwidth?bordertype:'dotted'}} {{=borderwidth}}{{=unit}} {{=borderwidth&&col.bLeft?bordercolor:'#0000'}};border-top:{{=borderwidth?bordertype:'dotted'}} {{=borderwidth}}{{=unit}} {{=borderwidth&&col.bTop?bordercolor:'#0000'}};border-right:{{=borderwidth?bordertype:'dotted'}} {{=borderwidth}}{{=unit}} {{=borderwidth&&col.bRight?bordercolor:'#0000'}};border-bottom:{{=borderwidth?bordertype:'dotted'}} {{=borderwidth}}{{=unit}} {{=borderwidth&&col.bBottom?bordercolor:'#0000'}}">
+                <div class="wp100 hp100 pr overflow-hidden">
+                    {{each col.elements as e}}
+                        <mx-vframe class="display-contents" id="{{=e.id}}" src="../{{=e.type}}/index" *props="{{#e.props}}" *unit="{{#unit}}"/>
+                    {{/each}}
+                </div>
+            </td>
+            {{/each}}
+        </tr>
+        {{/each}}
+        </tbody>
+    </table>
+</div>

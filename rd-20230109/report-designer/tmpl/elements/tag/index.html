@@ -1,0 +1,11 @@
+<div class="pa z-index-1{{if props.overflow=='hidden'}} overflow-hidden{{else if props.overflow=='visible'}} overflow-visible{{else}} scrollable thin-scrollable overflow-auto scroll-behavior-smooth{{/if}}" style="left:{{=props.x}}{{=unit}};top:{{=props.y}}{{=unit}};width:{{=props.width}}{{=unit}};height:{{=props.height}}{{=unit}};opacity:{{=props.alpha}};transform:rotate({{=props.rotate}}deg);{{=am(props.animations)}}">
+    {{each props.words as w}}
+    {{if w.text}}
+        {{if w.url}}
+            <a class="tag white-space-nowrap" style="background:{{=w.background}};color:{{=w.forecolor}}" href="{{=w.url}}" rel="noopener noreferrer" target="_blank">{{=w.text}}</a>
+        {{else}}
+            <span class="tag white-space-nowrap" style="background:{{=w.background}};color:{{=w.forecolor}}">{{=w.text}}</span>
+        {{/if}}
+    {{/if}}
+    {{/each}}
+</div>

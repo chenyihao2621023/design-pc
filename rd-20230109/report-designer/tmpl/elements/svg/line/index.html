@@ -1,0 +1,16 @@
+{{set {width,height,x,y,color,ctrl1X,ctrl1Y,ctrl2X,ctrl2Y,
+    linewidth,alpha,dash,/*startArrow,endArrow,*/cap,animations,}=props}}
+<svg class="overflow-visible pa z-index-1" style="width:{{=mmax(width,mu)}}{{=unit}};height:{{=mmax(height,mu)}}{{=unit}};left:{{=x}}{{=unit}};top:{{=y}}{{=unit}};{{=am(animations)}}">
+    <!-- <defs>
+        <marker id="a_{{=$viewId}}" viewBox="0 0 16 16" refX="8" refY="8"
+            markerWidth="8" markerHeight="8" orient="auto">
+            <path d="M0 0 L16 8 L0 16z" style="fill:{{=color}}" />
+        </marker>
+        <marker id="as_{{=$viewId}}" viewBox="0 0 16 16" refX="8" refY="8"
+            markerWidth="8" markerHeight="8" orient="auto">
+            <path d="M16 0 L0 8 L16 16z" style="fill:{{=color}}" />
+        </marker>
+    </defs> -->
+    <path d="M{{=toPx(ctrl1X-x+ox)}} {{=toPx(ctrl1Y-y+oy)}}L{{=toPx(ctrl2X-x+ox)}} {{=toPx(ctrl2Y-y+oy)}}" style="fill:none;stroke:{{=color}};stroke-width:{{=linewidth}}{{=unit}};opacity:{{=alpha}};" stroke-dasharray="{{=dash}}{{=unit}}" stroke-linecap="{{cap}}?round"/>
+    <!-- marker-start="{{=startArrow}}?url(#as_{{=$viewId}})" marker-end="{{=endArrow}}?url(#a_{{=$viewId}})" -->
+</svg>

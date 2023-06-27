@@ -1,0 +1,17 @@
+<div class="padding-2 simulator-container border-radius-x background-color-fff width-150 drop-zone{{if disabled}} notallowed simulator-container-disabled cursor-not-allowed{{/if}}" mx-drop="@:{when.data.field.drop}()" mx-contextmenu="@:{prevent}()">
+    {{each defined.tips as tip i}}
+    <!-- draggable="{{=!disabled&&fields[i]}}?true" -->
+        <div class="item-bindable border-radius-x flex align-items-center background-color-fff pr fontsize-12 line-height-14{{if i}} margin-top-2{{/if}}{{if index==i}} hod-drop-tip{{/if}}" title="{{if fields[i]}}[{{=i18n(tip)}}]绑定的数据是{{{=i18n(fields[i].name)}}}{{else}}拖动数据源字段到这里绑定[{{=i18n(tip)}}]{{/if}}" mx-dragenter="@:{when.data.field.enter}({at:'{{=i}}'})" mx-dragleave="@:{when.data.field.leave}({at:'{{=i}}'})">
+            <span class="ellipsis white-space-nowrap flex-fill-rest{{if !fields[i]}} opacity-40{{/if}}">
+                {{if fields[i]}}
+                    [{{=i18n(tip)}}]绑定{{{=i18n(fields[i].name)}}}
+                {{else}}
+                    这里绑定[{{=i18n(tip)}}]
+                {{/if}}
+            </span>
+            {{if !disabled && fields[i]}}
+                <i class="iconfont element-icon fontsize-12 fontsize-scale-10 color-third color-third-hover cursor-pointer" title="{{=i18n('@:{lang#remove.bind.by.clicked}',fields[i].name)}}" mx-click="@:{remove.at}({at:{{=i}}})">&#xe6b3;</i>
+            {{/if}}
+        </div>
+    {{/each}}
+</div>

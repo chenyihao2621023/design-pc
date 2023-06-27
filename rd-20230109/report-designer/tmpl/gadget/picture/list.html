@@ -1,0 +1,69 @@
+<div class="dialog-header-shadow position-sticky z-index-7"></div>
+<div class="dialog-header margin-0 position-sticky top-0 background-color-fff flex align-items-center margin-top-m-20 z-index-8">
+    <h5 class="padding-0 fontsize-14 margin-0">{{=i18n('@:{lang#lib.images}')}}</h5>
+    {{if hl}}
+    <a class="tag-a ml10" href="//github.com/xinglie/report-designer/issues/27#issuecomment-942136811" rel="noopener noreferrer" target="_blank">如何不显示或更换图片库接口?</a>
+    {{/if}}
+    <div class="flex-fill-rest"></div>
+    {{if current!='upload' && current!='network'}}
+    <input class="margin-0 input width-242 mr10" placeholder="输入图片名称按回车键搜索" value="{{=keyword}}" mx-keyup="@:{search}()"/>
+    {{/if}}
+    <mx-dropdown class="mr5 width-150" *list="{{#groups}}" *text-key="title" *value-key="id" *selected="{{#current}}" mx-change="@:{change.category}()"/>
+</div>
+<div class="dialog-body{{if 'network'==current||'upload'==current}} list-body-without-pager{{else}} full-dialog-list-body{{/if}}">
+    {{if error}}
+        <div class="tc mt30 fontsize-16">{{=error.message}}</div>
+    {{else}}
+    <!-- <div class="flex tabs white-space-nowrap">
+        {{each groups as category}}
+            <div class="tabs-item tc cursor-pointer flex-shrink-0{{if category.id==current}} tabs-active color-brand{{/if}}" mx-click="{{category.id!=current}}?@:{change.tab}({to:'{{=category.id}}'})">{{=category.title}}</div>
+        {{/each}}
+        {{if uploadUrl}}
+        <div class="tabs-item tc cursor-pointer flex-shrink-0{{if 'upload'==current}} tabs-active color-brand{{/if}}" mx-click="{{'upload'!=current}}?@:{change.tab}({to:'upload'})">本地上传</div>
+        {{/if}}
+        <div class="tabs-item tc cursor-pointer flex-shrink-0{{if 'network'==current}} tabs-active color-brand{{/if}}" mx-click="{{'network'!=current}}?@:{change.tab}({to:'network'})">网络图片</div>
+    </div> -->
+    {{if current=='upload'}}
+        <div class="flex margin-100 align-items-center height-100 justify-content-center simulator-container border-radius-x" mx-drop="@:{drop.upload}()">
+            {{if uploadError}}
+                <div class="ml10">
+                    {{=uploadError}}
+                    <span class="color-third">github.io和gitee.io环境不支持上传，请在本机测试</span>
+                </div>
+                <button type="button" class="ml10 mr10 btn white-space-nowrap outline-none btn-brand" mx-click="@:{retry}()">再次上传</button>
+            {{else if uploading}}
+                正在上传...
+            {{else}}
+                拖拽图片上传<span class="ml5 mr5">/</span>粘贴上传<span class="ml5 mr5">/</span>
+                <button type="button" class="btn white-space-nowrap outline-none btn-brand pr overflow-hidden">
+                    点击上传
+                    <input type="file" title="点击上传" class="pa full-fill opacity-0" accept="image/*" mx-change="@:{select.upload}()"/>
+                </button>
+            {{/if}}
+        </div>
+    {{else if current=='network'}}
+        <div class="flex margin-100">
+            网络地址:
+            <input placeholder="请粘贴/输入网络图片地址" class="margin-0 input ml10 flex-fill-rest" id="_rd_nw_{{=$viewId}}"/>
+            <button class="btn white-space-nowrap outline-none btn-brand ml10" mx-click="@:{apply.network.image}()">{{=i18n('@:{lang#btn.apply}')}}</button>
+        </div>
+    {{else if list}}
+        <div class="flex flex-wrap-wrap">
+            {{each list as p}}
+                <div title="{{=p.title}}">
+                    <div class="item-container border-radius-x padding-4 height-100 cursor-pointer overflow-hidden" mx-click="@:{use}({src:'{{=p.src}}'})">
+                        <div class="item hp100" style="background-image:url('{{=p.src}}')"></div>
+                    </div>
+                    <div class="tc item-title ellipsis white-space-nowrap">{{=p.title}}</div>
+                </div>
+            {{/each}}
+        </div>
+    {{/if}}
+    {{/if}}
+</div>
+{{if !error && current!='upload' && current!='network'}}
+<div class="dialog-footer flex justify-content-center align-items-center  position-sticky bottom-0 z-index-6 dialog-footer-with-shadow background-color-fff">
+    <mx-pager *page="{{#page}}" *total="{{#total}}" *size="{{#size}}" mx-change="@:{change.page}()"/>
+</div>
+<div class="dialog-footer-shadow position-sticky z-index-5"></div>
+{{/if}}

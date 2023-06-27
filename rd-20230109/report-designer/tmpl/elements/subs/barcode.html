@@ -1,0 +1,7 @@
+{{if msg}}
+    {{=msg}}
+{{else if render=='svg'}}
+    <svg id="{{=$viewId}}_bar" class="mwp100 wp100 hp100 pointer-events-none"></svg>
+{{else}}
+    <img id="{{=$viewId}}_bar" class="tag-img mwp100 mhp100{{if fill=='full'}} wp100 hp100{{/if}}"/>
+{{/if}}

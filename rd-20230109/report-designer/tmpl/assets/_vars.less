@@ -1,0 +1,55 @@
+/*
+    品牌色建议使用亮色，暗色一般留给禁用背景色、提示信息等
+*/
+
+@main-color: #fa742b;
+@main-contrast-color: contrast(@main-color);
+@color-brand: var(--scoped-color-brand);
+@color-brand-5: var(--scoped-color-brand-5);
+@color-brand-10: var(--scoped-color-brand-10);
+@color-brand-20: var(--scoped-color-brand-20);
+@color-brand-30: var(--scoped-color-brand-30);
+@color-brand-60: var(--scoped-color-brand-60);
+@color-brand-light: var(--scoped-color-brand-light); //lighten(@color-brand, 20%);
+@color-brand-lighter: var(--scoped-color-brand-lighter); //lighten(@color-brand, 30%);
+@color-brand-dark: var(--scoped-color-brand-dark); //darken(@color-brand, 5%);
+@color-brand-darker: var(--scoped-color-brand-darker); //darken(@color-brand, 10%);
+@color-brand-darkest: var(--scoped-color-brand-darkest); //darken(@color-brand, 12%);
+@contrast-color: var(--scoped-contrast-color); //contrast(@color-brand); //主题色差异色
+@contrast-color-15: var(--scoped-contrast-color-15);
+@contrast-color-60: var(--scoped-contrast-color-60);
+@element-outline-color: var(--scoped-element-outline-color);
+@color-primary: #333; //首选文字颜色
+@color-secondary: #666; //
+@color-third: #999;
+@color-third-light: lighten(@color-third, 30%);
+@color-hover: #f0f0f0;
+@color-hover-light: lighten(@color-hover, 3%);
+@color-hover-dark: darken(@color-hover, 5%);
+@color-border: #e6e6e6; //边框色
+@color-border-hover: #ccc; //边框hover
+@color-background: #ccc; //背景色
+@color-background-hover: #bbb; //背景hover
+@color-disabled: #f5f5f5;
+@color-danger: #bd0303;
+@box-bordercolor: #ccc; //标尺边框色
+@panel-background: #fafafa; //面板相关的背景色
+@stage-background: #edeef3; //编辑区灰色大背景
+@line-height: 1.5; //整体行高
+@duration: 0.15s; //动画持续时间
+@font-size: 14px; //默认字号
+@input-height: 22px; //24px;//输入或下拉框高度
+@border-radius: 2px;
+@menu-item-height: @input-height - 2;
+// Box sizing
+.box-sizing(@boxmodel) {
+    box-sizing: @boxmodel;
+}
+
+.inset-dock(@top, @right, @bottom, @left) {
+    //inset: @top @right @bottom @left;
+    left: @left;
+    top: @top;
+    right: @right;
+    bottom: @bottom;
+}

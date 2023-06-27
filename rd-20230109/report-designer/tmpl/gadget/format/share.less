@@ -1,0 +1,76 @@
+@import "../../assets/_vars.less";
+.format {
+    height: @input-height;
+}
+
+.min-full-height {
+    min-height: calc(100vh - 130px);
+}
+
+.height-30 {
+    height: 30px;
+}
+
+.remove {
+    opacity: 0.2;
+    &:hover {
+        opacity: 0.5;
+    }
+}
+
+.notallowed {
+    background: @color-disabled;
+    .remove {
+        opacity: 0.1;
+        &:hover {
+            opacity: 0.1;
+        }
+    }
+}
+
+.tabs {
+    margin-bottom: 10px;
+    border-bottom: solid 1px @color-brand;
+}
+
+.tabs-item {
+    height: 25px;
+    line-height: 25px;
+    margin: 0 5px;
+    padding: 0 4px;
+    margin-bottom: -1px;
+    min-width: 50px;
+    border: solid 1px #0000;
+    border-bottom: none;
+}
+
+.tabs-active {
+    border-radius: @border-radius @border-radius 0 0;
+    background: @contrast-color;
+    border-color: @color-brand;
+}
+
+.tabs-line-item {
+    height: 25px;
+    line-height: 25px;
+    padding: 0 10px;
+    min-width: 50px;
+    border-bottom: solid 2px #0000;
+}
+
+.tabs-line-active {
+    border-color: @color-brand;
+}
+
+.codemirror {
+    border: solid 1px @color-border;
+    cursor: text;
+}
+
+.codemirror:focus-within {
+    border-color: @color-brand;
+}
+
+.custom-textarea {
+    margin: 10px 2px;
+}

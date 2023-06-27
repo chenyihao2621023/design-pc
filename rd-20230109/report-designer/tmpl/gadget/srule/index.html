@@ -1,0 +1,54 @@
+
+{{set {rules}=props;}}
+{{each rules as rule i last first}}
+    <div class="flex align-items-center margin-bottom-4">
+        <span class="width-90 pr10 mr2 flex align-items-center justify-content-flex-end">
+            {{set canUp=!disabled&&!first}}
+            {{set canDown=!disabled&&!last}}
+            <div class="flex flex-direction-column mr2">
+                <span class="iconfont r180 fontsize-12 color-third{{if canUp}} color-third-hover cursor-pointer{{else}} cursor-not-allowed opacity-40{{/if}}" mx-click="{{=canUp}}?@:{move.at}({at:{{=i}},rules:{{#rules}},d:-1})" title="{{if !canUp}}不能{{/if}}向上交换轮播图">&#xe73a;</span>
+                <span class="iconfont fontsize-12 color-third{{if canDown}} color-third-hover cursor-pointer{{else}} cursor-not-allowed opacity-40{{/if}}" mx-click="{{=canDown}}?@:{move.at}({at:{{=i}},rules:{{#rules}},d:1})" title="{{if !canDown}}不能{{/if}}向下交换轮播图">&#xe73a;</span>
+            </div>
+            <span class="iconfont mr2 fontsize-12 color-third{{if disabled}} cursor-not-allowed opacity-40{{else}} color-third-hover cursor-pointer{{/if}}" mx-click="{{=!disabled}}?@:{remove.at}({at:{{=i}},rules:{{#rules}}})" title="删除轮播图">&#xe6b3;</span>
+            展示
+        </span>
+        <div class="width-150">
+            <mx-vframe src="../picture/index" *props="{{#rule}}" *disabled="{{#disabled}}" *defined="{{#idf}}" mx-change="@:{update.prop}({at:{{=i}},rules:{{#rules}}})"/>
+        </div>
+    </div>
+    <div class="flex align-items-center margin-bottom-4">
+        <span class="width-90 pr10 mr2 tr">
+            {{=i18n('@:{lang#props.rotate.x}')}}
+        </span>
+        <div class="width-150">
+            <label class="display-inline-block font-weight-normal mwp100 cursor-pointer flex align-items-center">
+                <input class="switch-input pa" type="checkbox" checked="{{=rule.mx}}?" disabled="{{=disabled}}?" mx-change="@:{update.mirror}({key:'x',at:{{=i}},rules:{{#rules}}})"/>
+                <i class="switch-button display-inline-block transition unselectable pr"></i>
+            </label>
+        </div>
+    </div>
+    <div class="flex align-items-center margin-bottom-4">
+        <span class="width-90 mr2 tr pr10">
+            {{=i18n('@:{lang#props.rotate.y}')}}
+        </span>
+        <div class="width-150">
+            <label class="display-inline-block font-weight-normal mwp100 cursor-pointer flex align-items-center">
+                <input class="switch-input pa" type="checkbox" checked="{{=rule.my}}?" disabled="{{=disabled}}?" mx-change="@:{update.mirror}({key:'y',at:{{=i}},rules:{{#rules}}})"/>
+                <i class="switch-button display-inline-block transition unselectable pr"></i>
+            </label>
+        </div>
+    </div>
+    <div class="flex align-items-center margin-bottom-4">
+        <span class="width-90 mr2 tr pr10">
+            点击链接
+        </span>
+        <textarea class="textarea margin-0 designer-ff overflow-auto width-150 height-100" placeholder="请输入点击链接" mx-input="@:{update.textarea}({at:{{=i}},rules:{{#rules}}})">{{=rule.link}}</textarea>
+    </div>
+    {{if !last}}
+        <div class="item-spliter"></div>
+    {{/if}}
+{{/each}}
+
+<div class="flex align-items-center width-242 justify-content-flex-end">
+    <button class="btn white-space-nowrap btn-brand cursor-pointer outline-none" disabled="{{=disabled}}?" mx-click="@:{add.rule}({rules:{{#rules}}})" title="向尾部添加轮播图，按下Ctrl键则添加到头部">添加轮播图</button>
+</div>

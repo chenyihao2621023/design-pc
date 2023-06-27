@@ -1,0 +1,18 @@
+<ul class="tag-ul padding-0 margin-0 unselectable{{if disabled}} notallowed cursor-not-allowed{{/if}}">
+    {{set {shows,prefix='style'}=defined}}
+    {{if !shows || shows.bold}}
+    <li title="{{=i18n('@:{lang#mx-gallery.font.style.bold}')}}" class="fl group-item{{if disabled}} cursor-not-allowed{{/if}} tc cursor-pointer iconfont{{if props[`${prefix}Bold`]}} active{{/if}}" mx-click="@:{set}({key:'{{=`${prefix}Bold`}}'})">&#xe749;</li>
+    {{/if}}
+    {{if !shows || shows.italic}}
+    <li title="{{=i18n('@:{lang#mx-gallery.font.style.italic}')}}" class="fl group-item{{if disabled}} cursor-not-allowed{{/if}} tc cursor-pointer iconfont{{if props[`${prefix}Italic`]}} active{{/if}}" mx-click="@:{set}({key:'{{=`${prefix}Italic`}}'})">&#xe65f;</li>
+    {{/if}}
+    {{if !shows || shows.underline}}
+    <li title="{{=i18n('@:{lang#mx-gallery.font.style.underline}')}}" class="fl group-item{{if disabled}} cursor-not-allowed{{/if}} tc cursor-pointer iconfont{{if props[`${prefix}Underline`]}} active{{/if}}" mx-click="@:{set}({key:'{{=`${prefix}Underline`}}'})">&#xe62e;</li>
+    {{/if}}
+    {{if !shows || shows.strike}}
+    <li title="{{=i18n('@:{lang#mx-gallery.font.style.strike}')}}" class="fl group-item{{if disabled}} cursor-not-allowed{{/if}} tc cursor-pointer iconfont{{if props[`${prefix}Strike`]}} active{{/if}}" mx-click="@:{set}({key:'{{=`${prefix}Strike`}}'})">&#xe623;</li>
+    {{/if}}
+    {{if !shows || shows.overline}}
+    <li title="{{=i18n('@:{lang#mx-gallery.font.style.overline}')}}" class="fl group-item{{if disabled}} cursor-not-allowed{{/if}} tc cursor-pointer iconfont{{if props[`${prefix}Overline`]}} active{{/if}}" mx-click="@:{set}({key:'{{=`${prefix}Overline`}}'})">&#xe643;</li>
+    {{/if}}
+</ul>

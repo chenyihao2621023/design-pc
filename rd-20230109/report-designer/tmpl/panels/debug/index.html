@@ -1,0 +1,19 @@
+<div class="debug-wrap">
+    <mx-vframe src="./perf" class="flex flex-direction-column align-items-center" id="_rd_{{=$viewId}}_perf"/>
+    <div class="item-spliter"></div>
+    <div class="color-third fontsize-12">以下采用console.log输出，需要打开浏览器的调试工具，在console面板查看</div>
+    <div class="mt5 flex flex-direction-column">
+        <button class="btn white-space-nowrap outline-none btn-brand cursor-pointer" mx-click="@:{log.state}()">查看State对象</button>
+        <button class="btn white-space-nowrap outline-none btn-brand cursor-pointer mt5" mx-click="@:{log.state.data}()">查看State中的数据</button>
+        <button class="btn white-space-nowrap outline-none btn-brand cursor-pointer mt5" mx-click="@:{log.history.data}()">查看历史记录</button>
+        <button class="btn white-space-nowrap outline-none btn-brand cursor-pointer mt5" mx-click="@:{log.vom}()">查看组件结构</button>
+        <button class="btn white-space-nowrap outline-none btn-brand cursor-pointer mt5" mx-click="@:{log.stage.elements}()">查看设计区元素</button>
+        <button class="btn white-space-nowrap outline-none btn-brand cursor-pointer mt5" mx-click="@:{log.select.elements}()">查看选中元素</button>
+        <button class="btn white-space-nowrap outline-none btn-brand cursor-pointer mt5" mx-click="@:{log.clipboard}()">查看剪切板</button>
+        <button class="btn white-space-nowrap outline-none btn-brand cursor-pointer mt5" mx-click="@:{clear.clipboard}()">清空剪切板</button>
+        <button class="btn white-space-nowrap outline-none btn-brand cursor-pointer mt5" mx-click="@:{add.text.to.cell}()">向格子内添加文本元素</button>
+        <button class="btn white-space-nowrap outline-none btn-brand cursor-pointer mt5" mx-click="@:{add.text.to.stage}()">添加文本元素到设计区</button>
+        <button class="btn white-space-nowrap outline-none btn-brand cursor-pointer mt5" mx-click="@:{change.lang}()">切换语言到{{=lang=='zh'?'英文':'中文'}}</button>
+    </div>
+    <div class="color-third fontsize-12 mt5">开发版本提供更多的功能，可加作者微信：qq84685009 咨询</div>
+</div>

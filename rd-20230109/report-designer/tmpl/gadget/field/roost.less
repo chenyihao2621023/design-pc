@@ -1,0 +1,26 @@
+@import "../../assets/_vars.less";
+.drop-zone {
+    min-height: 100px;
+}
+
+.item-bindable {
+    border: solid 1px @color-border;
+    height: 20px;
+    padding: 0 5px;
+}
+
+.margin-top-2 {
+    margin-top: 2px;
+}
+
+.element-icon {
+    margin: 0 2px;
+}
+
+.notallowed {
+    background: @color-disabled;
+    color: @color-third;
+    .item-bindable {
+        background: @color-disabled;
+    }
+}

@@ -1,0 +1,35 @@
+<div class="panel pa anim-move pointer-events-all{{if unselectable}} unselectable{{/if}}" style="width:{{=width}}px;{{if left!=null}}left:{{=left}}{{else}}right:{{=right}}{{/if}}px;{{if top!=null}}top:{{=top}}px{{else}}bottom:{{=bottom}}px{{/if}};z-index:{{=zIndex}};height:{{=(shrink?th+'px':(resizeY?`max(calc(100% - ${height}px),${th}px)`:`${height+th}px`))}}" id="_rdp_{{=$viewId}}" mx-pointerdown="@:{update.z-index}()" mx-pointerover="@:{hover.panel}()"  mx-pointerout="@:{hover.panel}()" mx-contextmenu="{{=cm==null}}?@:{prevent}()">
+    {{if mini}}
+        <div class="flex{{if vertical}} flex-direction-column{{else}} hp100{{/if}}{{if center}} align-items-center{{/if}}">
+            <div class="background-color-brand touch-action-none cursor-move{{if vertical}} height-4 wp100{{else}} width-4 hp100{{/if}}" title="{{=i18n('@:{lang#panel.drag}')}}" mx-pointerdown="@:{drag.move}()"></div>
+            <mx-vframe class="flex-fill-rest{{if !vertical}} flex align-items-center{{/if}}" src="{{=view}}" id="_rd_{{=$viewId}}_v"/>
+        </div>
+    {{else}}
+        <div class="title contrast-color background-color-brand unselectable flex fontsize-12" mx-contextmenu="@:{prevent}()">
+            <div class="title-text cursor-move flex-fill-rest touch-action-none ellipsis white-space-nowrap" title="{{=i18n('@:{lang#panel.drag}',title)}}" mx-pointerdown="@:{drag.move}()">
+                {{if icon}}
+                    <i class="iconfont fontsize-12 mr2" x-html="{{=icon}}"></i>
+                {{/if}}
+                {{=i18n(title)}}
+            </div>
+            <div class="flex align-items-center hp100">
+                {{if hl&&help}}
+                <i class="iconfont title-icon flex margin-0-2 border-radius-x fontsize-12 cursor-pointer justify-content-center align-items-center" title="{{=i18n('@:{lang#panel.help.link}',title)}}" mx-click="@:{open}({url:'{{=help}}'})">&#xe65e;</i>
+                {{/if}}
+                <i class="iconfont title-icon flex margin-0-2 border-radius-x fontsize-12 cursor-pointer justify-content-center align-items-center{{if shrink}} r180{{/if}}" mx-click="@:{toggle.height}()" title="{{=i18n(shrink?'@:{lang#panel.expand.panel}':'@:{lang#panel.shrink.panel}',title,key)}}">&#xe73a;</i>
+                <i class="iconfont title-icon flex margin-0-2 border-radius-x fontsize-12 cursor-pointer justify-content-center align-items-center" mx-click="@:{close}()" title="{{=i18n('@:{lang#panel.close.panel}',title,key)}}">&#xe712;</i>
+            </div>
+        </div>
+        <div class="content-outer contain-paint">
+            <mx-vframe class="overscroll-behavior-contain content-visibility-auto hp100{{if scrollable}} scrollable thin-scrollable{{if !imd}} scroll-behavior-smooth{{/if}} overflow-auto scrollbar-gutter-stable{{else}} overflow-hidden{{/if}}" src="{{=view}}" id="_rd_{{=$viewId}}_v">
+                <div class="loading flex align-items-center justify-content-center hp100 wp100">
+                    <span class="loading-anim"></span>
+                </div>
+            </mx-vframe>
+            {{if resizeX}}
+            <div class="hbar cursor-ew-resize unselectable hp100 pa touch-action-none" title="{{=i18n('@:{lang#panel.ew-resize}')}}" mx-pointerdown="@:{start.resize}({w:1})" mx-contextmenu="@:{prevent}()"></div>
+            {{/if}}
+        </div>
+        <div class="foot cursor-ns-resize pa unselectable touch-action-none{{if shrink||!resizeY}} none{{/if}}" title="{{=i18n('@:{lang#panel.ns-resize}')}}" mx-contextmenu="@:{prevent}()" mx-pointerdown="@:{start.resize}({h:1})"></div>
+    {{/if}}
+</div>

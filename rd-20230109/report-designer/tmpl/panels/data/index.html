@@ -1,0 +1,36 @@
+{{if error}}
+    {{=error.message||error}}
+{{else}}
+<div class="padding-4 unselectable pr">
+    {{if canUseBind}}
+        <!-- {{if treeView}} -->
+            <div id="si_{{= $viewId }}" class="search-input z-index-2 background-color-fff position-sticky top-0 padding-4 transition">
+                <input class="wp100 margin-0 input" value="{{=kw}}" placeholder="{{=i18n('@:{lang#search.data.source}')}}" mx-input="@:{search.data.source}()"/>
+                <i class="iconfont search-remove fontsize-14 pa cursor-pointer{{if !kw}} none{{/if}}" mx-click="@:{clear.keyword}()" title="{{=i18n('@:{lang#remove.keyword}')}}">&#xe624;</i>
+            </div>
+            {{if source.length}}
+                <mx-vframe src="./branch" *list="{{#source}}" *bind-map="{{#bindFieldsMap}}" *bind-id="{{=bindId}}" *readonly="{{#readonly}}" *kw="{{#kw}}" *l="{{=lang}}" mx-treeitemdown="@:{fix.drag.clip.bug}()" mx-contextmenu="@:{prevent}()"/>
+            {{else if kw}}
+                <span class="color-third">未搜索到“{{=kw}}”</span>
+            {{/if}}
+        <!-- {{else}}
+            <mx-dropdown *selected="{{=selected}}" *list="{{#source}}" *text-key="name" *value-key="id" *disabled="{{#ddDisabled}}" mx-change="@:{update.source}()"/>
+            <div class="item-spliter"></div>
+            {{if !selected}}
+                <div class="tc">{{=i18n('@:{lang#data.choose.source}')}}</div>
+            {{else}}
+                {{if fields}}
+                {{each fields as field}}
+                <div class="item-draggable{{if bindFieldsMap[field.id]||readonly}} opacity-40{{/if}}" draggable="{{=!bindFieldsMap[field.id]&&!readonly}}?true" mx-dragstart="@:{drag.field.start}({url:'{{=url}}',field:'{{#field}}',id:'{{=selected}}'})" mx-dragend="@:{drag.field.end}()" mx-pointerdown="@:{fix.drag.clip.bug}()">
+                    <span class="iconfont">&#xe69c;</span>
+                    <span>{{=field.name}}</span>
+                </div>
+                {{/each}}
+                {{/if}}
+            {{/if}}
+        {{/if}} -->
+    {{else}}
+        {{=i18n('@:{lang#data.choose.support.element}')}}
+    {{/if}}
+</div>
+{{/if}}

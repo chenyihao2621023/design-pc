@@ -1,0 +1,9 @@
+<div class="pa z-index-1" style="left:{{=props.x}}{{=unit}};top:{{=props.y}}{{=unit}};opacity:{{=props.alpha}};transform:rotate({{=props.rotate}}deg);{{=am(props.animations)}}">
+    {{if props.src}}
+        <video src="{{=props.src}}" poster="{{=props.poster}}" controls="{{=props.controls}}?" autoplay="{{=props.autoplay}}?" loop="{{=props.loop}}?" muted="{{=props.muted}}?" style="width:{{=props.width}}{{=unit}};height:{{=props.height}}{{=unit}}"></video>
+    {{else}}
+        <div class="overflow-hidden tc" style="width:{{=props.width}}{{=unit}};height:{{=props.height}}{{=unit}};line-height:{{=props.height}}{{=unit}}">
+            {{=i18n('@:{lang#elements.video.empty.tip}')}}
+        </div>
+    {{/if}}
+</div>

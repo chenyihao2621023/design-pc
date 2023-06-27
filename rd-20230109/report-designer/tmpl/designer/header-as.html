@@ -1,0 +1,7 @@
+<i class="iconfont menu-icon fontsize-14">&#xe69e;</i>
+<label class="display-inline-block font-weight-normal mwp100 cursor-pointer flex align-items-center">
+    <input class="switch-input switch-border-input pa" checked="{{=enable}}?" type="checkbox"  mx-change="@:{toggle.auto.save}()" />
+    <i class="switch-button display-inline-block transition unselectable pr switch-border-button"></i>
+</label>
+<div class="flex-fill-rest ml5 menu-text">{{=i18n('@:{lang#auto.save.state}',enable?'@:{lang#auto.save.enable}':'@:{lang#auto.save.disable}')}}</div>
+<code class="short fontsize-12">{{=last}}</code>

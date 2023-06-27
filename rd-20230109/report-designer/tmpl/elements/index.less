@@ -1,0 +1,197 @@
+@import "../assets/_vars.less";
+@resizer-size: 5px;
+@resizer-offset: -3px;
+.cross {
+    left: 50%;
+    top: 50%;
+}
+
+.cross:before {
+    content: '';
+    width: 1px;
+    height: 6px;
+    position: absolute;
+    background: @color-brand;
+    left: 0;
+    top: -3px;
+    transform: translateX(-50%);
+}
+
+.cross:after {
+    content: '';
+    width: 6px;
+    height: 1px;
+    position: absolute;
+    background: @color-brand;
+    left: -3px;
+    top: 0;
+    transform: translateY(-50%);
+}
+
+.normal {
+    outline: dotted 1px @element-outline-color; //可使用#ddd0去掉可视化中的边框展示
+}
+
+.focus-line {
+    outline-color: @color-brand;
+    outline-style: dashed;
+}
+
+.grouped-locked-line, .locked-line {
+    outline-color: @color-third;
+}
+
+.locked-line {
+    outline-style: dashed;
+}
+
+.grouped-line {
+    outline-color: @color-brand;
+}
+
+.grouped-self {
+    outline-style: solid;
+}
+
+.top-faker {
+    height: 12px;
+    top: -16px;
+}
+
+.right-faker {
+    width: 12px;
+    right: -16px;
+}
+
+.right {
+    border-right: solid @resizer-size @color-brand;
+    right: @resizer-offset;
+}
+
+.left {
+    border-left: solid @resizer-size @color-brand;
+    left: @resizer-offset;
+}
+
+.bottom {
+    border-bottom: solid @resizer-size @color-brand;
+    bottom: @resizer-offset;
+}
+
+.top {
+    border-top: solid @resizer-size @color-brand;
+    top: @resizer-offset;
+}
+
+// .top-touch {
+//     border-top-width: 15px;
+//     top: -8px;
+// }
+// .bottom-touch {
+//     border-bottom-width: 15px;
+//     bottom: -8px;
+// }
+// .right-touch {
+//     border-right-width: 15px;
+//     right: -8px;
+// }
+// .left-touch {
+//     border-left-width: 15px;
+//     left: -8px;
+// }
+.top-icon {
+    top: -23px;
+}
+
+.left-icon {
+    left: -23px;
+}
+
+.circle {
+    border-radius: 50%;
+}
+
+.ctrl-size {
+    width: 7px;
+    height: 7px;
+}
+
+.ctrl-rotate {
+    top: -18px;
+    left: 50%;
+    cursor: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAABvUExURUdwTP///9XV1R0dHf///3Nzc////////////////1ZWVq+vr/T09PX19QQEBP///////8XFxf///////////wYGBv///+jo6P///4aGhqioqMzMzP///2BgYP///////////zExMf///wAAAP///xLps0AAAAAjdFJOUwCxxOdixRDmzSDMv8/Z+tz5wWpXWPk3zALCv8KnyXZVMNuNPnv3CwAAAJ1JREFUKM/NkckOwyAMRFkDBMhC9qWr+//fWCIV1WlzrjoXS36yxmMT8hdqqKoUvRAjMtw22kvecem1GjTuK1vApmI+wQMBbQFy5li+QQRaX4AtRX+vbntAJeRl9HTTx4TiwESs61DXNUPmVQeujzVrQwh43TTxpeRBslVfMUhbiXKWyiAwvnIsMcdyJkfJYdpNvG/ltDm+bjP+8KFP8ggL+zQLGxwAAAAASUVORK5CYII=') 14 14, alias;
+}
+
+.ctrl-rotate::after {
+    content: '';
+    height: 8px;
+    border-right: @color-brand dashed 1px;
+    position: absolute;
+    left: 3px;
+    top: 8px;
+}
+
+.div-circle-path {
+    border: dotted 1px @color-brand;
+}
+
+.mod-rect {//for safari outline can not rounded
+    //outline: solid 1px @color-brand;
+    box-shadow: 0 0 0 1px @color-brand;
+}
+
+.mod-rect:hover {
+    //outline-width: 2px;
+    box-shadow: 0 0 0 2px @color-brand;
+}
+
+.preserve-size {
+    left: -50px;
+    top: -50px;
+    height: calc(100% + 100px);
+    width: calc(100% + 100px);
+}
+
+.hod-focus-line {
+    border: solid 2px @color-brand;
+}
+
+.hod-right, .hod-left {
+    border-right: solid 6px @color-brand;
+}
+
+.hod-right {
+    right: -4px;
+}
+
+.hod-left {
+    left: -4px;
+}
+
+.hod-bottom, .hod-top {
+    border-bottom: solid 6px @color-brand;
+}
+
+.hod-bottom {
+    bottom: -4px;
+}
+
+.hod-top {
+    top: -4px;
+}
+
+.hod-focus-div {
+    .inset-dock(-1px, -1px, -1px, -1px);
+}
+
+.table-main-cell {
+    background: @color-brand-5;
+}
+
+.right-m-4 {
+    right: -4px;
+}
+
+.border-dotted-999 {
+    border: dotted 1px @color-third;
+}

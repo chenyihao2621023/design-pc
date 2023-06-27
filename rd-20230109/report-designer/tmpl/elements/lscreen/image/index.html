@@ -1,0 +1,4 @@
+
+{{set {rotateX,rotateY}=props}}
+<img class="tag-img pa z-index-1"
+    style="left:{{=props.x}}{{=unit}};top:{{=props.y}}{{=unit}};height:{{=props.height}}{{=unit}};opacity:{{=props.alpha}};width:{{=props.width}}{{=unit}};transform:rotate({{=props.rotate}}deg);{{if rotateX||rotateY}};transform:{{if rotateX}}rotateX(180deg){{/if}}{{if rotateY}} rotateY(180deg){{/if}};{{/if}}{{=am(props.animations)}}" src="{{=props.image}}" />

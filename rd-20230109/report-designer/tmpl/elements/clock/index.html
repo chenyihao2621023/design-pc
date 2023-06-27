@@ -1,0 +1,12 @@
+<div class="pa z-index-1 clock" style="left:{{=props.x}}{{=unit}};top:{{=props.y}}{{=unit}};height:{{=props.height/scale}}{{=unit}};opacity:{{=props.alpha}};width:{{=props.width/scale}}{{=unit}};background-color:{{=props.dialColor}};{{if scale!=1}}transform:scale({{=scale}});transform-origin:0 0;{{/if}}{{=am(props.animations)}}">
+    <div class="r0 pa" style="border-color:{{=props.markColor}};"></div>
+    <div class="r1 pa" style="border-color:{{=props.markColor}};"></div>
+    <div class="r2 pa" style="border-color:{{=props.markColor}};"></div>
+    <div class="r3 pa" style="border-color:{{=props.markColor}};"></div>
+    <div class="r4 pa" style="border-color:{{=props.markColor}};"></div>
+    <div class="r5 pa" style="border-color:{{=props.markColor}};"></div>
+    <div class="hour pa" id="_rd_h_{{=$viewId}}" style="background-color:{{=props.handleColor}};"></div>
+    <div class="minute pa" id="_rd_m_{{=$viewId}}" style="background-color:{{=props.handleColor}};"></div>
+    <div class="second pa" id="_rd_s_{{=$viewId}}" style="background-color:{{=props.handleColor}};"></div>
+    <div class="dot pa"></div>
+</div>

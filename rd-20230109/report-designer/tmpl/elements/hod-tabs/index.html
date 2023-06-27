@@ -1,0 +1,22 @@
+<div class="pa z-index-1 flex flex-direction-column" style="left:{{=props.x}}{{=unit}};top:{{=props.y}}{{=unit}};opacity:{{=props.alpha}};width:{{=props.width}}{{=unit}};height:{{=props.height}}{{=unit}};{{=am(props.animations)}}">
+    <div class="flex tabs pa z-index-1 white-space-nowrap overflow-auto">
+        {{each props.rows as row}}
+            {{each row.cols as col ci}}
+                <div class="color-secondary padding-2-4 pointer-events-all cursor-pointer{{if props.activeTab==ci}} tabs-active color-brand{{/if}}" mx-click="@:{active.tab}({to:{{=ci}}})">{{=col.text}}</div>
+            {{/each}}
+        {{/each}}
+    </div>
+    {{each props.rows as row ri}}
+    <div class="pa full-fill tabs-backdrop">
+        {{each row.cols as col ci}}
+            {{if ci==props.activeTab}}
+            <div class="pr overflow-hidden" style="height:{{=row.height}}{{=unit}};width:{{=col.width}}{{=unit}};">
+                {{each col.elements as e}}
+                    <mx-vframe class="display-contents" src="../{{=e.type}}/index" *props="{{#e.props}}" *unit="{{#unit}}"/>
+                {{/each}}
+            </div>
+            {{/if}}
+        {{/each}}
+    </div>
+    {{/each}}
+</div>

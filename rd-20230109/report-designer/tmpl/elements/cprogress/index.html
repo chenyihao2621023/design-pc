@@ -1,0 +1,29 @@
+<svg class="pa" style="width:{{=props.width}}{{=unit}};height:{{=props.height}}{{=unit}};opacity:{{=props.alpha}};left:{{=props.x}}{{=unit}};top:{{=props.y}}{{=unit}};{{=am(props.animations)}}">
+    <circle
+        cx="50%"
+        cy="50%"
+        r="{{=radius}}"
+        fill="none" 
+        stroke="{{=props.background}}"
+        stroke-width="{{=border}}"/>
+    <circle
+        cx="50%"
+        cy="50%"
+        r="{{=radius}}"
+        fill="none" 
+        stroke="{{=props.fillcolor}}"
+        transform="rotate(-90 {{=center}} {{=center}})"
+        stroke-width="{{=border}}"
+        stroke-dasharray="{{=d1}},{{=d2}}"
+        stroke-linecap="{{if props.roundCap}}round{{else}}butt{{/if}}"
+        id="_rd_{{=$viewId}}"/>
+    {{if props.showText}}
+    <text 
+        x="50%"
+        y="50%"
+        style="text-anchor:middle;dominant-baseline:middle;" 
+        font-family="{{=props.fontfamily}}" 
+        font-size="{{=props.fontsize}}{{=unit}}" 
+        fill="{{=props.forecolor}}">{{=text||value+'%'}}</text>
+    {{/if}}
+</svg>

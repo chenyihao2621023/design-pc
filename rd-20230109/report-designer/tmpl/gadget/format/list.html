@@ -1,0 +1,91 @@
+<div class="dialog-header-shadow position-sticky z-index-7"></div>
+<div class="dialog-header margin-0 background-color-fff position-sticky top-0 z-index-8 margin-top-m-20">
+    <h5 class="padding-0 fontsize-14 margin-0">显示格式</h5>
+</div>
+{{set cIndex=0}}
+<div class="dialog-body min-full-height unselectable">
+    <div class="tabs flex">
+        {{each list as category ci}}
+            <div class="tabs-item tc cursor-pointer {{if category.id==parts[0]}}{{cIndex=ci}} tabs-active color-brand{{/if}}" mx-click="{{=category.id!=parts[0]}}?@:{change.tab}({to:'{{=category.id}}'})">{{=category.title}}</div>
+        {{/each}}
+    </div>
+    {{set current=list[cIndex]}}
+    {{if current.id=='custom'}}
+        <mx-codemirror class="codemirror border-radius-x" style="width:848px;height:calc(100vh - 210px)" *value="{{#parts[1]||current.defaults}}" mx-cmchange="@:{update.codemirror.format}()">
+            loading...
+        </mx-codemirror>
+    {{else}}
+        {{set {prefix,subs,postfix}=current}}
+        <div class="min-height-80">
+            <div class="fontsize-12 fontsize-scale-10 transform-origin-0 color-third margin-bottom-4 margin-top-4">
+                {{=prefix.title}}
+            </div>
+            <div class="flex flex-wrap-wrap">
+                {{each prefix.list as item}}
+                <div class="pr height-30 overflow-hidden margin-2 padding-4 mselector border-radius-x align-items-center cursor-pointer{{if parts[1]?.prefix==item.format}} mselector-selected{{/if}}" mx-click="@:{use.fix.format}({format:'{{=item.format}}',key:'prefix'})">
+                    {{=item.title}}
+                    {{if item.example}}
+                        <span class="color-third">({{=item.example}})</span>
+                    {{/if}}
+                </div>
+                {{/each}}
+                {{if prefix.custom}}
+                    <textarea class="custom-textarea textarea wp100" placeholder="请输入自定义{{=prefix.title}}" mx-input="@:{update.fix.custom}({key:'prefix'})">{{=parts[1]?.prefix??''}}</textarea>
+                {{/if}}
+            </div>
+        </div>
+        {{set subIndex=0}}
+        <div class="fontsize-12 fontsize-scale-10 transform-origin-0 color-third margin-bottom-4 margin-top-4">
+            内容
+        </div>
+        <div class="mb10 flex mr10 ml10">
+            {{each subs as s si}}
+                <div class="tabs-line-item tc cursor-pointer {{if s.id==parts[1]?.type}}{{subIndex=si}} tabs-line-active color-brand{{/if}}" mx-click="{{=s.id!=parts[1]?.type}}?@:{change.sub.tab}({to:'{{=s.id}}'})">{{=s.title}}</div>
+            {{/each}}
+        </div>
+        {{set sub=subs[subIndex]}}
+        {{each sub.parts as part pi}}
+        <div class="min-height-80 ml10 mr10">
+            <div class="fontsize-12 fontsize-scale-10 transform-origin-0 color-third margin-bottom-4 margin-top-4">
+                {{=part.title}}
+            </div>
+            <div class="flex flex-wrap-wrap">
+                {{each part.list as item}}
+                <div class="pr height-30 overflow-hidden margin-2 padding-4 mselector border-radius-x align-items-center cursor-pointer{{if parts[1]?.body?.[pi]==item.format}} mselector-selected{{/if}}" mx-click="@:{use.format}({format:'{{=item.format}}',at:{{=pi}}})">
+                    {{=item.title}}
+                    {{if item.example}}
+                        <span class="color-third">({{=item.example}})</span>
+                    {{/if}}
+                </div>
+                {{/each}}
+                {{if part.custom}}
+                    <textarea class="custom-textarea textarea wp100" placeholder="请输入自定义{{=part.title}}" mx-input="@:{update.custom}({at:{{=pi}}})">{{=parts[1]?.body?.[pi]??''}}</textarea>
+                {{/if}}
+            </div>
+        </div>
+        {{/each}}
+        <div class="min-height-80">
+            <div class="fontsize-12 fontsize-scale-10 transform-origin-0 color-third margin-bottom-4 margin-top-4">
+                {{=postfix.title}}
+            </div>
+            <div class="flex flex-wrap-wrap">
+                {{each postfix.list as item}}
+                <div class="pr height-30 overflow-hidden margin-2 padding-4 mselector border-radius-x align-items-center cursor-pointer{{if parts[1]?.postfix==item.format}} mselector-selected{{/if}}" mx-click="@:{use.fix.format}({format:'{{=item.format}}',key:'postfix'})">
+                    {{=item.title}}
+                    {{if item.example}}
+                        <span class="color-third">({{=item.example}})</span>
+                    {{/if}}
+                </div>
+                {{/each}}
+                {{if postfix.custom}}
+                    <textarea class="custom-textarea textarea wp100" placeholder="请输入自定义{{=postfix.title}}" mx-input="@:{update.fix.custom}({key:'postfix'})">{{=parts[1]?.postfix??''}}</textarea>
+                {{/if}}
+            </div>
+        </div>
+    {{/if}}
+</div>
+<div class="dialog-footer flex justify-content-flex-end position-sticky bottom-0 z-index-6 dialog-footer-with-shadow background-color-fff">
+    <button mx-click="@:{apply}();" class="btn white-space-nowrap outline-none cursor-pointer btn-brand" type="button">{{=i18n('@:{lang#btn.apply}')}}</button>
+    <button mx-click="@:{close}();" class="btn white-space-nowrap outline-none cursor-pointer ml10" type="button">{{=i18n('@:{lang#btn.cancel}')}}</button>
+</div>
+<div class="dialog-footer-shadow position-sticky z-index-5"></div>

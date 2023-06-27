@@ -1,0 +1,96 @@
+@import "../../assets/_vars.less";
+@dialog-movement: 30px;
+@dialog-backdrop-light: #0000;
+@dialog-backdrop-dark: #0006;
+.dialog-content {
+    border: 1px solid @color-border;
+    margin: 25px;
+    min-height: 120px;
+}
+
+.dialog-close {
+    opacity: .2;
+    top: 11px;
+    right: 10px;
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px #fff;
+    &:hover, &:focus {
+        opacity: .5;
+    }
+}
+
+.dialog-center {
+    margin: auto;
+}
+
+.dialog-close-sticky {
+    float: right;
+    margin: 36px 32px 0 -35px;
+}
+
+.dialog-backdrop {
+    background-color: @dialog-backdrop-light;
+}
+
+// .blur {
+//     filter: blur(3px);
+// }
+.anim-mask {
+    animation: fadein .2s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadein {
+    from {
+        background-color: @dialog-backdrop-light;
+    }
+    to {
+        background-color: @dialog-backdrop-dark;
+    }
+}
+
+.anim-mask-out {
+    animation: fadeout .2s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeout {
+    from {
+        background-color: @dialog-backdrop-dark;
+    }
+    to {
+        background-color: @dialog-backdrop-light;
+    }
+}
+
+.anim-body {
+    animation: move .2s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes move {
+    from {
+        transform: translateY(@dialog-movement);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.anim-body-out {
+    animation: moveup .2s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes moveup {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-@dialog-movement);
+        opacity: 0;
+    }
+}

@@ -1,0 +1,9 @@
+
+{{set {rotateX,rotateY,bind,x,y,width,height,alpha,rotate,animations,image,webUrl,}=props}}
+<div class="overflow-hidden z-index-1 pa flex align-items-center justify-content-center{{if enter}} hod-drop-tip{{/if}}" style="left:{{=x}}{{=unit}};top:{{=y}}{{=unit}};height:{{=height}}{{=unit}};opacity:{{=alpha}};width:{{=width}}{{=unit}};transform:rotate({{=rotate}}deg);{{=am(animations)}}" mx-dragenter="@:{when.data.field.enter}()" mx-dragleave="@:{when.data.field.leave}()" mx-drop="@:{when.data.field.drop}()">
+    {{if image||webUrl}}
+        <img class="tag-img wp100 hp100 pointer-events-none" style="{{if rotateX||rotateY}}transform:{{if rotateX}}rotateX(180deg){{/if}}{{if rotateY}} rotateY(180deg){{/if}}{{/if}}" src="{{=image||webUrl}}" />
+    {{else}}
+        {{=text||i18n('@:{lang#elements.image.select.image}')}}
+    {{/if}}
+</div>

@@ -1,0 +1,30 @@
+{{each cs as w i}}
+    <canvas width="{{=w*dpr}}" height="{{=h*dpr}}" style="width:{{=w}}px;height:{{=h}}px;" id="_rd_{{=i}}_{{= $viewId }}"></canvas>
+{{/each}}
+
+<!-- <svg class="pa cursor-default" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {{=width}} 19" style="width:{{=width}}px;height:19px;">
+    {{set temp}}
+    {{for(let i=step;i<xStart;i+=step)}}
+        {{temp=round(i/scale*enlarge)}}
+        {{if temp%(space*enlarge)===0}}
+            <rect width="1" height="{{=hbar}}" x="{{=xStart-i}}" y="{{=19-hbar}}" style="fill:{{=barColor}};"/>
+            <text x="{{=xStart-i+2}}" y="14" class="fontsize-10 color-fill-999">{{=-toUnit(temp/enlarge)}}</text>
+        {{else}}
+            <rect width="1" height="{{=bar}}" x="{{=xStart-i}}" y="{{=19-bar}}" style="fill:{{=barColor}};"/>
+        {{/if}}
+    {{/for}}
+    {{for(let i=0;i<xEnd;i+=step)}}
+    {{temp=round(i/scale*enlarge)}}
+    {{if temp%(space*enlarge)===0}}
+        <rect width="1" height="{{=hbar}}" x="{{=xStart+i}}" y="{{=19-hbar}}" style="fill:{{=barColor}};"/>
+        <text x="{{=xStart+i+2}}" y="14" class="fontsize-10 color-fill-999">{{=toUnit(temp/enlarge)}}</text>
+    {{else}}
+        <rect width="1" height="{{=bar}}" x="{{=xStart+i}}" y="{{=19-bar}}" style="fill:{{=barColor}};"/>
+    {{/if}}
+    {{/for}}
+</svg> -->
+{{if x}}
+    {{each x as t}}
+        <div class="pa height-4 bottom-0 background-color-brand-a30 transition" style="left:{{=t[0]+xs}}px;width:{{=t[1]-t[0]}}px"></div>
+    {{/each}}
+{{/if}}

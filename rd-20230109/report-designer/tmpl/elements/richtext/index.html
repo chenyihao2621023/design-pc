@@ -1,0 +1,1 @@
+<div class="pa z-index-1{{if !props.splitToPages}} overflow-auto{{/if}}" style="left:{{=props.x}}{{=unit}};top:{{=props.y}}{{=unit}};opacity:{{=props.alpha}};width:{{=props.width}}{{=unit}};height:{{if props.splitToPages}}auto{{else}}{{=props.height}}{{=unit}}{{/if}};{{=am(props.animations)}}" x-html="{{=props.text}}"></div>

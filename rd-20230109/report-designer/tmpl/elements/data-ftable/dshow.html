@@ -1,0 +1,126 @@
+<div class="pa z-index-1" style="left:{{=props.x}}{{=unit}};top:{{=props.y}}{{=unit}};opacity:{{=props.alpha}};width:{{=props.width}}{{=unit}};height:{{=props.height}}{{=unit}};{{=am(props.animations)}}">
+    {{set {borderwidth,bordertype,bordercolor,borderdeed,rows,readonly}=props}}
+    {{set bwn=(borderdeed=='collapse'?1:2)*borderwidth}}
+    <table class="wp100 table" style="border-collapse:{{=borderdeed}}">
+        <tbody>
+        {{set findTotalRow=0}}
+        {{set findLabelRow=0}}
+        {{each props.rows as row ri}}
+        {{if row.label}}
+            {{findLabelRow=1}}
+        {{/if}}
+        {{if ((!row.total||!props.hideTotal) &&
+             (!findTotalRow||!props.hideFoot)) &&
+             (findLabelRow||!props.hideHead) &&
+             (!row.label||!props.hideLabel)}}
+        <tr>
+            {{each row.cols as col ci}}
+            <td class="table-cell padding-0 word-break-break-all touch-action-none pr{{if row.data}} table-main-cell{{/if}}{{if selectRect&&srRow==ri&&srCol==ci}} overflow-hidden{{/if}}" colspan="{{=col.colspan}}??" rowspan="{{=col.rowspan}}??" style="width:{{=col.width}}{{=unit}};height:{{=col.height}}{{=unit}};border-left:{{=borderwidth?bordertype:'dotted'}} {{=borderwidth}}{{=unit}} {{=borderwidth&&col.bLeft?bordercolor:cv}};border-top:{{=borderwidth?bordertype:'dotted'}} {{=borderwidth}}{{=unit}} {{=borderwidth&&col.bTop?bordercolor:cv}};border-right:{{=borderwidth?bordertype:'dotted'}} {{=borderwidth}}{{=unit}} {{=borderwidth&&col.bRight?bordercolor:cv}};border-bottom:{{=borderwidth?bordertype:'dotted'}} {{=borderwidth}}{{=unit}} {{=borderwidth&&col.bBottom?bordercolor:cv}}" mx-pointerdown="@:{active.cell}({row:{{=ri}},col:{{=ci}},elm:1})" id="_rd_h_{{=element.id}}_{{=ri}}_{{=ci}}" mx-contextmenu="@:{show.contxtmenu}({row:{{=ri}},col:{{=ci}}})">
+                <div class="wp100 hp100 pr overflow-hidden" data-as="hod" id="_rd_hm_{{=element.id}}_{{=ri}}_{{=ci}}">
+                {{if col.elements?.length}}
+                    {{each col.elements as e}}
+                        <mx-vframe class="touch-action-none" id="{{=e.id}}" src="../{{=e.type}}/designer" *element="{{#e}}"  *owner-id="_rd_h_{{=element.id}}_{{=ri}}_{{=ci}}" *mask-id="_rd_hm_{{=element.id}}_{{=ri}}_{{=ci}}" *unit="{{#unit}}" mx-pointerdown="@:{element.start.drag}({element:{{#e}},maskId:'_rd_hm_{{=element.id}}_{{=ri}}_{{=ci}}'})"/>
+                    {{/each}}
+                {{/if}}
+                </div>
+                {{if !props.locked}}
+                {{set focusCurrentCell=props.focusRow==ri&&props.focusCol==ci&&selected&&count==1}}
+                <div class="pa hod-focus-div z-index-1 pointer-events-none{{if focusCurrentCell}} hod-focus-line{{/if}}{{if fieldRow==ri&&fieldCol==ci}} hod-drop-tip{{/if}}" style="{{if focusCurrentCell}}{{if !col.bLeft}}border-left-style:dotted;{{/if}}{{if !col.bTop}}border-top-style:dotted;{{/if}}{{if !col.bRight}}border-right-style:dotted;{{/if}}{{if !col.bBottom}}border-bottom-style:dotted;{{/if}}{{/if}}" id="_rd_dm_{{=element.id}}_{{=ri}}_{{=ci}}">
+                    {{if focusCurrentCell&&!grouped}}
+                    {{set pxHeight=toPx(col.height-bwn)-1,
+                        pxWidth=toPx(col.width-bwn)-1}}
+                    {{set height=(mmin(22,pxHeight-2))}}
+                    {{set width=(mmin(22,pxWidth-2))}}
+                    {{set top=(pxHeight-height)/2}}
+                    {{set left=(pxWidth-width-bwn)/2}}
+                    <div class="pa hod-right border-radius-x pointer-events-all touch-action-none cursor-ew-resize" style="height:{{=mmax(height,0)}}px;top:{{=top}}px;" title="{{=i18n('@:{lang#press.drag.cell.width}')}}" mx-pointerdown="@:{start.resize.table.cell}({key:'mr'})"></div>
+                    <div class="pa hod-left border-radius-x pointer-events-all touch-action-none cursor-ew-resize" style="height:{{=mmax(height,0)}}px;top:{{=top}}px;" title="{{=i18n('@:{lang#press.drag.cell.width}')}}" mx-pointerdown="@:{start.resize.table.cell}({key:'ml'})"></div>
+                    <div class="pa hod-bottom border-radius-x pointer-events-all touch-action-none cursor-ns-resize" style="width:{{=mmax(width,0)}}px;left:{{=left}}px" title="{{=i18n('@:{lang#press.drag.cell.height}')}}" mx-pointerdown="@:{start.resize.table.cell}({key:'bm'})"></div>
+                    <div class="pa hod-top border-radius-x pointer-events-all touch-action-none cursor-ns-resize" style="width:{{=mmax(width,0)}}px;left:{{=left}}px" title="{{=i18n('@:{lang#press.drag.cell.height}')}}" mx-pointerdown="@:{start.resize.table.cell}({key:'tm'})"></div>
+                    {{/if}}
+                </div>
+                {{/if}}
+                {{if !readonly && col.elements?.length}}
+                    <i class="pa z-index-1 left-0 top-0 border-radius-x padding-2 iconfont fontsize-12 fontsize-scale-10 cursor-pointer color-third color-third-hover transition background-color-brand-a10" title="{{=i18n('@:{lang#cell.select}')}}">&#xe647;</i>
+                {{/if}}
+                {{if selectRect&&srRow==ri&&srCol==ci}}
+                    <div class="select-rect none z-index-2 pointer-events-none pa" style="display:block;left:{{=selectRect.x}}px;top:{{=selectRect.y}}px;width:{{=selectRect.width}}px;height:{{=selectRect.height}}px"></div>
+                {{/if}}
+            </td>
+            {{/each}}
+        </tr>
+        {{/if}}
+        {{if row.data}}
+            {{for(let ti=0;2>ti;ti++)}}
+            <tr>
+                {{each row.cols as col ci}}
+                <td class="table-cell padding-0 word-break-break-all pr" style="width:{{=col.width}}{{=unit}};height:{{=col.height}}{{=unit}};border-left:{{=borderwidth?bordertype:'dotted'}} {{=borderwidth}}{{=unit}} {{=borderwidth&&col.bLeft?bordercolor:cv}};border-top:{{=borderwidth?bordertype:'dotted'}} {{=borderwidth}}{{=unit}} {{=borderwidth&&col.bTop?bordercolor:cv}};border-right:{{=borderwidth?bordertype:'dotted'}} {{=borderwidth}}{{=unit}} {{=borderwidth&&col.bRight?bordercolor:cv}};border-bottom:{{=borderwidth?bordertype:'dotted'}} {{=borderwidth}}{{=unit}} {{=borderwidth&&col.bBottom?bordercolor:cv}};background:#eeeeee80" colspan="{{=col.colspan}}??" rowspan="{{=col.rowspan}}??">
+                </td>
+                {{/each}}
+            </tr>
+            {{/for}}
+        {{/if}}
+        {{if row.total}}
+            {{findTotalRow=1}}
+        {{/if}}
+        {{/each}}
+        </tbody>
+    </table>
+    {{if props.tfootSpacing}}
+    <div class="border-dotted-999 pr touch-action-none" style="height:{{=props.tfootSpacing}}{{=unit}}" mx-pointerdown="@:{active.cell}({row:-2,col:-2})">
+        {{if selected&&!props.locked&&count==1&&props.focusRow==-2&&props.focusCol==-2}}
+        <div class="pa hod-focus-div z-index-1 pointer-events-none hod-focus-line border-style-dashed">
+            {{set left=(toPx(props.width)-22-bwn)/2-1}}
+            <div class="pa hod-bottom border-radius-x pointer-events-all touch-action-none cursor-ns-resize" style="width:22px;left:{{=left}}px" title="{{=i18n('@:{lang#press.drag.space.height}')}}" mx-pointerdown="@:{start.resize.table.cell}({key:'bm'})"></div>
+        </div>
+        {{/if}}
+    </div>
+    {{/if}}
+    <div class="pa wp100 tc color-third" style="top:{{=props.tipTop}}{{=unit}};left:0;font-size:{{=props.tfs}}{{=unit}};transform:translateY(-50%)">重复数据行</div>
+    {{if selected && count==1 && !props.locked}}
+        {{set h=toPx(props.headHeight)}}
+        {{if !props.hideHead}}
+        <svg style="left:-15px;top:{{=props.headStart}}{{=unit}};width:15px;height:{{=h}}px" class="pa pointer-events-none overflow-visible">
+            <path d="M10 0C0 0 10 {{=h/2}} 0 {{=h/2}}C10 {{=h/2}} 0 {{=h}} 10 {{=h}}" style="fill:none;stroke:#999;"/>
+        </svg>
+        <div class="pa color-third pointer-events-none" style="left:-15px;top:{{=h/2+toPx(props.headStart)}}px;transform:translate(-110%,-50%);width:20px;line-height:1">头</div>
+        {{/if}}
+        {{if !props.hideLabel}}
+        {{h=toPx(props.labelHeight)}}
+        <svg style="left:-15px;top:{{=props.labelStart}}{{=unit}};width:15px;height:{{=h}}px" class="pa pointer-events-none overflow-visible">
+            <path d="M10 0C0 0 10 {{=h/2}} 0 {{=h/2}}C10 {{=h/2}} 0 {{=h}} 10 {{=h}}" style="fill:none;stroke:#999;"/>
+        </svg>
+        <div class="pa color-third pointer-events-none" style="left:-15px;top:{{=h/2+toPx(props.labelStart)}}px;transform:translate(-110%,-50%);width:20px;line-height:1">表头</div>
+        {{/if}}
+        {{h=toPx(props.bodyHeight)}}
+        <svg style="left:-15px;top:{{=props.bodyStart}}{{=unit}};width:15px;height:{{=h}}px" class="pa pointer-events-none overflow-visible">
+            <path d="M10 2C0 2 10 {{=h/2}} 0 {{=h/2}}C10 {{=h/2}} 0 {{=h}} 10 {{=h}}" style="fill:none;stroke:#999;"/>
+        </svg>
+        <div class="pa color-third pointer-events-none" style="left:-15px;top:{{=h/2+toPx(props.bodyStart)}}px;transform:translate(-110%,-50%);width:20px;line-height:1">数据</div>
+        {{if !props.hideTotal}}
+        {{h=toPx(props.totalHeight)}}
+        <svg style="left:-15px;top:{{=props.totalStart}}{{=unit}};width:15px;height:{{=h}}px" class="pa pointer-events-none overflow-visible">
+            <path d="M10 2C0 2 10 {{=h/2}} 0 {{=h/2}}C10 {{=h/2}} 0 {{=h}} 10 {{=h}}" style="fill:none;stroke:#999;"/>
+        </svg>
+        <div class="pa color-third pointer-events-none" style="left:-15px;top:{{=h/2+toPx(props.totalStart)}}px;transform:translate(-110%,-50%);width:20px;line-height:1">表尾</div>
+        {{/if}}
+        {{if !props.hideFoot}}
+        {{h=props.footHeight}}
+        {{if h>0}}
+        {{h=toPx(h)}}
+        <svg style="left:-15px;top:{{=props.footStart}}{{=unit}};width:15px;height:{{=h}}px" class="pa pointer-events-none overflow-visible">
+            <path d="M10 2C0 2 10 {{=h/2}} 0 {{=h/2}}C10 {{=h/2}} 0 {{=h}} 10 {{=h}}" style="fill:none;stroke:#999;"/>
+        </svg>
+        <div class="pa color-third pointer-events-none" style="left:-15px;top:{{=h/2+toPx(props.footStart)}}px;transform:translate(-110%,-50%);width:20px;line-height:1">尾</div>
+        {{/if}}
+        {{/if}}
+        {{h=props.spacingHeight}}
+        {{h=toPx(h)}}
+        {{if h>3}}
+        <svg style="left:-15px;top:{{=props.spacingStart}}{{=unit}};width:15px;height:{{=h}}px" class="pa pointer-events-none overflow-visible">
+            <path d="M10 2C0 2 10 {{=h/2}} 0 {{=h/2}}C10 {{=h/2}} 0 {{=h}} 10 {{=h}}" style="fill:none;stroke:#999;"/>
+        </svg>
+        <div class="pa color-third pointer-events-none" style="left:-15px;top:{{=h/2+toPx(props.spacingStart)}}px;transform:translate(-110%,-50%);width:20px;line-height:1">留白</div>
+        {{/if}}
+    {{/if}}
+</div>

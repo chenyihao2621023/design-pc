@@ -1,0 +1,13 @@
+<div class="dialog-backdrop pf full-fill anim-mask" style="z-index:{{=zIndex-1}}" id="_mx_mask_{{=$viewId}}"></div>
+<div class="overscroll-behavior-contain pf scrollbar-gutter-stable overflow-auto wp100 hp100 flex full-fill outline-none thin-scrollable anim-body scroll-behavior-smooth" style="z-index:{{=zIndex}};" tabindex="0" id="_mx_scroll_{{=$viewId}}">
+    <div class="dialog-center border-radius-x flex-shrink-0" id="_mx_body_{{=$viewId}}" style="width:{{=width}}px;">
+        {{if closable}}
+            <span class="iconfont dialog-close dialog-close-sticky position-sticky cursor-pointer z-index-9" title="{{=i18n('@:{lang#close.window}')}}" mx-click="@:{close}()">&#xe624;</span>
+        {{/if}}
+        <mx-vframe class="dialog-content background-color-fff contain-paint grid" src="{{=view}}" *="{{#this}}">
+            <div class="loading flex align-items-center justify-content-center hp100">
+                <span class="loading-anim"></span>
+            </div>
+        </mx-vframe>
+    </div>
+</div>

@@ -1,0 +1,61 @@
+{{let current}}
+<div class="left-20 z-index-100 pr{{if !show}} none{{/if}}" style="transform:translateY(-{{=st}}px)" id="_rd_{{=$viewId}}_y_help">
+    {{each yhs as yHelp yi}}
+        {{current=abs(ys)+yHelp*scale+20}}
+        <div class="background-color-brand height-1 pa pointer-events-none wp100{{if dpr>=2}} transform-y-n50{{/if}}" style="top:{{=current}}px;">
+            <i class="iconfont top-m-15 left-4 color-third color-third-hover pa cursor-pointer pointer-events-all fontsize-12 fontsize-scale-10" title="{{=i18n('@:{lang#axis.delete.line}')}}" mx-click="@:{delete.help.line}({type:'y',i:{{=yi}}})">&#xe6b3;</i>
+            <span class="left-4 top-2 color-secondary pa fontsize-12 fontsize-scale-10 cursor-default">{{=toUnit(yHelp)}}</span>
+            <span class="y-help-line-move cursor-ns-resize width-20 background-color-brand pa overflow-hidden pointer-events-all touch-action-none" mx-pointerdown="@:{drag.help.line}({type:'y',i:{{=yi}},c:{{=current}}})" title="{{=i18n('@:{lang#axis.move.line}')}}" tabindex="0" mx-keydown="@:{move.help.line}({type:'y',i:{{=yi}}})"></span>
+        </div>
+    {{/each}}
+</div>
+<div class="top-20 z-index-100 pr{{if !show}} none{{/if}}" style="transform:translateX(-{{=sl}}px)" id="_rd_{{=$viewId}}_x_help">
+    {{each xhs as xHelp xi}}
+        {{current=abs(xs)+xHelp*scale}}
+        <div class="background-color-brand width-1 pa pointer-events-none{{if dpr>=2}} transform-x-n50{{/if}}" style="left:{{=current}}px;height:{{=vh}}px">
+            <i class="iconfont top-4 left-m-15 color-third color-third-hover pa cursor-pointer pointer-events-all fontsize-12 fontsize-scale-10" title="{{=i18n('@:{lang#axis.delete.line}')}}" mx-click="@:{delete.help.line}({type:'x',i:{{=xi}}})">&#xe6b3;</i>
+            <span class="left-4 top-2 color-secondary pa fontsize-12 fontsize-scale-10 cursor-default">{{=toUnit(xHelp)}}</span>
+            <span class="x-help-line-move cursor-ew-resize top-20 height-20 background-color-brand pa overflow-hidden pointer-events-all touch-action-none" mx-pointerdown="@:{drag.help.line}({type:'x',i:{{=xi}},c:{{=current}}})" title="{{=i18n('@:{lang#axis.move.line}')}}" tabindex="0" mx-keydown="@:{move.help.line}({type:'x',i:{{=xi}}})"></span>
+        </div>
+    {{/each}}
+</div> 
+<div mx-pointermove="@:{show.x.line}()" mx-pointerout="@:{hide.x.line}()" mx-click="@:{add.x.help.line}()">
+    <div class="height-20 bottom-border background-color-fff overflow-hidden pr wp100 z-index-200" id="_rd_{{=$viewId}}_x" mx-wheel="@:{wheel.axis}({type:'x'})">
+        <mx-vframe src="./axis-xrod" class="hp100" style="width:{{=width}}px;"
+        *d="{{#d}}"
+        *w="{{#width}}"
+        *xs="{{#xs}}"
+        *xe="{{#xe}}"
+        *t="{{#step}}"
+        *sc="{{#space}}"
+        *s="{{#scale}}"
+        *hb="{{#hbar}}"
+        *bar="{{#bar}}"
+        *bc="{{#bc}}"/>
+    </div>
+    <div class="top-0 background-color-brand pa pointer-events-none none z-index-200 width-1{{if dpr>=2}} transform-x-n50{{/if}}" style="height:{{=vh+20}}px" id="_rd_{{=$viewId}}_x_line">
+        <span class="top-22 left-4 pa fontsize-12 fontsize-scale-10" id="_rd_{{=$viewId}}_x_tip">-</span>
+    </div>
+</div>
+<div mx-pointermove="@:{show.y.line}()" mx-pointerout="@:{hide.y.line}()" mx-click="@:{add.y.help.line}()">
+    <div class="width-20 right-border background-color-fff overflow-hidden pr z-index-200" id="_rd_{{=$viewId}}_y" style="height:{{=vh}}px" mx-wheel="@:{wheel.axis}({type:'y'})">
+        <mx-vframe src="./axis-yrod" style="height:{{=height}}px;"
+        *d="{{#d}}"
+        *h="{{#height}}"
+        *ys="{{#ys}}"
+        *ye="{{#ye}}"
+        *t="{{#step}}"
+        *sc="{{#space}}"
+        *s="{{#scale}}"
+        *hb="{{#hbar}}"
+        *bar="{{#bar}}"
+        *bc="{{#bc}}"/>
+    </div>
+    <div class="left-0 background-color-brand height-1 pa pointer-events-none none z-index-200 wp100{{if dpr>=2}} transform-y-n50{{/if}}" id="_rd_{{=$viewId}}_y_line">
+        <span class="left-24 top-2 pa fontsize-12 fontsize-scale-10" id="_rd_{{=$viewId}}_y_tip">-</span>
+    </div>
+</div>
+{{set lines=xhs.length+yhs.length}}
+<div class="z-index-201 width-20 height-20 right-border bottom-border left-0 top-0 pa background-color-fff flex align-items-center justify-content-center color-third color-third-hover{{if lines}} cursor-pointer{{/if}}" title="{{if lines}}{{=i18n(show?'@:{lang#axis.hide.all.lines}':'@:{lang#axis.show.all.lines}')}}(H){{/if}}" mx-click="{{lines>0}}?@:{toggle.help.lines}()">
+    <i class="iconfont fontsize-14{{if !lines}} none{{/if}}">{{if show}}&#xe676;{{else}}&#xe6f4;{{/if}}</i>
+</div>

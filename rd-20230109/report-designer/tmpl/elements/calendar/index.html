@@ -1,0 +1,26 @@
+<div class="pa z-index-1 overflow-hidden"
+    style="left:{{=props.x}}{{=unit}};top:{{=props.y}}{{=unit}};height:{{=props.height}}{{=unit}};opacity:{{=props.alpha}};width:{{=props.width}}{{=unit}};transform:rotate({{=props.rotate}}deg);{{=am(props.animations)}}">
+    <table class="wp100 hp100 tc table">
+        <tbody>
+            <tr>
+                {{each weekText as wt}}
+                <td style="font-size:{{=props.theadFontsize}}{{=unit}};background:{{=props.theadRowBackground}}">{{=wt}}
+                </td>
+                {{/each}}
+            </tr>
+            {{each weeks as weekDays}}
+            <tr>
+                {{each weekDays as wd}}
+                {{set date=`${wd.year}-${wd.month}-${wd.day}`}}
+                <td style="font-size:{{=props.tbodyFontsize}}{{=unit}};"
+                    title="{{=!wd.otherMonth}}?{{=date}}">
+                    {{if !wd.otherMonth}}
+                    {{=wd.day}}
+                    {{/if}}
+                </td>
+                {{/each}}
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,13 @@
+<div class="pa overflow-hidden z-index-1 flex align-items-center justify-content-center{{if enter}} hod-drop-tip{{/if}}" style="left:{{=props.x}}{{=unit}};top:{{=props.y}}{{=unit}};height:{{=props.height}}{{=unit}};opacity:{{=props.alpha}};width:{{=props.width}}{{=unit}};transform:rotate({{=props.rotate}}deg);{{=am(props.animations)}}" mx-dragenter="@:{when.data.field.enter}()" mx-dragleave="@:{when.data.field.leave}()" mx-drop="@:{when.data.field.drop}()">
+    {{if !text||error}}
+        {{if error}}
+            {{=error}}
+        {{else}}
+            {{=i18n('@:{lang#elements.empty.tip}')}}
+        {{/if}}
+    {{else if render=='svg'}}
+        <svg id="_rd_{{=$viewId}}_bar" class="mwp100 pointer-events-none wp100 hp100"></svg>
+    {{else}}
+        <img class="tag-img mwp100 mhp100 pointer-events-none{{if props.fill=='full'}} wp100 hp100{{/if}}" id="_rd_{{=$viewId}}_bar"/>
+    {{/if}}
+</div>

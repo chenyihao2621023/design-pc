@@ -1,0 +1,9 @@
+{{if v}}
+    <i class="toolbar-vertical-space flex"></i>
+{{else}}
+    <i class="toolbar-spliter fl"></i>
+{{/if}}
+<i class="iconfont toolbar-item margin-0-2 border-radius-x align-items-center justify-content-center{{if canDuplicate}} cursor-pointer{{else}} toolbar-item-disabled cursor-not-allowed{{/if}}" title="{{=i18n('@:{lang#menu.duplicate}')}}(Ctrl+D)" mx-click="{{=canDuplicate}}?@:{duplicate}()">&#xe6b1;</i>
+<i class="iconfont toolbar-item margin-0-2 border-radius-x align-items-center justify-content-center{{if canCopy}} cursor-pointer{{else}} toolbar-item-disabled cursor-not-allowed{{/if}}" title="{{=i18n('@:{lang#menu.copy}')}}(Ctrl+C)" mx-click="{{=canCopy}}?@:{copy}()">&#xe69a;</i>
+<i class="iconfont toolbar-item margin-0-2 border-radius-x align-items-center justify-content-center{{if canCut}} cursor-pointer{{else}} toolbar-item-disabled cursor-not-allowed{{/if}}" title="{{=i18n('@:{lang#menu.cut}')}}(Ctrl+X)" mx-click="{{=canCut}}?@:{cut}()">&#xe6bf;</i>
+<i class="iconfont toolbar-item margin-0-2 border-radius-x align-items-center justify-content-center{{if canPaste}} cursor-pointer{{else}} toolbar-item-disabled cursor-not-allowed{{/if}}" title="{{=i18n('@:{lang#menu.paste}')}}(Ctrl+V)" mx-click="{{=canPaste}}?@:{paste}()">&#xe6c1;</i>

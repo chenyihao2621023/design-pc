@@ -1,0 +1,16 @@
+<div class="dialog-header margin-0 background-color-fff">
+    <h5 class="padding-0 fontsize-14 margin-0">Lodop打印设置</h5>
+</div>
+<div class="dialog-body">
+    <div class="flex align-items-center">
+        <div class="width-120 pr10">打印插件地址</div>
+        <div><input placeholder="打印插件地址" class="margin-0 input width-350" value="{{=src}}" mx-input="@:{update.src}()" /></div>
+    </div>
+    <div class="color-third mt-20">
+        Lodop安装后会有一个通过http协议来控制打印服务的javascript插件，在这里设置该插件的地址。如果打印服务安装在当前电脑上且未修改过端口，则无需做任何设置。<a class="tag-a" href="http://www.lodop.net/download.html" target="_blank" rel="noopener noreferrer">去Lodop官网了解更多信息</a>
+    </div>
+</div>
+<div class="dialog-footer flex justify-content-flex-end">
+    <button mx-click="@:{apply}();" class="btn white-space-nowrap outline-none cursor-pointer btn-brand" type="button">{{=i18n('@:{lang#btn.apply}')}}</button>
+    <button mx-click="@:{cancel}();" class="btn white-space-nowrap outline-none cursor-pointer ml10" type="button">{{=i18n('@:{lang#btn.cancel}')}}</button>
+</div>

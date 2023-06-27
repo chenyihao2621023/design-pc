@@ -1,0 +1,31 @@
+.toast-mask {
+    z-index: 2000;
+}
+
+.toast-mask-prevent {
+    background: #0002;
+}
+
+.toast {
+    border-radius: 5px;
+    background: #0008;
+    padding: 6px;
+    color: #fff;
+    min-width: 15%;
+}
+
+
+@keyframes fadeout {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+.fade-out {
+    animation: fadeout .2s;
+    animation-fill-mode: forwards;
+}

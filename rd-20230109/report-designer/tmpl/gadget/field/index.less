@@ -1,0 +1,68 @@
+@import "../../assets/_vars.less";
+.drop-zone {
+    min-height: 100px;
+}
+
+.drop-first-place::after {
+    content: '';
+    height: 2px;
+    left: 4px;
+    right: 4px;
+    top: 1px;
+    position: absolute;
+    background: @color-brand-darkest;
+    pointer-events: none;
+}
+
+.element-icon {
+    margin: 0 2px;
+}
+
+.margin-top-2 {
+    margin-top: 2px;
+}
+
+.drop-tip {
+    padding: 10px;
+}
+
+.item-draggable {
+    border: solid 1px @color-border;
+    height: 20px;
+}
+
+.item-draggable::after {
+    content: '';
+    height: 2px;
+    left: 1px;
+    right: 1px;
+    position: absolute;
+    pointer-events: none;
+}
+
+.notallowed {
+    background: @color-disabled;
+    color: @color-third;
+    .item-draggable {
+        background: @color-disabled;
+    }
+}
+
+.item--top::after {
+    top: -3px;
+    background: @color-brand-darkest;
+}
+
+.item--bottom::after {
+    bottom: -3px;
+    background: @color-brand-darkest;
+}
+
+.drop-zone-enter {
+    background: @color-brand-10;
+}
+
+.item-removed {
+    text-decoration: line-through;
+    color: @color-danger;
+}

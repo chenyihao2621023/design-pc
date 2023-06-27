@@ -1,0 +1,10 @@
+{{if x}}
+    {{each x as xp}}
+        <div class="pa z-index-1 background-color-brand-a60 height-1{{if dpr>1}} transform-y-n50{{/if}}" style="top:{{=xp[0]}}px;left:{{=xp[1]}}px;width:{{=xp[2]-xp[1]}}px"></div>
+    {{/each}}
+{{/if}}
+{{if y}}
+    {{each y as yp}}
+        <div class="pa z-index-1 background-color-brand-a60 width-1{{if dpr>1}} transform-x-n50{{/if}}" style="left:{{=yp[0]}}px;top:{{=yp[1]}}px;height:{{=yp[2]-yp[1]}}px"></div>
+    {{/each}}
+{{/if}}

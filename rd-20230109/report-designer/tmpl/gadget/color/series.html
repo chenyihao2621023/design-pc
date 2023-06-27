@@ -1,0 +1,12 @@
+{{each colors as color index last first}}
+    <div class="flex align-items-center width-150{{if !first}} margin-top-4{{/if}}">
+        <mx-color class="wp100" *color="{{#color}}" *align="right" *disabled="{{#disabled}}??" mx-input="@:{update.colors}({index:{{=index}}})"/>
+        <i class="iconfont flex-right fontsize-12 cursor-pointer tr right-icon{{if disabled}} notallowed cursor-not-allowed{{/if}}" title="{{=i18n('@:{lang#color.series.random}')}}" mx-click="@:{random.color}({index:{{=index}}})">&#xe604;</i>
+        {{if colors.length>1}}
+        <i class="iconfont flex-right fontsize-12 cursor-pointer tr right-icon{{if disabled}} notallowed cursor-not-allowed{{/if}}" title="{{=i18n('@:{lang#color.series.remove}')}}" mx-click="@:{remove.color}({index:{{=index}}})">&#xe6b3;</i>
+        {{/if}}
+    </div>
+{{/each}}
+{{if multi}}
+    <i class="iconfont right-icon fontsize-14 cursor-pointer{{if disabled||colors.length>max}} notallowed cursor-not-allowed{{/if}}" title="{{=i18n('@:{lang#color.series.add}')}}" mx-click="@:{add.color}()">&#xe650;</i>
+{{/if}}

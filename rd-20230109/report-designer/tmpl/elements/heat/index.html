@@ -1,0 +1,14 @@
+<div class="pa" style="left:{{=props.x}}{{=unit}};top:{{=props.y}}{{=unit}};height:{{=props.height}}{{=unit}};opacity:{{=props.alpha}};width:{{=props.width}}{{=unit}};transform:rotate({{=props.rotate}}deg);color:{{=props.background}};{{=am(props.animations)}}">
+    <div class="hp100 flex justify-content-space-between align-items-center">
+        {{for(let i=0;props.bars>i;i++)}}
+        <div style="height:80%;width:{{=props.barWidth}}{{=unit}};background:{{=props.background}};border-radius:{{=props.barWidth/2}}{{=unit}};"></div>
+        {{/for}}
+    </div>
+    <div class="pa full-fill overflow-hidden transition" style="width:{{=value}}%;">
+        <div class="flex hp100 justify-content-space-between align-items-center" style="width:{{=props.width}}{{=unit}};">
+            {{for(let i=0;props.bars>i;i++)}}
+            <div style="height:80%;opacity:{{=i*step*100}}%;width:{{=props.barWidth}}{{=unit}};background:{{=props.fillcolor}};border-radius:{{=props.barWidth/2}}{{=unit}};"></div>
+            {{/for}}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+<div class="root overscroll-behavior-contain simulator-container border-radius-x overflow-y-scroll background-color-fff scrollable thin-scrollable scroll-behavior-smooth width-150{{if disabled}} notallowed cursor-not-allowed simulator-container-disabled background-color-disabled{{/if}}">
+{{each skins as s}}
+    <table class="table-item cursor-pointer table fl" style="border-color:{{=s.bordercolor}}" mx-click="{{=!disabled}}?@:{set.skin}({skin:{{#s}}})">
+        <thead>
+            <tr>
+                <th class="table-cell padding-0 ellipsis white-space-nowrap" style="height:{{=s.theadRowHeight}}px;line-height:{{=s.theadRowHeight}}px;font-size:{{=s.theadFontsize}}px;color:{{=s.theadForecolor}};border-color:{{=s.bordercolor}};text-align:{{=s.cellAlign}};{{if s.theadRowBackground}}background:{{=s.theadRowBackground}}{{/if}}">
+                    表头
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="table-cell padding-0 ellipsis white-space-nowrap" style="text-align:{{=s.cellAlign}};border-color:{{=s.bordercolor}};background:{{=s.tbodyOddRowBackground}};height:{{=s.tbodyRowHeight}}px;line-height:{{=s.tbodyRowHeight}}px;font-size:{{=s.tbodyFontsize}}px;color:{{=s.tbodyForecolor}}">
+                    奇数行
+                </td>
+            </tr>
+            <tr>
+                <td class="table-cell padding-0 ellipsis white-space-nowrap" style="text-align:{{=s.cellAlign}};border-color:{{=s.bordercolor}};background:{{=s.tbodyEvenRowBackground}};height:{{=s.tbodyRowHeight}}px;line-height:{{=s.tbodyRowHeight}}px;font-size:{{=s.tbodyFontsize}}px;color:{{=s.tbodyForecolor}}">
+                    偶数行
+                </td>
+            </tr>
+        </tbody>
+    </table>
+{{/each}}
+</div>

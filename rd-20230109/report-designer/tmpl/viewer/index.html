@@ -1,0 +1,64 @@
+<div class="header pf justify-content-flex-end background-color-fff z-index-2 flex align-items-center">
+    <h5 class="padding-0 fontsize-14 margin-0 flex-fill-rest ml10">打印预览</h5>
+    {{if d || !approve}}
+    {{if inner}}
+    <button class="btn white-space-nowrap outline-none cursor-pointer mr10" mx-click="@:{open.with.id}()">{{=i18n('@:{lang#print.standalone}')}}</button>
+    {{/if}}
+    <button class="btn white-space-nowrap outline-none cursor-pointer mr10" mx-click="@:{silent.print}()">{{=i18n('@:{lang#print.slient.print}')}}</button>
+    <div class="spliter width-1"></div>
+    {{/if}}
+    <div>{{=i18n('@:{lang#print.convert.to}')}}</div>
+    <mx-dropdown *disabled="{{#empty}}?" *list="{{#format}}" class="width-120 mr10 ml5" *selected="{{=sf}}" mx-change="@:{change.format}()"/>
+    <button disabled="{{= sf!='pdf' && sf!='rdPdf' &&!enable }}?" class="btn white-space-nowrap outline-none cursor-pointer btn-brand mr10" mx-click="@:{export.to.native.file}()">{{=i18n('@:{lang#save.to.local}')}}</button>
+    <button disabled="{{=!enable}}?" class="btn white-space-nowrap outline-none cursor-pointer mr10" mx-click="@:{lodop.setting}()">Lodop设置</button>
+    <button disabled="{{=!enable||empty}}?" class="btn white-space-nowrap outline-none cursor-pointer btn-brand" mx-click="@:{lodop.print}()">Lodop打印</button>
+    {{if rds}}
+    <div class="spliter width-1"></div>
+    <button disabled="{{=!enable}}?" class="btn white-space-nowrap outline-none cursor-pointer mr10" mx-click="@:{rds.setting}()">{{=i18n('@:{lang#print.rds.settings}')}}</button>
+    <button disabled="{{=!enable}}?" class="btn white-space-nowrap outline-none cursor-pointer btn-brand" mx-click="@:{rds.print}()">{{=i18n('@:{lang#print.rds.print}')}}</button>
+    {{/if}}
+    <div class="spliter width-1"></div>
+    <button disabled="{{=!enable}}?" class="btn white-space-nowrap outline-none cursor-pointer btn-brand" mx-click="@:{print}()">{{=i18n('@:{lang#print.browser.print}')}}</button>
+</div>
+<!-- <mx-vframe src="./form/form"/> -->
+<div id="c_{{= $viewId }}" class="{{if sf=='pdf'||sf=='rdPdf'}}page-pdf-canvas{{else}}page-canvas flex justify-content-center{{/if}}">
+    <div class="wrap flex align-items-center flex-direction-column">
+        {{if hasData}}
+            {{if loading}}
+                <div class="pr page page-display flex justify-content-center overflow-hidden" style="width:{{=page.width}}{{=unit}};height:{{=page.height}}{{=unit}};border-radius:{{=page.radius}};background:{{=page.background}};">
+                    <div class="tip fontsize-16">{{=i18n('@:{lang#print.prepare.page}')}}</div>
+                </div>
+            {{else}}
+                {{if sf=='pdf'}}
+                    <embed src="{{=pdf}}" class="wp100 pdf-ifm" type="application/pdf"/>
+                {{else if sf=='rdPdf'}}
+                    <embed src="{{=rdPdf}}" class="wp100 pdf-ifm" type="application/pdf"/>
+                {{else}}
+                    {{each pages as item pageIndex last}}
+                    <div role="page-content" class="pr page page-display overflow-hidden{{if !last}} page-break{{/if}}" style="width:{{=page.width}}{{=unit}};height:{{=page.height}}{{=unit}};border-radius:{{=page.radius}};background:{{=page.background}};{{if !page.preformat&&page.backgroundImage}}background-image:url({{=page.backgroundImage}});background-repeat:{{=page.backgroundRepeat=='full'?'no-repeat':page.backgroundRepeat}};background-size:{{if page.backgroundRepeat=='full'}}100% 100%{{else}}{{=page.backgroundWidth}}{{=unit}} {{=page.backgroundHeight}}{{=unit}};background-position:{{=page.backgroundXOffset}}{{=unit}} {{=page.backgroundYOffset}}{{=unit}}{{/if}}{{/if}}">
+                        {{if sf=='web'}}
+                            {{each item as e}}
+                                <mx-vframe class="display-contents" src="../elements/{{=e.type}}/index" *props="{{#e.props}}" *unit="{{#unit}}"/>
+                            {{/each}}
+                        {{else if sf=='image' && images}}
+                            <img class="tag-img mwp100" src="{{=images[pageIndex]}}"/>
+                        {{else if sf=='rdImage' && rdImages}}
+                            <img class="tag-img mwp100" src="{{=rdImages[pageIndex]}}"/>
+                        {{/if}}
+                        {{if !approve}}
+                            <div class="disapprove pa full-fill flex align-items-center justify-content-center pointer-events-none">
+                                {{=window.atob('dW5hdXRob3JpemVk')}}
+                            </div>
+                        {{/if}}
+                    </div>
+                    {{/each}}
+                {{/if}}
+            {{/if}}
+        {{else}}
+            <div class="tip fontsize-16">
+                {{=i18n('@:{lang#print.need.id}')}}
+            </div>
+        {{/if}}
+    </div>
+</div>
+<div id="_rd_tip" class="progress-tip bottom-0 pf padding-4 background-color-fff none right-0"></div>

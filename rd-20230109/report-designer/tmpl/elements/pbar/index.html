@@ -1,0 +1,7 @@
+<div class="pa" style="left:{{=props.x}}{{=unit}};top:{{=props.y}}{{=unit}};height:{{=props.height}}{{=unit}};opacity:{{=props.alpha}};width:{{=props.width}}{{=unit}};transform:rotate({{=props.rotate}}deg);background-color:{{=props.background}};border-radius:{{=props.radius}}{{=unit}};{{=am(props.animations)}}">
+    <div style="width:{{=value}}%;background-color:{{=props.barcolor}};border-radius:{{=props.radius}}{{=unit}}" class="hp100 pr transition">
+        {{if props.showText||text}}
+        <span class="pa" style="transform:translate(50%,-100%);right:0;color:{{=props.textColor}};font-size:{{=props.textFontsize}}{{=unit}}">{{=text||value+'%'}}</span>
+        {{/if}}
+    </div>
+</div>

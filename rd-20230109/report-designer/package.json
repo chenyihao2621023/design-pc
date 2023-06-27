@@ -1,0 +1,21 @@
+{
+  "name": "report-designer",
+  "description": "element online editor",
+  "version": "2023.1.9",
+  "author": "kooboy_li <kooboy_li@163.com>",
+  "dependencies": {
+    "gulp": "4.0.x",
+    "gulp-concat": "2.6.x",
+    "gulp-watch": "5.0.x",
+    "terser": "5.16.x",
+    "through2": "4.0.x",
+    "typescript": "4.9.x"
+  },
+  "private": true,
+  "scripts": {
+    "server": "anywhere -h localhost -p 8888",
+    "watch": "gulp watch",
+    "dist": "gulp dist",
+    "dev": "npm run watch & npm run server"
+  }
+}

@@ -1,0 +1,5 @@
+<div class="border-radius-x width-150 clearfix simulator-container{{if disabled}} simulator-container-disabled cursor-not-allowed{{/if}}">
+    {{each items as item}}
+        <div title="{{=item}}" class="pr mselector border-radius-x fl margin-2 pl4 pr4{{if rules.includes(item)}} mselector-selected{{/if}}{{if disabled}} mselector-disabled{{else}} cursor-pointer{{/if}}" mx-click="{{= !disabled }}?@:{update.prop}({rule:'{{=item}}'})">{{=item}}</div>
+    {{/each}}
+</div>

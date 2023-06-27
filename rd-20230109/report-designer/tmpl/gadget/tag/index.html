@@ -1,0 +1,39 @@
+{{set {words}=props}}
+<!-- {{set total=words.length}} -->
+{{each words as p i last first}}
+<div class="flex align-items-center margin-bottom-4">
+    <span class="width-90 pr10 mr2 flex align-items-center justify-content-flex-end">
+        {{set canUp=!disabled&&!first}}
+        {{set canDown=!disabled&&!last}}
+        <div class="flex flex-direction-column mr2">
+            <span class="iconfont r180 fontsize-12 color-third{{if canUp}} color-third-hover cursor-pointer{{else}} cursor-not-allowed opacity-40{{/if}}" mx-click="{{=canUp}}?@:{move.at}({at:{{=i}},d:-1})" title="{{if !canUp}}不能{{/if}}向上交换标签">&#xe73a;</span>
+            <span class="iconfont fontsize-12 color-third{{if canDown}} color-third-hover cursor-pointer{{else}} cursor-not-allowed opacity-40{{/if}}" mx-click="{{=canDown}}?@:{move.at}({at:{{=i}},d:1})" title="{{if !canDown}}不能{{/if}}向下交换标签">&#xe73a;</span>
+        </div>
+        <span class="iconfont mr2 fontsize-12 color-third{{if disabled}} cursor-not-allowed opacity-40{{else}} color-third-hover cursor-pointer{{/if}}" mx-click="{{=!disabled}}?@:{remove.tag}({at:{{=i}}})" title="删除标签">&#xe6b3;</span>
+        文本
+    </span>
+    <input value="{{=p.text}}" class="margin-0 input width-150" disabled="{{=disabled}}?" mx-change="@:{stop}()" mx-input="@:{update.tag}({at:{{=i}},key:'text'})"/>
+</div>
+
+<div class="flex margin-bottom-4">
+    <span class="width-90 mr2 tr pr10">
+        链接
+    </span>
+    <input value="{{=p.url}}" class="margin-0 input width-150" disabled="{{=disabled}}?" mx-change="@:{stop}()" mx-input="@:{update.tag}({at:{{=i}},key:'url'})"/>
+</div>
+<div class="flex margin-bottom-4">
+    <span class="width-90 mr2 tr pr10">
+        文字颜色
+    </span>
+    <mx-color class="width-150" *color="{{=p.forecolor}}" *align="right" *disabled="{{#disabled}}" *alpha="true" mx-input="@:{update.tag}({at:{{=i}},key:'forecolor'})"/>
+</div>
+<div class="flex margin-bottom-4">
+    <span class="width-90 mr2 tr pr10">
+        背景颜色
+    </span>
+    <mx-color class="width-150" *color="{{=p.background}}" *align="right" *disabled="{{#disabled}}" *alpha="true" mx-input="@:{update.tag}({at:{{=i}},key:'background'})"/>
+</div>
+{{/each}}
+<div class="flex align-items-center width-242 justify-content-flex-end">
+    <button class="btn white-space-nowrap btn-brand cursor-pointer outline-none" disabled="{{=disabled}}?" mx-click="@:{add.tag}()" title="向尾部添加标签，按下Ctrl键则添加到头部">添加标签</button>
+</div>

@@ -1,0 +1,49 @@
+<table class="pa z-index-1 table" style="left:{{=props.x}}{{=unit}};top:{{=props.y}}{{=unit}};opacity:{{=props.alpha}};width:{{=props.width}}{{=unit}};table-layout:fixed;border-color:{{=props.bordercolor}};{{=am(props.animations)}}">
+    {{if props.bind?.fields?.length}}
+        <thead>
+            <tr>
+                {{each props.bind.fields as field}}
+                    <th class="table-cell padding-0 ellipsis white-space-nowrap" style="width:{{=props.columns[field.key]}}{{=unit}};border-color:{{=props.bordercolor}};text-align:{{=props.cellAlign}};height:{{=props.theadRowHeight}}{{=unit}};line-height:{{=props.theadRowHeight}}{{=unit}};font-size:{{=props.theadFontsize}}{{=unit}};color:{{=props.theadForecolor}};{{if props.theadRowBackground}}background:{{=props.theadRowBackground}}{{/if}}">
+                        {{=field.name}}
+                    </th>
+                {{/each}}
+            </tr>
+        </thead>
+        <tbody>
+            {{if props.bind}}
+            {{if props.bind._tip}}
+            <tr>
+                <td class="table-cell padding-0 color-third tc fontsize-12 ellipsis white-space-nowrap" colspan="{{=props.bind.fields.length}}" style="border-color:{{=props.bordercolor}};height:{{=props.loadingHeight}}{{=unit}};line-height:{{=props.loadingHeight}}{{=unit}};font-size:{{=props.theadFontsize}}{{=unit}}">
+                    {{=props.bind._tip}}
+                </td>
+            </tr>
+            {{else}}
+            {{each props.bind._data as item i}}
+            <tr>
+                {{each props.bind.fields as field}}
+                <td class="table-cell padding-0 ellipsis white-space-nowrap" style="text-align:{{=props.cellAlign}};height:{{=props.tbodyRowHeight}}{{=unit}};line-height:{{=props.tbodyRowHeight}}{{=unit}};font-size:{{=props.tbodyFontsize}}{{=unit}};color:{{=props.tbodyForecolor}};border-color:{{=props.bordercolor}};{{if i%2&&props.tbodyOddRowBackground}}background:{{=props.tbodyOddRowBackground}}{{else if (i%2)==0&&props.tbodyEvenRowBackground}}background:{{=props.tbodyEvenRowBackground}}{{/if}}">
+                    {{=item[field.key]??''}}
+                </td>
+                {{/each}}
+            </tr>
+            {{/each}}
+            {{/if}}
+            {{/if}}
+        </tbody>
+    {{else}}
+        <thead>
+            <tr>
+                <th class="table-cell padding-0 ellipsis white-space-nowrap" style="height:{{=props.theadRowHeight}}{{=unit}};line-height:{{=props.theadRowHeight}}{{=unit}};font-size:{{=props.theadFontsize}}{{=unit}};color:{{=props.theadForecolor}};text-align:{{=props.cellAlign}};border-color:{{=props.bordercolor}};{{if props.theadRowBackground}}background:{{=props.theadRowBackground}}{{/if}}">
+                    绑定数据
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="table-cell padding-0 ellipsis white-space-nowrap" style="height:{{=props.tbodyRowHeight}}{{=unit}};line-height:{{=props.tbodyRowHeight}}{{=unit}};font-size:{{=props.tbodyFontsize}}{{=unit}};color:{{=props.tbodyForecolor}};text-align:{{=props.cellAlign}};border-color:{{=props.bordercolor}};{{if props.tbodyOddRowBackground}}background:{{=props.tbodyOddRowBackground}}{{/if}}">
+                    请先绑定数据
+                </td>
+            </tr>
+        </tbody>
+    {{/if}}
+</table>

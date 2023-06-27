@@ -1,0 +1,23 @@
+<div class="padding-2-0 unselectable" mx-wheel="@:{scroll.by.pointer}()">
+    <!-- {{if native}}{{=native}};background-size:contain;{{/if}} -->
+    <div class="stage-container transition pr overflow-hidden" style="width:{{=width}}px;height:{{=height}}px;margin:{{=centerMargin}}">
+        <!-- {{if !native}} -->
+        {{set {pages:count,background}=page}}
+        <div class="pointer-events-none pr" style="width:{{=pWidth}}{{=unit}};height:{{=pHeight*count}}{{=unit}};margin:{{=canvasMargin}};">
+            {{for(let i=0;count>i;i++)}}
+            <div class="pa page{{if i}} stage-page-break-line stage-page-break-line-small{{/if}}" style="top:{{=pHeight*i}}{{=unit}};width:{{=pWidth}}{{=unit}};height:{{=pHeight}}{{=unit}};border-radius:{{=radius}};background:{{=background}};"></div>
+            {{/for}}
+            {{each elements as {id:eId,props,type,ctrl}}}
+                {{set {width:pw,height:ph,x,y,rotate}=props}}
+                {{set ew=pw*ratio,
+                    eh=ph*ratio}}
+                <div class="item pa overflow-hidden flex justify-content-center align-items-center" style="left:{{=x*ratio}}{{=unit}};top:{{=y*ratio}}{{=unit}};width:{{=ew}}{{=unit}};height:{{=eh}}{{=unit}}{{if rotate}};transform:rotate({{=rotate}}deg){{/if}}">
+                    <i class="iconfont inner-icon contrast-color" x-html="{{=ctrl.icon}}"></i>
+                </div>
+            {{/each}}
+        </div>
+        <!-- {{/if}} -->
+        <div class="stage-viewport cursor-move anim-size pa touch-action-none" style="left:{{=left}}px;top:{{=top}}px;width:{{=vWidth}}px;height:{{=vHeight}}px;" id="_rd_ol_{{= $viewId }}" mx-pointerdown="@:{move.viewport}()">
+        </div>
+    </div>
+</div>

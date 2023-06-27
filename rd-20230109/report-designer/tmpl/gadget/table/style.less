@@ -1,0 +1,25 @@
+@import "../../assets/_vars.less";
+.root {
+    height: 140px;
+}
+
+.table-item {
+    width: 116px;
+    margin: 8px;
+    opacity: 0.8;
+    zoom: 0.5;
+}
+
+.table-item:hover {
+    opacity: 1;
+}
+
+.notallowed {
+    .table-item {
+        cursor: not-allowed;
+        opacity: .4;
+    }
+    .table-item:hover {
+        opacity: 0.4;
+    }
+}

@@ -1,0 +1,40 @@
+@import "../../assets/_vars.less";
+.container {
+    z-index: 3000;
+    max-height: calc(100vh - 40px);
+    max-width: calc(100vw - 40px);
+    border: solid 1px @color-border;
+    box-shadow: rgba(0, 0, 0, 0.06) 0 0 3px 2px
+}
+
+.items-li {
+    height: @input-height + 2;
+    padding: 2px 8px 2px 4px;
+}
+
+.icon {
+    width: 14px;
+    height: 14px;
+}
+
+.items-li:not(.item-disabled):hover {
+    background-color: @color-brand-lighter;
+}
+
+.spliter {
+    height: 1px;
+    background: #eee;
+    margin: 4px 0;
+}
+
+.item-disabled, .item-disabled:hover {
+    color: @color-background;
+}
+
+.item-disabled .short {
+    color: @color-border;
+}
+
+.item-disabled .icon {
+    color: @color-border;
+}

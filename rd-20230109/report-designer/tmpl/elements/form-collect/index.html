@@ -1,0 +1,119 @@
+<div class="pa z-index-1" style="left:{{=props.x}}{{=unit}};top:{{=props.y}}{{=unit}};opacity:{{=props.alpha}};width:{{=props.width}}{{=unit}};{{=am(props.animations)}}">
+    {{set {borderwidth,bordertype,bordercolor,borderdeed,rows,readonly:eReadonly,excel,excelLeft,excelTop,excelBackground,excelForecolor}=props}}
+    {{set bwn=(borderdeed=='collapse'?1:2)*borderwidth}}
+    {{set findLabelRow,findTotalRow}}
+    {{set rowIndex=0}}
+    {{set isReadonly=readonly||eReadonly}}
+    <table class="wp100 table" style="border-collapse:{{=borderdeed}}">
+        <tbody>
+        {{if excel}}
+            <tr>
+                <td class="table-cell padding-0 word-break-break-all" style="height:{{=excelTop}}{{=unit}};background:{{=excelBackground}};border:{{=borderwidth?bordertype:'dotted'}} {{=borderwidth}}{{=unit}} {{=bordercolor}}">
+                </td>
+                {{set maxCol=getMaxCol(props)}}
+                {{for(let i=0;maxCol>i;i++)}}
+                <td class="table-cell padding-0 word-break-break-all" style="height:{{=excelTop}}{{=unit}};background:{{=excelBackground}};border:{{=borderwidth?bordertype:'dotted'}} {{=borderwidth}}{{=unit}} {{=bordercolor}};color:{{=excelForecolor}}">
+                    <div class="flex hp100 wp100 align-items-center justify-content-center height-1">{{=excelTitle(i)}}</div>
+                </td>
+                {{/for}}
+            </tr>
+        {{/if}}
+        {{each rows as row ri}}
+            <!--未隐藏合计行或数据行或标题行或头或尾-->
+            {{if row.label}}
+                {{findLabelRow=1}}
+            {{/if}}
+            {{if (row.total&&!props.hideTotal)||row.data||(row.label&&!props.hideLabel)||(!findLabelRow&&!props.hideHead)||(findTotalRow&&!props.hideFoot)}}
+            <tr>
+                {{if excel}}
+                <td class="table-cell padding-0 word-break-break-all" style="width:{{=excelLeft}}{{=unit}};background:{{=excelBackground}};border:{{=borderwidth?bordertype:'dotted'}} {{=borderwidth}}{{=unit}} {{=bordercolor}};color:{{=excelForecolor}}">
+                    <div class="flex hp100 wp100 align-items-center justify-content-center height-1">{{=++rowIndex}}</div>
+                </td>
+                {{/if}}
+                {{each row.cols as col ci last first}}
+                <td class="table-cell padding-0 word-break-break-all pr{{if !row.data}} overflow-hidden{{/if}}" colspan="{{=col.colspan!=1}}?{{=col.colspan}}" rowspan="{{=col.rowspan!=1}}?{{=col.rowspan}}" style="width:{{=col.width}}{{=unit}};height:{{=col.height}}{{=unit}};border-left:{{=borderwidth?bordertype:'dotted'}} {{=borderwidth}}{{=unit}} {{=borderwidth&&col.bLeft?bordercolor:'#0000'}};border-top:{{=borderwidth?bordertype:'dotted'}} {{=borderwidth}}{{=unit}} {{=borderwidth&&col.bTop?bordercolor:'#0000'}};border-right:{{=borderwidth?bordertype:'dotted'}} {{=borderwidth}}{{=unit}} {{=borderwidth&&col.bRight?bordercolor:'#0000'}};border-bottom:{{=borderwidth?bordertype:'dotted'}} {{=borderwidth}}{{=unit}} {{=borderwidth&&col.bBottom?bordercolor:'#0000'}}">
+                    {{if col.elements?.length}}
+                        {{each col.elements as e}}
+                            <mx-vframe id="{{=e.id}}" src="../{{=e.type}}/index" *props="{{#e.props}}" *unit="{{=unit}}" *readonly="{{# isReadonly }}" mx-elementinput="@:{sub.element.input}()"/>
+                        {{/each}}
+                    {{else}}
+                    {{set {paddingTop,paddingBottom,paddingLeft,paddingRight}=col}}
+                    {{set realWidth=col.width-bwn-toUnit(1),realHeight=col.height-bwn-toUnit(1)}}
+                    {{if paddingTop>realHeight}}
+                        {{paddingTop=realHeight}}
+                    {{/if}}
+                    {{if paddingTop+paddingBottom>realHeight}}
+                        {{paddingBottom=realHeight-paddingTop}}
+                    {{/if}}
+                    {{if paddingLeft>realWidth}}
+                        {{paddingLeft=realWidth}}
+                    {{/if}}
+                    {{if paddingLeft+paddingRight>realWidth}}
+                        {{paddingRight=realWidth-paddingLeft}}
+                    {{/if}}
+                    {{set cellTD=td(col)}}
+                    <div class="overflow-hidden flex" style="padding:{{=paddingTop}}{{=unit}} {{=paddingRight}}{{=unit}} {{=paddingBottom}}{{=unit}} {{=paddingLeft}}{{=unit}};width:{{=realWidth}}{{=unit}};height:{{=realHeight}}{{=unit}};align-items:{{=col.vpos}};justify-content:{{=col.hpos}};opacity:{{=col.alpha}};{{if col.background}}background:{{=col.background}};{{/if}}{{if col.textFontsize!=null}}color:{{=col.textForecolor}};letter-spacing:{{=col.textLetterspacing}}{{=unit}};{{if col.textStyleBold}}font-weight:bold;{{/if}}{{if col.textStyleItalic}}font-style:italic;{{/if}}{{if cellTD}}text-decoration:{{=cellTD}};{{/if}}font-family:{{=col.textFontfamily}};font-size:{{=col.textFontsize}}{{=unit}};{{/if}}">
+                        {{if col.type=='text'}}
+                            <div class="ellipsis white-space-nowrap" x-html="{{=col.textRichText?safeHTML(col.textContent):enHTML(col.textContent)}}"></div>
+                        {{else if col.type=='image'}}
+                            {{if col.imageContent}}
+                                <img class="tag-img mhp100 mwp100" style="{{if col.imageRotateX||col.imageRotateY}};transform:{{if col.imageRotateX}}rotateX(180deg){{/if}}{{if col.imageRotateY}} rotateY(180deg){{/if}}{{/if}}" src="{{=col.imageContent}}" />
+                            {{/if}}
+                        {{else if col.type=='barcode'}}
+                            {{if col.barcodeContent}}
+                                <mx-vframe style="height:{{=realHeight-paddingTop-paddingBottom}}{{=unit}};" src="../subs/barcode" *props="{{#col}}"/>
+                            {{/if}}
+                        {{else if col.type=='qrcode'}}
+                            {{if col.qrcodeContent}}
+                                <mx-vframe style="height:{{=realHeight-paddingTop-paddingBottom}}{{=unit}};" src="../subs/qrcode" *props="{{#col}}"/>
+                            {{/if}}
+                        {{else if col.type=='input'}}
+                            {{if col.inputMultiline}}
+                                <textarea id="ipt_{{=$viewId}}_{{=ri}}_{{=ci}}" readonly="{{=isReadonly===true}}?" class="overflow-auto margin-0 wp100 hp100 textarea{{if col.inputClassName}} {{=col.inputClassName}}{{/if}}" style="color:{{=col.inputForecolor}};font-size:{{=col.inputFontsize}}{{=unit}};letter-spacing:{{=col.inputLetterspacing}}{{=unit}};font-family:{{=col.inputFontfamily}};text-align:{{=col.inputTextAlign}}" placeholder="{{=col.inputplaceholder}}" mx-input="@:{update.value}({cell:'{{#col}}'})">{{=col.inputUserValue||col.inputText}}</textarea>
+                            {{else}}
+                                <input id="ipt_{{=$viewId}}_{{=ri}}_{{=ci}}" readonly="{{=isReadonly===true}}?" class="margin-0 wp100 hp100 input{{if col.inputClassName}} {{=col.inputClassName}}{{/if}}" style="color:{{=col.inputForecolor}};font-size:{{=col.inputFontsize}}{{=unit}};letter-spacing:{{=col.inputLetterspacing}}{{=unit}};font-family:{{=col.inputFontfamily}};text-align:{{=col.inputTextAlign}}" placeholder="{{=col.inputPlaceholder}}" value="{{=col.inputUserValue||col.inputText}}" mx-input="@:{update.value}({cell:'{{#col}}'})"/>
+                            {{/if}}
+                        {{else if col.type=='sum'||
+                            col.type=='custom'||
+                            col.type=='avg'}}
+                            {{set sum=getSumByCell(col)}}
+                            {{if col.type=='sum'}}
+                                <div class="ellipsis white-space-nowrap" x-html="{{=format(col.textFormat,calcSum(sum))}}"></div>
+                            {{else if col.type=='avg'}}
+                                <div class="ellipsis white-space-nowrap" x-html="{{=format(col.textFormat,calcAvg(sum))}}"></div>
+                            {{else}}
+                                <div class="ellipsis white-space-nowrap" x-html="{{=format(col.textFormat,sum)}}"></div>
+                            {{/if}}
+                        {{else if col.type=='dropdown'}}
+                            <select multiple="{{=col.dropdownMultipleSelect}}?" readonly="{{=isReadonly===true}}?" class="wp100 hp100{{if col.dropdownClassName}} {{=col.dropdownClassName}}{{/if}}" style="color:{{=col.dropdownForecolor}};font-size:{{=col.dropdownFontsize}}{{=unit}};letter-spacing:{{=col.dropdownLetterspacing}}{{=unit}};font-family:{{=col.dropdownFontfamily}}" name="{{=col.dropdownName}}" mx-change="@:{update.value}({cell:'{{#col}}'})">
+                                {{each col.dropdownItems as item}}
+                                <option disabled="{{=item.disabled}}?" selected="{{=item.checked}}?" value="{{=item.value}}">
+                                    {{=item.text}}
+                                </option>
+                                {{/each}}
+                            </select>
+                        {{/if}}
+                        {{if !isReadonly}}
+                            {{if row.data}}
+                                <!--加减icon宽40高22，这里先临时写死完成需求-->
+                                {{if first}}
+                                <i style="left:{{=-45-toPx(borderwidth)-(excel?toPx(excelLeft):0)}}px;top:{{=(toPx(realHeight)-22)/2}}px;" class="iconfont btn  font-weight-normal outline-none margin-0 tc cursor-pointer pa pointer-events-all" title="点击复制添加当前行" mx-click="@:{add.row.at}({ri:{{=ri}}})">&#xe650;</i>
+                                {{/if}}
+                                {{if last&&row.copy}}
+                                <i style="right:{{=-45-toPx(borderwidth)}}px;top:{{=(toPx(realHeight)-22)/2}}px;" class="iconfont btn font-weight-normal outline-none margin-0 tc cursor-pointer pa pointer-events-all" title="点击删除当前行" mx-click="@:{delete.row.at}({ri:{{=ri}}})">&#xe68e;</i>
+                                {{/if}}
+                            {{/if}}
+                        {{/if}}
+                    </div>
+                    {{/if}}
+                </td>
+                {{/each}}
+            </tr>
+            {{/if}}
+            {{if row.total}}
+                {{findTotalRow=1}}
+            {{/if}}
+        {{/each}}
+        </tbody>
+    </table>
+</div>

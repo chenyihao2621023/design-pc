@@ -1,0 +1,59 @@
+{{each data as d i last}}
+    <div class="flex align-items-flex-start margin-bottom-4">
+        <span class="width-90 mr2 pr10 tr">
+            {{if data.length>1}}
+            <span class="iconfont mr5 fontsize-12 color-third{{if disabled}} cursor-not-allowed opacity-40{{else}} color-third-hover cursor-pointer{{/if}}" mx-click="{{=!disabled}}?@:{remove.fx}({i:{{=i}}})" title="删除函数">&#xe6b3;</span>
+            {{/if}}
+            函数
+        </span>
+        <textarea class="textarea margin-0 designer-ff overflow-auto width-150 height-100" disabled="{{=disabled}}?" mx-change="@:{stop}()" mx-input="@:{update.prop}({i:{{=i}},key:'fn',native:'value'})">{{=d.fn}}</textarea>
+    </div>
+    <div class="flex align-items-center margin-bottom-4">
+        <span class="width-90 mr2 tr pr10">颜色</span>
+        <mx-color class="width-150" *align="right" *disabled="{{#disabled}}" *color="{{#d.color}}" mx-input="@:{update.prop}({i:{{=i}},key:'color',use:'color'})"/>
+    </div>
+    <div class="flex align-items-center margin-bottom-4">
+        <span class="width-90 mr2 tr pr10">线条类型</span>
+        <mx-dropdown class="width-150" *disabled="{{#disabled}}" *selected="{{=d.graphType}}" *list="{{#lineTypes}}" mx-change="@:{update.prop}({i:{{=i}},key:'graphType',use:'value'})"/>
+    </div>
+    <div class="flex align-items-center margin-bottom-4">
+        <span class="width-90 mr2 tr pr10">设置范围</span>
+        <label class="display-inline-block font-weight-normal mwp100 cursor-pointer flex align-items-center">
+            <input class="switch-input pa" type="checkbox" checked="{{=d.range!=null}}?" disabled="{{=disabled}}?" mx-change="@:{update.range.setting}({i:{{=i}}})"/>
+            <i class="switch-button display-inline-block transition unselectable pr"></i>
+        </label>
+    </div>
+    {{if d.range}}
+    <div class="flex align-items-center margin-bottom-4">
+        <span class="width-90 mr2 tr pr10">取值范围</span>
+        <mx-number.pair class="width-150" *disabled="{{#disabled}}" *value="{{#d.range}}" mx-input="@:{update.prop}({i:{{=i}},key:'range',use:'pair'})"/>
+    </div>
+    {{/if}}
+    <div class="flex align-items-center margin-bottom-4">
+        <span class="width-90 mr2 tr pr10">设置取样</span>
+        <label class="display-inline-block font-weight-normal mwp100 cursor-pointer flex align-items-center">
+            <input class="switch-input pa" type="checkbox" checked="{{=d.nSamples!=null}}?" disabled="{{=disabled}}?" mx-change="@:{update.samples.setting}({i:{{=i}}})"/>
+            <i class="switch-button display-inline-block transition unselectable pr"></i>
+        </label>
+    </div>
+    {{if d.nSamples!=null}}
+    <div class="flex align-items-center margin-bottom-4">
+        <span class="width-90 mr2 tr pr10">取样</span>
+        <mx-number class="width-150 input pr" *disabled="{{#disabled}}" *value="{{#d.nSamples}}" *min="10" mx-change="@:{stop}()" mx-input="@:{update.prop}({i:{{=i}},key:'nSamples',use:'value'})"/>
+    </div>
+    {{/if}}
+    <div class="flex align-items-center margin-bottom-4">
+        <span class="width-90 mr2 tr pr10">填充</span>
+        <label class="display-inline-block font-weight-normal mwp100 cursor-pointer flex align-items-center">
+            <input class="switch-input pa" type="checkbox" checked="{{=d.closed}}?" disabled="{{=disabled}}?" mx-change="@:{update.prop}({i:{{=i}},key:'closed',native:'checked'})"/>
+            <i class="switch-button display-inline-block transition unselectable pr"></i>
+        </label>
+    </div>
+    {{if !last}}
+    <div class="item-spliter"></div>
+    {{/if}}
+{{/each}}
+
+<div class="flex align-items-center width-242 justify-content-flex-end">
+    <button class="btn white-space-nowrap btn-brand cursor-pointer outline-none" disabled="{{=disabled}}?" mx-click="@:{add.fx}()">添加函数</button>
+</div>

@@ -1,0 +1,13 @@
+<div class="format width-150 simulator-container pl4 pr2 background-color-fff border-radius-x cursor-pointer flex align-items-center{{if disabled}} notallowed simulator-container-disabled cursor-not-allowed
+{{/if}}" mx-click="{{=!disabled}}?@:{choose.format}()" title="{{=text}}??">
+    <div class="flex-fill-rest ellipsis white-space-nowrap{{if !text||disabled}} color-third{{/if}}">
+        {{if text}}
+            {{=text}}
+        {{else}}
+            点击选择显示格式
+        {{/if}}
+    </div>
+    {{if format}}
+        <i class="iconfont remove fontsize-14" mx-click="{{=!disabled}}?@:{clear.format}()" title="清除格式">&#xe624;</i>
+    {{/if}}
+</div>

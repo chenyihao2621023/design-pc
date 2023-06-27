@@ -1,0 +1,23 @@
+
+
+{{each borders as b i}}
+    {{if !i||mode==MODE_FULL}}
+    <div class="flex align-items-center{{if i}} margin-top-4{{/if}}">
+        <span class="width-90 pr10 mr2 tr">
+            {{if mode==MODE_FULL}}{{=i18n(bt[i])}}{{/if}}{{=i18n('@:{lang#props.border}')}}
+        </span>
+        <div class="width-150 flex flex-direction-column">
+            <mx-number class="wp100 margin-bottom-4 input pr" *disabled="{{#disabled}}" *min="0" *max="{{#max}}" *step="{{#step}}" *fixed="{{#fixed}}" *value="{{#read(props[`border${b}Width`])}}" mx-change="@:{stop}()" mx-input="@:{update.border.width}({key:'{{=b}}'})"/>
+            <div class="flex">
+                <mx-dropdown class="width-90 flex-shrink-0 mr5" *disabled="{{#disabled}}" *list="{{#borderTypes}}" *selected="{{=props[`border${b}Style`]}}" mx-change="@:{change.border.style}({key:'{{=b}}'})"/>
+                <mx-color class="wp100" *disabled="{{#disabled}}" *align="right" *alpha="true" *color="{{#props[`border${b}Color`]}}" mx-input="@:{update.border.color}({key:'{{=b}}'})"/>
+            </div>
+        </div>
+    </div>
+    {{/if}}
+{{/each}}
+
+<div class="flex align-items-center width-242 justify-content-flex-end margin-top-4">
+    <button class="btn white-space-nowrap btn-brand mr5 cursor-pointer outline-none" title="{{if mode==MODE_TIDY}}当前处于简约模式{{else}}使用简约模式设置边框{{/if}}" disabled="{{=disabled||mode==MODE_TIDY}}?" mx-click="@:{change.mode}({to:{{=MODE_TIDY}}})">简约</button>
+    <button class="btn white-space-nowrap btn-brand cursor-pointer outline-none" title="{{if mode==MODE_FULL}}当前处于全部模式{{else}}使用全部模式设置边框{{/if}}" disabled="{{=disabled||mode==MODE_FULL}}?" mx-click="@:{change.mode}({to:{{=MODE_FULL}}})">全部</button>
+</div>

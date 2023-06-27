@@ -1,0 +1,9 @@
+
+{{set {x,y,height,alpha,width,rotate,link,rotateX,rotateY,animations}=props;}}
+{{if image}}
+    <img draggable="false" class="tag-img pa z-index-1{{if link}} cursor-pointer outline-brand-lighter{{/if}}" style="left:{{=x}}{{=unit}};top:{{=y}}{{=unit}};height:{{=height}}{{=unit}};opacity:{{=alpha}};width:{{=width}}{{=unit}};transform:rotate({{=rotate}}deg){{if rotateX}} rotateX(180deg){{/if}}{{if rotateY}} rotateY(180deg){{/if}};{{=am(animations)}}" src="{{=image}}" mx-click="{{=link}}?@:{open.link}()"/>
+{{else if text}}
+    <div class="overflow-hidden z-index-1 pa flex align-items-center justify-content-center" style="left:{{=x}}{{=unit}};top:{{=y}}{{=unit}};height:{{=height}}{{=unit}};opacity:{{=alpha}};width:{{=width}}{{=unit}};transform:rotate({{=rotate}}deg)">
+        {{=text}}
+    </div>
+{{/if}}

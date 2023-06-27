@@ -1,0 +1,5 @@
+
+{{set {x,y,width,height,r,fillcolor, linewidth, alpha, dash, cap,color,animations, }=props;}}
+<svg class="overflow-visible pa z-index-1" style="left:{{=x}}{{=unit}};top:{{=y}}{{=unit}};width:{{=width}}{{=unit}};height:{{=height}}{{=unit}};{{=am(animations)}}">
+    <circle r="{{=r}}{{=unit}}" cx="{{=r}}{{=unit}}" cy="{{=r}}{{=unit}}" style="fill:{{=fillcolor||'none'}};stroke:{{=color}};stroke-width:{{=linewidth}}{{=unit}};opacity:{{=alpha}};" stroke-dasharray="{{=dash}}{{=unit}}" stroke-linecap="{{cap}}?round"/>
+</svg>

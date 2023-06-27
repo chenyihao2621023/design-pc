@@ -1,0 +1,7 @@
+{{if fields.length}}
+    {{each fields as field}}
+        <mx-number *min="{{#min}}" *fixed="{{#fixed}}" *step="{{#step}}" *max="{{#max}}" *value="{{#columns[field.key]}}" mx-input="@:{update.width}({id:'{{=field.key}}'})" mx-change="@:{stop}()" *disabled="{{#disabled}}" class="input pr"/>
+    {{/each}}
+{{else}}
+    <div class="tip border-radius-x color-third width-150{{if disabled}} cursor-not-allowed background-color-disabled{{/if}}">{{=i18n('@:{lang#mx-gallery.need.bind.data}')}}</div>
+{{/if}}

@@ -1,0 +1,33 @@
+<div class="flex align-items-center hp100 unselectable flex-fill-rest">
+    <mx-vframe src="./toolbar-do" class="flex-shrink-0"/>
+    {{if !mini}}
+    <mx-vframe src="./toolbar-start" class="flex-shrink-0"/>
+    <mx-vframe src="./toolbar-cxv" class="flex-shrink-0"/>
+    <mx-vframe src="./toolbar-avg" class="flex-shrink-0"/>
+    {{/if}}
+    <mx-vframe src="./toolbar-align" class="flex-shrink-0"/>
+    <mx-vframe src="./toolbar-layer" class="flex-shrink-0"/>
+    {{if !mini}}
+    <mx-vframe src="./toolbar-group" class="flex-shrink-0"/>
+    <mx-vframe src="./toolbar-rotate" class="flex-shrink-0"/>
+    {{/if}}
+    <mx-vframe src="./toolbar-locker" class="flex-shrink-0"/>
+    {{if !mini}}
+    <mx-vframe src="./toolbar-kr" class="flex-shrink-0"/>
+    <mx-vframe src="./toolbar-outline" class="flex-shrink-0"/>
+    {{/if}}
+    <mx-vframe src="./toolbar-del" class="flex-shrink-0"/>
+</div>
+<div class="hp100 flex align-items-center unselectable">
+    <mx-vframe class="flex align-items-center" src="./toolbar-scale"/>
+    {{if panels.length}}
+        <i class="toolbar-compact-spliter fl"></i>
+        {{each panels as p}}
+            {{if !p.mini}}
+            <i class="iconfont toolbar-item margin-0-2 border-radius-x cursor-pointer align-items-center justify-content-center{{if p['@:{opened}']}} toolbar-item-active{{/if}}" x-html="{{=p.icon}}" mx-click="@:{toggle.panel}({p:'{{#p}}'})" title="{{=i18n(p['@:{opened}']?'@:{lang#panel.close.panel}':'@:{lang#panel.open.panel}',p.title,p.key)}}"></i>
+            {{/if}}
+        {{/each}}
+        <i class="toolbar-compact-spliter fl"></i>
+        <i class="iconfont toolbar-item margin-0-2 border-radius-x cursor-pointer align-items-center justify-content-center{{if allOpen}} toolbar-item-active{{/if}}" mx-click="@:{close.all.panel}()" title="{{=i18n(allOpen?'@:{lang#panel.close.all}':'@:{lang#panel.open.all}')}}">&#xe651;</i>
+    {{/if}}
+</div>

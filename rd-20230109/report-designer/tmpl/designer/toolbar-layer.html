@@ -1,0 +1,9 @@
+{{if v}}
+    <i class="toolbar-vertical-space flex"></i>
+{{else}}
+    <i class="toolbar-spliter fl"></i>
+{{/if}}
+<i class="iconfont toolbar-item margin-0-2 border-radius-x align-items-center justify-content-center{{if toTop}} cursor-pointer{{else}} toolbar-item-disabled cursor-not-allowed{{/if}}" title="{{=i18n('@:{lang#menu.to.top}')}}(T)" mx-click="{{=toTop}}?@:{move.element}({to:3})">&#xe607;</i>
+<i class="iconfont toolbar-item margin-0-2 border-radius-x align-items-center justify-content-center{{if toTop}} cursor-pointer{{else}} toolbar-item-disabled cursor-not-allowed{{/if}}" title="{{=i18n('@:{lang#menu.move.up}')}}(U)" mx-click="{{=toTop}}?@:{move.element}({to:5})">&#xe632;</i>
+<i class="iconfont toolbar-item margin-0-2 border-radius-x align-items-center justify-content-center r180{{if toBottom}} cursor-pointer{{else}} toolbar-item-disabled cursor-not-allowed{{/if}}" title="{{=i18n('@:{lang#menu.move.down}')}}(D)" mx-click="{{=toBottom}}?@:{move.element}({to:6})">&#xe632;</i>
+<i class="iconfont toolbar-item margin-0-2 border-radius-x align-items-center justify-content-center r180{{if toBottom}} cursor-pointer{{else}} toolbar-item-disabled cursor-not-allowed{{/if}}" title="{{=i18n('@:{lang#menu.to.bottom}')}}(B)" mx-click="{{=toBottom}}?@:{move.element}({to:4})">&#xe607;</i>

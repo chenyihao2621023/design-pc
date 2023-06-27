@@ -1,0 +1,5 @@
+<div class="flex">
+    <mx-number *disabled="{{#disabled}}" *value="{{#value[0]}}" class="width-60 input pr" mx-input="@:{num.input}({i:0})" mx-change="@:{stop}()"/>
+    <span class="flex-fill-rest fore-color-border tc">~</span>
+    <mx-number *disabled="{{#disabled}}" *value="{{#value[1]}}" class="width-60 input pr" mx-input="@:{num.input}({i:1})" mx-change="@:{stop}()"/>
+</div>

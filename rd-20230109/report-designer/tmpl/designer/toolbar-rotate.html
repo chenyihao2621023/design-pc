@@ -1,0 +1,6 @@
+<i class="toolbar-spliter fl"></i>
+<i class="iconfont toolbar-item margin-0-2 border-radius-x align-items-center justify-content-center{{if canRotate}} cursor-pointer{{else}} toolbar-item-disabled cursor-not-allowed{{/if}}"
+    title="{{=i18n('@:{lang#menu.anticlockwise}',90,45)}}" mx-click="{{=canRotate}}?@:{rotate}({to:-90})">&#xe68c;</i>
+
+<i class="iconfont toolbar-item margin-0-2 border-radius-x align-items-center justify-content-center flipx{{if canRotate}} cursor-pointer{{else}} toolbar-item-disabled cursor-not-allowed{{/if}}"
+    title="{{=i18n('@:{lang#menu.clockwise}',90,45)}}" mx-click="{{=canRotate}}?@:{rotate}({to:90})">&#xe68c;</i>

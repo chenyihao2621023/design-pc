@@ -1,0 +1,304 @@
+{
+    "data": [
+        {
+            "name": "人物信息",
+            "tag": "apis/person.json",
+            "id": 3,
+            "expand": true,
+            "headless":false,
+            "fields": [
+                {
+                    "name": "头像",
+                    "key": "avatar",
+                    "use": "image",
+                    "props": {
+                        "width": 150,
+                        "height": 150
+                    }
+                },
+                {
+                    "name": "姓名",
+                    "key": "name"
+                },
+                {
+                    "name": "性别",
+                    "key": "gender"
+                },
+                {
+                    "name": "地址",
+                    "key": "addr"
+                },
+                {
+                    "name": "身份证号",
+                    "key": "idn"
+                },
+                {
+                    "name": "无数据1",
+                    "key": "nodata1"
+                },
+                {
+                    "name": "无数据2",
+                    "key": "nodata2"
+                },
+                {
+                    "name": "无数据3",
+                    "key": "nodata3"
+                }
+            ]
+        },
+        {
+            "name": "物联网",
+            "tag": "apis/iot.json",
+            "id": "iot",
+            "fields": [
+                {
+                    "name": "温度计",
+                    "key": "001"
+                },
+                {
+                    "name": "水位",
+                    "key": "002"
+                },
+                {
+                    "name": "阀门",
+                    "key": "003"
+                }
+            ]
+        },
+        {
+            "name": "报表字段",
+            "tag": "apis/report.json",
+            "id": 2,
+            "expand": true,
+            "headless":false,
+            "fields": [
+                {
+                    "name": "展现量",
+                    "key": "f1"
+                },
+                {
+                    "name": "点击量",
+                    "key": "f2"
+                },
+                {
+                    "name": "点击率",
+                    "key": "f3"
+                },
+                {
+                    "name": "关注",
+                    "key": "f4"
+                },
+                {
+                    "name": "收藏量",
+                    "key": "f5"
+                },
+                {
+                    "name": "成交量",
+                    "key": "f6"
+                },
+                {
+                    "name": "成效金额",
+                    "key": "f7"
+                },
+                {
+                    "name": "千次展现成本",
+                    "key": "f8"
+                },
+                {
+                    "name": "预售金额",
+                    "key": "f9"
+                }
+            ]
+        },
+        {
+            "name": "地区数据",
+            "tag": "apis/area.json",
+            "id": 1,
+            "fields": [
+                {
+                    "name": "河北",
+                    "key": "area_13"
+                },
+                {
+                    "name": "山西",
+                    "key": "area_14"
+                },
+                {
+                    "name": "内蒙古",
+                    "key": "area_15"
+                },
+                {
+                    "name": "辽宁",
+                    "key": "area_21"
+                },
+                {
+                    "name": "吉林",
+                    "key": "area_22"
+                },
+                {
+                    "name": "黑龙江",
+                    "key": "area_23"
+                },
+                {
+                    "name": "江苏",
+                    "key": "area_32"
+                },
+                {
+                    "name": "浙江",
+                    "key": "area_33"
+                },
+                {
+                    "name": "安徽",
+                    "key": "area_34"
+                },
+                {
+                    "name": "福建",
+                    "key": "area_35"
+                },
+                {
+                    "name": "江西",
+                    "key": "area_36"
+                },
+                {
+                    "name": "山东",
+                    "key": "area_37"
+                },
+                {
+                    "name": "河南",
+                    "key": "area_41"
+                },
+                {
+                    "name": "湖北",
+                    "key": "area_42"
+                },
+                {
+                    "name": "湖南",
+                    "key": "area_43"
+                },
+                {
+                    "name": "广东",
+                    "key": "area_44"
+                },
+                {
+                    "name": "广西",
+                    "key": "area_45"
+                },
+                {
+                    "name": "海南",
+                    "key": "area_46"
+                },
+                {
+                    "name": "四川",
+                    "key": "area_51"
+                },
+                {
+                    "name": "贵州",
+                    "key": "area_52"
+                },
+                {
+                    "name": "云南",
+                    "key": "area_53"
+                },
+                {
+                    "name": "西藏",
+                    "key": "area_54"
+                },
+                {
+                    "name": "陕西",
+                    "key": "area_61"
+                },
+                {
+                    "name": "甘肃",
+                    "key": "area_62"
+                },
+                {
+                    "name": "青海",
+                    "key": "area_63"
+                },
+                {
+                    "name": "宁夏",
+                    "key": "area_64"
+                },
+                {
+                    "name": "新疆",
+                    "key": "area_65"
+                }
+            ]
+        },
+        {
+            "name": "富文本1",
+            "tag": "apis/richtext.json",
+            "id": 4,
+            "fields": [
+                {
+                    "name": "片断1",
+                    "key": "p1",
+                    "use": "data-richtext",
+                    "props": {
+                        "width": 500
+                    }
+                },
+                {
+                    "name": "片断2",
+                    "key": "p2",
+                    "use": "data-richtext",
+                    "props": {
+                        "width": 500
+                    }
+                }
+            ]
+        },
+        {
+            "name": "资产卡片",
+            "tag": "apis/asset.json",
+            "id": 5,
+            "fields": [
+                {
+                    "name": "资产编码",
+                    "key": "assetcode"
+                },
+                {
+                    "name": "资产名称",
+                    "key": "assetname"
+                },
+                {
+                    "name": "投用日期",
+                    "key": "assetdate"
+                },
+                {
+                    "name": "使用部门",
+                    "key": "assetdept"
+                }
+            ]
+        },
+        {
+            "name": "表单绑定",
+            "tag": "apis/form.json",
+            "id": 6,
+            "fields": [
+                {
+                    "name": "下拉、单选、多选",
+                    "key": "item",
+                    "use": "form-checkbox"
+                },
+                {
+                    "name": "中文名称",
+                    "key": "item1",
+                    "use": "form-dropdown"
+                },
+                {
+                    "name": "标签",
+                    "key": "tags",
+                    "use": "tag"
+                },
+                {
+                    "name": "输入框绑定",
+                    "key": "input",
+                    "use": "form-input"
+                }
+            ]
+        }
+    ],
+    "success": true,
+    "message": ""
+}

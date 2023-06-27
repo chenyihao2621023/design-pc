@@ -1,0 +1,12 @@
+<div class="simulator-container border-radius-x background-color-fff cursor-pointer padding-4 pr height-100 width-150{{if disabled}} notallowed simulator-container-disabled cursor-not-allowed{{/if}}" mx-click="{{=!disabled}}?@:{choose.picture}()">
+    {{set src=props[defined.key]}}
+    {{if src}}
+    <div class="item wp100 hp100" style="background-image:url('{{=src}}')">
+        <i class="iconfont remove pa" mx-click="{{=!disabled}}?@:{clear.image}()" title="{{=i18n('@:{lang#remove.image}')}}">&#xe624;</i>
+    </div>
+    {{else}}
+    <div class="pic-tip tc color-third">
+        {{=i18n('@:{lang#click.choose.image}')}}
+    </div>
+    {{/if}}
+</div>

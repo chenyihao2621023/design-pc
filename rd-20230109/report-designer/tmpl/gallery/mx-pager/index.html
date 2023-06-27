@@ -1,0 +1,23 @@
+<div class="flex unselectable">
+    <div class="iconfont num-item margin-0-2 border-radius-x flex align-items-center justify-content-center cursor-pointer r90 {{if page==1}}cursor-not-allowed opacity-20{{else}}num-enable{{/if}}" mx-click="{{page>1}}?@:{to.page}({page:{{=page-1}}})" title="{{if page==1}}已经是首页了{{else}}点击跳转到第{{=page-1}}页{{/if}}">
+        &#xe73a;
+    </div>
+    {{if (start>1)}}
+        <div class="num-item margin-0-2 border-radius-x flex align-items-center justify-content-center cursor-pointer num-enable" mx-click="@:{to.page}({page:1})" title="点击跳转到第1页">1</div>
+    {{/if}}
+    {{if (start>2)}}
+        <div class="num-item margin-0-2 border-radius-x cursor-not-allowed opacity-20 flex align-items-center justify-content-center">...</div>
+    {{/if}}
+    {{for(let i=start;end>=i;i++)}}
+        <div class="num-item margin-0-2 border-radius-x flex align-items-center justify-content-center cursor-pointer {{if i==page}}num-active{{else}}num-enable{{/if}}" mx-click="{{=i!=page}}?@:{to.page}({page:{{=i}}})" title="{{=i!=page}}?点击跳转到第{{=i}}页">{{=i}}</div>
+    {{/for}}
+    {{if pages>=end+2 }}
+        <div class="num-item margin-0-2 border-radius-x cursor-not-allowed opacity-20 flex align-items-center justify-content-center">...</div>
+    {{/if}}
+    {{if pages>end }}
+        <div class="num-item margin-0-2 border-radius-x flex align-items-center justify-content-center cursor-pointer num-enable" mx-click="@:{to.page}({page:{{=pages}}})" title="点击跳转到第{{=pages}}页">{{=pages}}</div>
+    {{/if}}
+    <div class="iconfont num-item margin-0-2 border-radius-x flex align-items-center justify-content-center cursor-pointer r270 {{if page==pages}}cursor-not-allowed opacity-20{{else}}num-enable{{/if}}" mx-click="{{pages>page}}?@:{to.page}({page:{{=page+1}}})" title="{{if page==pages}}已经是尾页了{{else}}点击跳转到第{{=1+page}}页{{/if}}">
+        &#xe73a;
+    </div>
+</div>

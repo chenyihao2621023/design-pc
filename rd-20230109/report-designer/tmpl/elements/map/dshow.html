@@ -1,0 +1,9 @@
+<div class="pa z-index-1 touch-action-none" style="left:{{=props.x}}{{=unit}};top:{{=props.y}}{{=unit}};height:{{=props.height/scale}}{{=unit}};opacity:{{=props.alpha}};width:{{=props.width/scale}}{{=unit}};{{if scale!=1}}transform:scale({{=scale}});transform-origin:0 0;{{/if}}{{=am(props.animations)}}" id="map_{{=$viewId}}" mx-pointerdown="@:{stop}()" mx-contextmenu="@:{stop}()">
+    <div id="tip_{{=$viewId}}" class="flex hp100 align-items-center justify-content-center">
+        {{if error}}
+            {{=error}}
+        {{else}}
+            {{=i18n('@:{lang#elements.loading.library.tip}')}}
+        {{/if}}
+    </div>
+</div>

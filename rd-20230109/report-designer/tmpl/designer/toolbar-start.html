@@ -1,0 +1,3 @@
+<i class="toolbar-spliter fl"></i>
+<i class="iconfont toolbar-item margin-0-2 border-radius-x align-items-center justify-content-center{{if canCreate}} cursor-pointer{{else}} toolbar-item-disabled cursor-not-allowed{{/if}}" title="{{=i18n('@:{lang#menu.new}')}}(N)" mx-click="{{=canCreate}}?@:{new.page}()">&#xe612;</i>
+<i class="iconfont toolbar-item margin-0-2 border-radius-x align-items-center justify-content-center{{if canClear}} cursor-pointer{{else}} toolbar-item-disabled cursor-not-allowed{{/if}}" title="{{=i18n('@:{lang#menu.clear}')}}(C)" mx-click="{{=canClear}}?@:{clear.elements}()">&#xe7db;</i>

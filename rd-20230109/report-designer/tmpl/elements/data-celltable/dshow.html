@@ -1,0 +1,103 @@
+<div class="pa z-index-1" style="left:{{=props.x}}{{=unit}};top:{{=props.y}}{{=unit}};opacity:{{=props.alpha}};width:{{=props.width}}{{=unit}};height:{{=props.height}}{{=unit}};transform:rotate({{=props.rotate}}deg);{{=am(props.animations)}}" mx-drop="@:{when.data.field.drop}()">
+    {{set {borderwidth:bw,bordertype,bordercolor,borderdeed,rows}=props}}
+    {{set bwn=(borderdeed=='collapse'?1:2)*bw}}
+    <table class="wp100 table" style="border-collapse:{{=borderdeed}}">
+        <tbody>
+        {{each rows as row ri}}
+        <tr>
+            {{each row.cols as col ci}}
+            <td class="table-cell padding-0 word-break-break-all touch-action-none pr" colspan="{{=col.colspan}}??" rowspan="{{=col.rowspan}}??" style="width:{{=col.width}}{{=unit}};height:{{=col.height}}{{=unit}};border-left:{{=bw?bordertype:'dotted'}} {{=bw}}{{=unit}} {{=bw&&col.bLeft?bordercolor:cv}};border-top:{{=bw?bordertype:'dotted'}} {{=bw}}{{=unit}} {{=bw&&col.bTop?bordercolor:cv}};border-right:{{=bw?bordertype:'dotted'}} {{=bw}}{{=unit}} {{=bw&&col.bRight?bordercolor:cv}};border-bottom:{{=bw?bordertype:'dotted'}} {{=bw}}{{=unit}} {{=bw&&col.bBottom?bordercolor:cv}}" mx-pointerdown="@:{active.cell}({row:{{=ri}},col:{{=ci}}})" mx-dragenter="@:{when.data.field.enter}({row:{{=ri}},col:{{=ci}}})" mx-dragleave="@:{when.data.field.leave}({row:{{=ri}},col:{{=ci}}})">
+                {{if col.type}}
+                    <i class="iconfont fontsize-12 fontsize-scale-10 right-0 bottom-0 pa color-third pointer-events-none">
+                        {{if col.type=='image'}}
+                        &#xe690;
+                        {{else if col.type=='barcode'}}
+                        &#xe6c8;
+                        {{else if col.type=='qrcode'}}
+                        &#xe61c;
+                        {{else}}
+                        &#xe61d;
+                        {{/if}}
+                    </i>
+                {{/if}}
+                {{set {paddingTop,paddingBottom,paddingLeft,paddingRight}=col}}
+                {{set realWidth=col.width-bwn-toUnit(1),realHeight=col.height-bwn-toUnit(1)}}
+                {{if paddingTop>realHeight}}
+                    {{paddingTop=realHeight}}
+                {{/if}}
+                {{if paddingTop+paddingBottom>realHeight}}
+                    {{paddingBottom=realHeight-paddingTop}}
+                {{/if}}
+                {{if paddingLeft>realWidth}}
+                    {{paddingLeft=realWidth}}
+                {{/if}}
+                {{if paddingLeft+paddingRight>realWidth}}
+                    {{paddingRight=realWidth-paddingLeft}}
+                {{/if}}
+                {{set cellTD=td(col)}}
+                <div class="pr overflow-hidden flex{{if (!col.type||col.type=='text')&&!col.bindKey&&!props.locked}} cursor-text{{/if}}" style="padding:{{=paddingTop}}{{=unit}} {{=paddingRight}}{{=unit}} {{=paddingBottom}}{{=unit}} {{=paddingLeft}}{{=unit}};width:{{=realWidth}}{{=unit}};height:{{=realHeight}}{{=unit}};align-items:{{=col.vpos}};justify-content:{{=col.hpos}};opacity:{{=col.alpha}};{{if col.background}}background:{{=col.background}};{{/if}}{{if col.type=='text'}}color:{{=col.textForecolor}};letter-spacing:{{=col.textLetterspacing}}{{=unit}};{{if col.textStyleBold}}font-weight:bold;{{/if}}{{if col.textStyleItalic}}font-style:italic;{{/if}}{{if cellTD}}text-decoration:{{=cellTD}};{{/if}}font-family:{{=col.textFontfamily}};font-size:{{=col.textFontsize}}{{=unit}};{{/if}}">
+                    {{if col.bindKey}}
+                        {{if !props.locked}}
+                            <i class="iconfont fontsize-12 fontsize-scale-10 right-0 top-0 pa color-third color-third-hover cursor-pointer touch-action-none" mx-pointerdown="@:{stop}()" mx-click="@:{delete.bind.field}({row:{{=ri}},col:{{=ci}}})" title="{{=i18n('@:{lang#elements.delete.bind.field}')}}">&#xe6b3;</i>
+                        {{/if}}
+                        [绑定:{{=col.bindName}}]
+                    {{else if !col.type||col.type=='text'}}
+                        {{set value=col.textContent}}
+                        {{if !props.locked}}
+                            <textarea rd-owner="{{= $viewId }}" rd-as="i" class="pa margin-0 padding-0 border-none ff-inherit overflow-auto textarea form-input pointer-events-none" mx-wheel="@:{stop}()" mx-input="@:{update.cell.text}({cell:{{#col}},key:'textContent'})" style="width:calc(100% - {{=paddingLeft+paddingRight}}{{=unit}});height:calc(100% - {{=paddingTop+paddingBottom}}{{=unit}});text-align:{{if col.hpos=='center'}}center{{else if col.hpos=='flex-end'}}right{{else}}left{{/if}}" mx-focusin="@:{active.cell.by.pos}({row:{{=ri}},col:{{=ci}}})">{{=value}}</textarea>
+                        {{/if}}
+                        {{if value}}
+                            <div class="form-content pointer-events-none{{if !col.textAutoHeight}} ellipsis white-space-nowrap{{/if}}" x-html="{{=col.textRichText?safeHTML(value):enHTML(value)}}"></div>
+                        {{/if}}
+                    {{else if col.type=='image'}}
+                        {{if col.imageContent}}
+                            {{set rw=realWidth-paddingLeft-paddingRight,
+                                rh=realHeight-paddingTop-paddingBottom;}}
+                            {{set scaleWidth=col.imageWidth,
+                                scaleHeight=col.imageHeight,
+                                wr=rw/scaleWidth,
+                                hr=rh/scaleHeight;}}
+                            {{if 1>wr && hr>wr}}
+                                {{scaleHeight=0}}
+                                {{scaleWidth=rw}}
+                            {{/if}}
+                            {{if 1>hr && wr>hr}}
+                                {{scaleWidth=0}}
+                                {{scaleHeight=rh}}
+                            {{/if}}
+                            <img class="tag-img mwp100 mhp100" style="{{if scaleWidth}}width:{{=scaleWidth}}{{=unit}};{{/if}}{{if scaleHeight}}height:{{=scaleHeight}}{{=unit}};{{/if}}{{if col.imageRotateX||col.imageRotateY}}transform:{{if col.imageRotateX}}rotateX(180deg){{/if}}{{if col.imageRotateY}} rotateY(180deg){{/if}}{{/if}}" src="{{=col.imageContent}}"/>
+                        {{/if}}
+                    {{else if col.type=='barcode'}}
+                        {{if col.barcodeContent}}
+                            <mx-vframe style="height:{{=realHeight-paddingTop-paddingBottom}}{{=unit}};" src="../subs/barcode" *props="{{#col}}"/>
+                        {{/if}}
+                    {{else if col.type=='qrcode'}}
+                        {{if col.qrcodeContent}}
+                            <mx-vframe style="height:{{=realHeight-paddingTop-paddingBottom}}{{=unit}};" src="../subs/qrcode" *props="{{#col}}"/>
+                        {{/if}}
+                    {{/if}}
+                </div>
+                {{if !props.locked}}
+                {{set focusCurrentCell=props.focusRow==ri&&props.focusCol==ci&&selected&&count==1}}
+                <div class="pa hod-focus-div z-index-1 pointer-events-none{{if focusCurrentCell}} hod-focus-line{{/if}}{{if fieldRow==ri&&fieldCol==ci}} hod-drop-tip{{/if}}" style="{{if focusCurrentCell}}{{if !col.bLeft}}border-left-style:dotted;{{/if}}{{if !col.bTop}}border-top-style:dotted;{{/if}}{{if !col.bRight}}border-right-style:dotted;{{/if}}{{if !col.bBottom}}border-bottom-style:dotted;{{/if}}{{/if}}">
+                    {{if focusCurrentCell&&!grouped}}
+                    {{set pxHeight=toPx(realHeight),
+                        pxWidth=toPx(realWidth)}}
+                    {{set height=(mmin(22,pxHeight-2))}}
+                    {{set width=(mmin(22,pxWidth-2))}}
+                    {{set top=(pxHeight-height)/2}}
+                    {{set left=(pxWidth-width-bwn)/2}}
+                    <div class="pa hod-right border-radius-x pointer-events-all touch-action-none" style="height:{{=mmax(height,0)}}px;top:{{=top}}px;cursor:{{=cursor(props.rotate,0)}}-resize" title="{{=i18n('@:{lang#press.drag.cell.width}')}}" mx-pointerdown="@:{start.resize.table.cell}({key:'mr'})"></div>
+                    <div class="pa hod-left border-radius-x pointer-events-all touch-action-none" style="height:{{=mmax(height,0)}}px;top:{{=top}}px;cursor:{{=cursor(props.rotate,0)}}-resize" title="{{=i18n('@:{lang#press.drag.cell.width}')}}" mx-pointerdown="@:{start.resize.table.cell}({key:'ml'})"></div>
+                    <div class="pa hod-bottom border-radius-x pointer-events-all touch-action-none" style="width:{{=mmax(width,0)}}px;left:{{=left}}px;cursor:{{=cursor(props.rotate,90)}}-resize" title="{{=i18n('@:{lang#press.drag.cell.height}')}}" mx-pointerdown="@:{start.resize.table.cell}({key:'bm'})"></div>
+                    <div class="pa hod-top border-radius-x pointer-events-all touch-action-none" style="width:{{=mmax(width,0)}}px;left:{{=left}}px;cursor:{{=cursor(props.rotate,90)}}-resize" title="{{=i18n('@:{lang#press.drag.cell.height}')}}" mx-pointerdown="@:{start.resize.table.cell}({key:'tm'})"></div>
+                    {{/if}}
+                </div>
+                {{/if}}
+            </td>
+            {{/each}}
+        </tr>
+        {{/each}}
+        </tbody>
+    </table>
+</div>

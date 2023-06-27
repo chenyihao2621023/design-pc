@@ -1,0 +1,37 @@
+{{set {ext}=props;}}
+<div class="flex align-items-center margin-bottom-4">
+    <span class="width-90 mr2 tr pr10">
+        计算方式
+    </span>
+    <mx-dropdown class="width-150" *disabled="{{#disabled}}" *selected="{{=ext.fx}}" *list="{{#fxs}}" mx-change="@:{update.prop}({key:'fx',use:'value'})"/>
+</div>
+<div class="flex align-items-center margin-bottom-4">
+    <span class="width-90 mr2 tr pr10">
+        起始值
+    </span>
+    <mx-number class="width-150 input pr" *disabled="{{#disabled}}" *value="{{#ext.start}}" mx-input="@:{update.prop}({key:'start',use:'value'})"/>
+</div>
+<div class="flex align-items-center margin-bottom-4">
+    <span class="width-90 mr2 tr pr10">
+        公{{if ext.fx=='AP'}}差{{else}}比{{/if}}
+    </span>
+    <mx-number class="width-150 input pr" *disabled="{{#disabled}}" *value="{{#ext.step}}" mx-input="@:{update.prop}({key:'step',use:'value'})"/>
+</div>
+<div class="flex align-items-center margin-bottom-4">
+    <span class="width-90 mr2 tr pr10">
+        补零
+    </span>
+    <label class="display-inline-block font-weight-normal mwp100 cursor-pointer flex align-items-center">
+        <input class="switch-input pa" type="checkbox" checked="{{=ext.pad}}?" disabled="{{=disabled}}?" mx-change="@:{update.prop}({key:'pad',native:'checked'})"/>
+        <i class="switch-button display-inline-block transition unselectable pr"></i>
+    </label>
+</div>
+<div class="flex align-items-center margin-bottom-4">
+    <span class="width-90 mr2 tr pr10">
+        倒序
+    </span>
+    <label class="display-inline-block font-weight-normal mwp100 cursor-pointer flex align-items-center">
+        <input class="switch-input pa" type="checkbox" checked="{{=ext.reverse}}?" disabled="{{=disabled}}?" mx-change="@:{update.prop}({key:'reverse',native:'checked'})"/>
+        <i class="switch-button display-inline-block transition unselectable pr"></i>
+    </label>
+</div>

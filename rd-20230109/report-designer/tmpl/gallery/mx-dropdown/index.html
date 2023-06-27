@@ -1,0 +1,50 @@
+<div class="dropdown outline-none simulator-container background-color-fff border-radius-x wp100 unselectable pr{{if disabled}} notallowed simulator-container-disabled cursor-not-allowed{{else}} dropdown-enable{{/if}}" id="_mx_dd_{{=$viewId}}" tabindex="{{=!disabled}}?0">
+    {{set displayText=dt?selectedText:i18n(selectedText)}}
+    <div
+        class="dropdown-toggle cursor-pointer pr wp100"
+        mx-click="@:{toggle}()"
+        title="{{=displayText}}">
+        <span class="dropdown-toggle-label display-block ellipsis white-space-nowrap{{if (selected==='')}} color-third{{/if}}">
+            {{if selectedIcon}}
+                <i class="iconfont icon-text" x-html="{{=selectedIcon}}"></i>
+            {{/if}}
+            {{=displayText}}
+        </span>
+        <span class="arrow pa hp100 right-0 transition"></span>
+    </div>
+    {{if rList}}
+    <div class="dropdown-menu-wrapper padding-2-0 dropdown-menu-wrapper--{{=dock}} margin-top-4 background-color-fff border-radius-x pa none overflow-auto scrollable thin-scrollable z-index-2{{if search}} dropdown-menu-wrapper-with-search{{/if}}" id="_mx_list_{{=$viewId}}" mx-scroll="{{=search}}?@:{list}()">
+        {{if search}}
+        <div id="si_{{=$viewId}}" class="position-sticky top-0 background-color-fff padding-2 transition">
+            <input class="input wp100" placeholder="{{=i18n('@:{lang#search}')}}" value="{{=kw}}" mx-input="@:{search}()" mx-change="@:{stop}()"/>
+        </div>
+        {{/if}}
+        {{if list?.length}}
+            {{each list as item i}}
+            {{set text=dt?item[textKey]:i18n(item[textKey]),value=item[valueKey],icon=item[iconKey]}}
+            {{set equal=(value+'')===(selected+'')}}
+            {{set fs=ff&&rff(value)&&sff(value)}}
+            <div title="{{=text}}" class="dropdown-item margin-2 border-radius-x flex align-items-center color-secondary cursor-pointer{{if equal}} active{{/if}}" style="{{=(!fs||fs=='loaded')&&item.style}}?{{=item.style}}" mx-click="@:{select}({item:'{{#item}}'})">
+                {{if icon}}
+                    <i class="iconfont icon-text fontsize-12" x-html="{{=icon}}"></i>
+                {{/if}}
+                <span class="flex-fill-rest ellipsis white-space-nowrap">
+                    {{=text}}
+                </span>
+                {{if fs}}
+                    {{if fs=='unloaded'}}
+                        <i title="点击下载当前字体" class="iconfont fontsize-12 pr4" mx-click="@:{load.ff}({k:'{{=value}}'})">&#xec1d;</i>
+                    {{else if fs=='loading'}}
+                        <i title="正在下载字体..." class="iconfont fontsize-12 pr4 {{=rc}}">&#xe6a4;</i>
+                    {{else if fs=='error'}}
+                        <i title="下载字体异常" class="iconfont fontsize-12 pr4">&#xe6a1;</i>
+                    {{/if}}
+                {{/if}}
+            </div>
+            {{/each}}
+        {{else if kw}}
+            <div class="color-third padding-2">未搜索到“{{=kw}}”</div>
+        {{/if}}
+    </div>
+    {{/if}}
+</div>

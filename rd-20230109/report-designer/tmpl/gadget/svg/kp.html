@@ -1,0 +1,26 @@
+{{set total=points.length}}
+{{each points as p i last first}}
+<div class="flex align-items-center{{if i}} margin-top-4{{/if}}">
+    <span class="width-90 pr10 mr2 flex align-items-center justify-content-flex-end border-radius-x{{if disabled}} cursor-not-allowed{{else}} cursor-pointer{{if props['@:{focus.ctrl}']==p}} background-color-brand-a20{{/if}}{{/if}}" mx-pointerover="@:{focus.key.point}({key:'{{=p}}'})">
+        {{set canUp=!disabled&&!first}}
+        {{set canDown=!disabled&&!last}}
+        <div class="flex flex-direction-column mr2">
+            <span class="iconfont r180 fontsize-12 color-third{{if canUp}} color-third-hover cursor-pointer{{else}} cursor-not-allowed opacity-40{{/if}}" mx-click="{{=canUp}}?@:{move.at}({at:{{=i+1}},d:-1})" title="{{if !canUp}}不能{{/if}}向上交换控制点">&#xe73a;</span>
+            <span class="iconfont fontsize-12 color-third{{if canDown}} color-third-hover cursor-pointer{{else}} cursor-not-allowed opacity-40{{/if}}" mx-click="{{=canDown}}?@:{move.at}({at:{{=i+1}},d:1})" title="{{if !canDown}}不能{{/if}}向下交换控制点">&#xe73a;</span>
+        </div>
+        {{if total>(min||3) && mod}}
+        <span class="iconfont mr5 fontsize-12 color-third{{if disabled}} cursor-not-allowed opacity-40{{else}} color-third-hover{{/if}}" mx-click="{{=!disabled}}?@:{remove.key.point}({i:{{=i+1}}})" title="删除控制点">&#xe6b3;</span>
+        {{/if}}
+        控制点
+    </span>
+    <div class="width-150 flex flex-direction-column">
+        <mx-number class="wp100 margin-bottom-4 input pr" *disabled="{{#disabled}}" *step="{{#step}}" *fixed="{{#fixed}}" *value="{{#read(props[p+'X'])}}" mx-change="@:{stop}()" mx-input="@:{update.key.point}({i:{{=i+1}},type:'X'})"/>
+        <mx-number class="wp100 input pr" *disabled="{{#disabled}}" *step="{{#step}}" *fixed="{{#fixed}}" *value="{{#read(props[p+'Y'])}}" mx-change="@:{stop}()" mx-input="@:{update.key.point}({i:{{=i+1}},type:'Y'})"/>
+    </div>
+</div>
+{{/each}}
+{{if mod}}
+<div class="flex align-items-center width-242 justify-content-flex-end margin-top-4">
+    <button class="btn white-space-nowrap btn-brand cursor-pointer outline-none" disabled="{{=disabled}}?" mx-click="@:{add.key.point}()" title="向尾部添加控制点，按下Ctrl键则添加到头部">添加控制点</button>
+</div>
+{{/if}}

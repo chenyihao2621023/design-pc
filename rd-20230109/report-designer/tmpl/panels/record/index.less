@@ -1,0 +1,35 @@
+@import "../../assets/_vars.less";
+.history-wrap {
+    padding: 5px 4px;
+}
+
+.history {
+    margin: 1px 0;
+    height: @input-height;
+    line-height: @input-height;
+}
+
+.history:hover {
+    background: @color-hover;
+}
+
+.history-selected:hover {
+    background: @color-brand-lighter;
+}
+
+.history-icon {
+    margin: 0 4px 0 2px;
+    width: 12px;
+}
+
+.remove-icon {
+    visibility: hidden;
+}
+
+.history:hover .remove-icon {
+    visibility: visible;
+}
+
+.move {
+    margin: 0 2px;
+}

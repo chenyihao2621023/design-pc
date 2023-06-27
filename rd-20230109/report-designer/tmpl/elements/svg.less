@@ -1,0 +1,30 @@
+@import "../assets/_vars.less";
+.svg-path {
+    fill: none;
+    stroke: @color-brand;
+    stroke-width: 1;
+}
+
+.svg-ms-dashed {
+    stroke-dasharray: 1;
+}
+
+.svg-ctrl-dahsed-line {
+    stroke-dasharray: 3;
+}
+
+.svg-ctrl-solid-line {
+    stroke-dasharray: 0;
+}
+
+.flow-link-rect {
+    visibility: hidden;
+}
+
+.flow-ctrl-root:hover .flow-link-rect {
+    visibility: visible;
+}
+
+.cursor-crosshair {
+    cursor: crosshair;
+}

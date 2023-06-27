@@ -1,0 +1,22 @@
+{{each data as l i}}
+<div class="flex align-items-flex-start margin-bottom-4">
+    <span class="width-90 mr2 tr pr10">
+        <span class="iconfont mr5 fontsize-12 color-third{{if disabled}} cursor-not-allowed opacity-40{{else}} color-third-hover cursor-pointer{{/if}}" mx-click="{{=!disabled}}?@:{remove.fx}({i:{{=i}}})" title="删除辅助线">&#xe6b3;</span>
+        辅助线
+    </span>
+    <mx-dropdown class="flex width-150" *disabled="{{#disabled}}" *selected="{{=l.x!=null?'x':'y'}}" *list="{{#lineTypes}}" mx-change="@:{update.line.type}({i:{{=i}}})"/>
+</div>
+<div class="flex align-items-flex-start margin-bottom-4">
+    <span class="width-90 mr2 tr"></span>
+    <mx-number class="width-150 input pr" *disabled="{{#disabled}}" *value="{{#l.x!=null?l.x:l.y}}" mx-change="@:{stop}()" mx-input="@:{update.line.value}({i:{{=i}}})"/>
+</div>
+<div class="flex align-items-flex-start margin-bottom-4">
+    <span class="width-90 mr2 tr"></span>
+    <input placeholder="辅助线名称" class="margin-0 input" value="{{=l.text}}" disabled="{{=disabled}}?" mx-change="@:{stop}()" mx-input="@:{update.line.text}({i:{{=i}}})"/>
+</div>
+{{/each}}
+
+
+<div class="flex align-items-center width-242 justify-content-flex-end">
+    <button class="btn white-space-nowrap btn-brand cursor-pointer outline-none" disabled="{{=disabled}}?" mx-click="@:{add.fx}()">添加辅助线</button>
+</div>

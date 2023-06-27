@@ -1,0 +1,15 @@
+
+{{set {x,y,width,height,rotate,animations,
+    topcolor,frontcolor,sidecolor,color,linewidth,dash,cap,linejoin,alpha}=props}}
+<svg class="overflow-visible pa z-index-1" style="left:{{=x}}{{=unit}};top:{{=y}}{{=unit}};width:{{=width}}{{=unit}};height:{{=height}}{{=unit}};transform:rotate({{=rotate}}deg);opacity:{{=alpha}};{{=am(animations)}}">
+    {{if topcolor}}
+        <path d="{{=path1}}" style="fill:{{=topcolor}}"/>
+    {{/if}}
+    {{if frontcolor}}
+        <path d="{{=path2}}" style="fill:{{=frontcolor}}"/>
+    {{/if}}
+    {{if sidecolor}}
+        <path d="{{=path3}}" style="fill:{{=sidecolor}}"/>
+    {{/if}}
+    <path d="{{=path4}}" style="fill:none;stroke:{{=color}};stroke-width:{{=linewidth}}{{=unit}};" stroke-dasharray="{{=dash}}{{=unit}}" stroke-linecap="{{cap}}?round" stroke-linejoin="{{=linejoin}}"/>
+</svg>

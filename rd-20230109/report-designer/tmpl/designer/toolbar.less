@@ -1,0 +1,45 @@
+@import "../assets/_vars.less";
+.toolbar-item {
+    height: 22px;
+    width: 22px;
+    display: inline-flex;
+}
+
+.toolbar-item:hover {
+    background: @color-border;
+}
+
+.toolbar-item-active, .toolbar-item-active:hover {
+    background: #c4c4c4;
+}
+
+.toolbar-spliter, .toolbar-compact-spliter {
+    height: 16px;
+    width: 1px;
+    background: #eee;
+}
+
+.toolbar-spliter {
+    margin: 3px 8px;
+}
+
+.toolbar-compact-spliter {
+    margin: 3px 6px;
+}
+
+.toolbar-item-disabled {
+    color: #aaa;
+}
+
+.toolbar-item-disabled:hover {
+    color: #aaa;
+    background: none;
+}
+
+.toolbar-text {
+    width: 40px;
+}
+
+.toolbar-vertical-space {
+    height: 2px;
+}

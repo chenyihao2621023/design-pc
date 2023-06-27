@@ -1,0 +1,13 @@
+{{if error||text}}
+    <div class="pa overflow-hidden z-index-1{{if props.fill=='auto'}} flex align-items-center justify-content-center{{/if}}" style="left:{{=props.x}}{{=unit}};top:{{=props.y}}{{=unit}};height:{{=props.height}}{{=unit}};opacity:{{=props.alpha}};width:{{=props.width}}{{=unit}};transform:rotate({{=props.rotate}}deg);{{=am(props.animations)}}">
+        {{if error}}
+            <div class="flex hp100 align-items-center justify-content-center">
+                {{=error}}
+            </div>
+        {{else if render=='svg'}}
+            <svg id="_rd_{{=$viewId}}_bar" class="mwp100 wp100 hp100 pointer-events-none"></svg>
+        {{else}}
+            <img id="_rd_{{=$viewId}}_bar" class="tag-img mwp100 mhp100{{if props.fill=='full'}} wp100 hp100{{/if}}"/>
+        {{/if}}
+    </div>
+{{/if}}

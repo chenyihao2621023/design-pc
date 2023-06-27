@@ -1,0 +1,96 @@
+{{set {props,ctrl,id}=element}}
+{{set modifier=ctrl['@:{modifier}'],
+    {x,y,width,height,rotate,locked,readonly,pinX,pinY}=props}}
+{{set r=((rotate||0)+360)%360}}
+{{set pxPropsHeight=toPx(height),
+    pxPropsWidth=toPx(width);}}
+{{set showIcon=hmSize>=pxPropsWidth||hmSize>=pxPropsHeight}}
+<mx-vframe class="unselectable display-contents{{if ((readonly&&(ctrl.as & denum['@:{enum#as.hod}']) != denum['@:{enum#as.hod}'])|| !(modifier & denum['@:{enum#modifier.nomask}']) ) }} pointer-events-none{{/if}}" src="{{=view}}" *props="{{#props}}" *element="{{#element}}" *selected="{{#selected}}" *count="{{#count}}" *unit="{{#unit}}" *grouped="{{# selfGrouped||grouped }}"/>
+
+<div id="_rdm_{{=element.id}}" style="left:{{=x}}{{=unit}};top:{{=y}}{{=unit}};width:{{=width}}{{=unit}};height:{{=height}}{{=unit}};transform:rotate({{=r}}deg)" class="pa z-index-1 unselectable normal{{if selected}}{{if locked}} locked-line{{else}} focus-line{{/if}}{{if selfGrouped}} grouped-self{{/if}}{{/if}}{{if grouped}} {{if locked}} grouped-locked-line{{else}} grouped-line{{/if}}{{/if}}{{if !locked && ((modifier & denum['@:{enum#modifier.nomask}']) || readonly) }} pointer-events-none{{/if}}">
+    <!--元素撑开器，在靠近底或右边时，保留空隙-->
+    <div class="pa pointer-events-none preserve-size"></div>
+    {{if locked}}
+        <i class="iconfont color-third pa right-0 top-0 fontsize-12 pointer-events-none">&#xe63e;</i>
+    {{/if}}
+    {{if !locked && selected}}
+        <!--中心十字标-->
+        <div class="cross pa pointer-events-none"></div>
+        <!--支持显示文本输入框-->
+        {{if (modifier & denum['@:{enum#modifier.inputext}']) && props['@:{show.text}']}}
+            <textarea data-as="da" id="_rd_ta_{{=$viewId}}" class="textarea designer-ff overflow-auto margin-0 padding-0-2 border-none wp100 hp100 pointer-events-all touch-action-none pa full-fill" mx-wheel="@:{stop}()" mx-contextmenu="@:{stop}()" mx-input="@:{update.text}()" mx-keyup="@:{watch.input}()" mx-focusout="@:{watch.input}()" style="font-size:{{=props.fontsize}}{{=unit}};font-family:{{=props.fontfamily}}">{{=props.text}}</textarea>
+        {{/if}}
+    {{/if}}
+    {{if !locked && count==1 && selected && !grouped && !selfGrouped}}
+        {{if modifier}}
+            {{if (modifier & denum['@:{enum#modifier.rotate}']) && !pinX && !pinY}}<!--支持旋转-->
+                <div class="ctrl-rotate mod-rect ctrl-size transform-x-n50 circle background-color-contrast pr pointer-events-all touch-action-none transition" mx-pointerdown="@:{start.rotate}()" title="{{=i18n('@:{lang#press.drag.element.rotate}')}}"></div>
+            {{/if}}
+            {{set h=0,
+                w=0,
+                top=0,
+                left=0,
+                size}}
+            {{if modifier & denum['@:{enum#modifier.width}']}}
+                {{h=mmax(mmin(20,pxPropsHeight)-4,0)}}
+                {{top=(pxPropsHeight-h)/2}}
+            {{/if}}
+            {{if modifier & denum['@:{enum#modifier.height}']}}
+                {{w=mmax(mmin(20,pxPropsWidth)-4,0)}}
+                {{left=(pxPropsWidth-w-1)/2}}
+            {{/if}}
+            {{size=mmin(mmax(0,mmin(pxPropsHeight-h-top,pxPropsHeight/2,pxPropsWidth-w-left,pxPropsWidth/2)),14)}}
+
+            {{if modifier & denum['@:{enum#modifier.width}']}}
+                <!--修改宽度的左右2个手柄-->
+                {{if !pinX}}
+                    <div class="pa left pointer-events-all z-index-1 touch-action-none border-radius-x top-faker{{if h>4}} none{{/if}}" style="cursor:{{=cursor(r,0)}}-resize" title="{{=i18n('@:{lang#press.drag.element.width}')}}" mx-pointerdown="@:{start.resize}({key:'ml'})"></div>
+                    <div class="pa left pointer-events-all z-index-1 touch-action-none border-radius-x{{if 4>=h}} none{{/if}}" style="height:{{=h}}px;top:{{=top}}px;cursor:{{=cursor(r,0)}}-resize" title="{{=i18n('@:{lang#press.drag.element.width}')}}" mx-pointerdown="@:{start.resize}({key:'ml'})"></div>
+                {{/if}}
+                {{if !(kr&&pinY)}}
+                <div class="pa right pointer-events-all z-index-1 touch-action-none border-radius-x top-faker{{if h>4}} none{{/if}}" style="cursor:{{=cursor(r,0)}}-resize" title="{{=i18n('@:{lang#press.drag.element.width}')}}" mx-pointerdown="@:{start.resize}({key:'mr'})"></div>
+                <div class="pa right pointer-events-all z-index-1 touch-action-none border-radius-x{{if 4>=h}} none{{/if}}" style="height:{{=h}}px;top:{{=top}}px;cursor:{{=cursor(r,0)}}-resize" title="{{=i18n('@:{lang#press.drag.element.width}')}}" mx-pointerdown="@:{start.resize}({key:'mr'})"></div>
+                {{/if}}
+            {{/if}}
+
+            {{if modifier & denum['@:{enum#modifier.height}']}}
+                <!--修改高度的上下2个手柄-->
+                {{if !pinY && !(kr&&pinX)}}
+                    <div class="pa top pointer-events-all z-index-1 touch-action-none border-radius-x right-faker{{if w>4}} none{{/if}}" style="cursor:{{=cursor(r,90)}}-resize" title="{{=i18n('@:{lang#press.drag.element.height}')}}" mx-pointerdown="@:{start.resize}({key:'tm'})"></div>
+                    <div class="pa top pointer-events-all z-index-1 touch-action-none border-radius-x{{if 4>=w}} none{{/if}}" style="width:{{=w}}px;left:{{=left}}px;cursor:{{=cursor(r,90)}}-resize" title="{{=i18n('@:{lang#press.drag.element.height}')}}" mx-pointerdown="@:{start.resize}({key:'tm'})"></div>
+                {{/if}}
+                <div class="pa bottom pointer-events-all z-index-1 touch-action-none border-radius-x right-faker{{if w>4}} none{{/if}}" style="cursor:{{=cursor(r,90)}}-resize" title="{{=i18n('@:{lang#press.drag.element.height}')}}" mx-pointerdown="@:{start.resize}({key:'bm'})"></div>
+                <div class="pa bottom pointer-events-all z-index-1 touch-action-none border-radius-x{{if 4>=w}} none{{/if}}" style="width:{{=w}}px;left:{{=left}}px;cursor:{{=cursor(r,90)}}-resize" title="{{=i18n('@:{lang#press.drag.element.height}')}}" mx-pointerdown="@:{start.resize}({key:'bm'})"></div>
+            {{/if}}
+
+            {{if (modifier & denum['@:{enum#modifier.size}'])||((modifier & whEnum)==whEnum)}}
+                <!--4个拐角手柄-->
+                {{if !pinX}}
+                    <div class="pa left bottom pointer-events-all z-index-1 touch-action-none border-radius-x{{if 4>size}} none{{/if}}" style="width:{{=size}}px;height:{{=size}}px;cursor:{{=cursor(r,135)}}-resize;" title="{{=i18n('@:{lang#press.drag.element.width.or.height}')}}" mx-pointerdown="@:{start.resize}({key:'bl'})"></div>
+                {{/if}}
+                {{if !pinX&&!pinY}}
+                    <div class="pa left top pointer-events-all z-index-1 touch-action-none border-radius-x{{if 4>size}} none{{/if}}" style="width:{{=size}}px;height:{{=size}}px;cursor:{{=cursor(r,45)}}-resize;" title="{{=i18n('@:{lang#press.drag.element.width.or.height}')}}" mx-pointerdown="@:{start.resize}({key:'tl'})"></div>
+                {{/if}}
+                {{if !pinY}}
+                    <div class="pa right top pointer-events-all z-index-1 touch-action-none border-radius-x{{if 4>size}} none{{/if}}" style="width:{{=size}}px;height:{{=size}}px;cursor:{{=cursor(r,135)}}-resize;" title="{{=i18n('@:{lang#press.drag.element.width.or.height}')}}" mx-pointerdown="@:{start.resize}({key:'tr'})"></div>
+                {{/if}}
+                <div class="pa right bottom pointer-events-all z-index-1 touch-action-none border-radius-x{{if 4>size}} none{{/if}}" style="width:{{=size}}px;height:{{=size}}px;cursor:{{=cursor(r,45)}}-resize;" title="{{=i18n('@:{lang#press.drag.element.width.or.height}')}}" mx-pointerdown="@:{start.resize}({key:'br'})"></div>
+            {{/if}}
+        {{/if}}
+        {{if ctrl['@:{circle.paths}']}}<!--部分svg图形也继承了normal，这里实现svg图形中特有的效果展示-->
+            {{each ctrl['@:{circle.paths}'] as [r,c]}}
+                <div style="left:{{=props[c+'X']-x-props[r]}}{{=unit}};top:{{=props[c+'Y']-y-props[r]}}{{=unit}};width:{{=2*props[r]}}{{=unit}};height:{{=2*props[r]}}{{=unit}};" class="div-circle-path circle pa pointer-events-none"></div>
+            {{/each}}
+        {{/if}}
+        {{if ctrl['@:{get.ctrl.points}']}}
+            {{set keyPoints=ctrl['@:{get.ctrl.points}'](props)}}
+            {{each keyPoints as key}}
+                <div style="left:{{=key.x}}{{=unit}};top:{{=key.y}}{{=unit}}" class="pa z-index-1 mod-rect ctrl-size cursor-move touch-action-none transform-xy-n50{{if key.c==props['@:{focus.mod}']}} background-color-brand{{else}} background-color-contrast{{/if}}" mx-pointerover="@:{focus.mod.point}({key:'{{=key.c}}'})" title="{{=i18n('@:{lang#press.drag.modify.point}')}}" mx-pointerdown="@:{drag.mod.point}({key:'{{=key.c}}'})"></div>
+            {{/each}}
+        {{/if}}
+    {{/if}}
+    {{if !readonly && (showIcon || (modifier & denum['@:{enum#modifier.icon}']) || (selected && (modifier & denum['@:{enum#modifier.selected.show.icon}'])))}}
+        <!--如果需要显示icon且元素非只读，则显示icon-->
+        <i data-as="icon" class="iconfont pa pointer-events-all touch-action-none border-radius-x padding-2{{if locked}} background-color-disabled{{else}} cursor-move color-third color-third-hover background-color-brand-a10{{/if}}{{if (modifier & denum['@:{enum#modifier.top.icon}'])}} left-0 top-icon{{else}} left-icon top-0{{/if}}" x-html="{{=ctrl.icon}}"></i>
+    {{/if}}
+</div>

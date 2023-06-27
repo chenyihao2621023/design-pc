@@ -1,0 +1,31 @@
+{{each list as e i}}
+    {{if !e['@:{if.show}']||e['@:{if.show}'](cell)}}
+    <div class="flex align-items-center margin-bottom-4">
+        <span class="width-90 mr2 tr pr10">
+            {{=i18n(e.tip)}}
+        </span>
+        {{set data=cell[e.key]}}
+        {{if e.read}}
+            {{data=e.read(data,cell);}}
+        {{/if}}
+        {{if e.type==types['@:{enum#prop.number}']}}
+            <mx-number class="width-150 input pr" *min="{{#e.min}}??" *max="{{#e.max}}??" *step="{{#e.step}}??" *fixed="{{#e.fixed}}??" *disabled="{{#disabled}}" *value="{{#data}}" mx-change="@:{stop}()" mx-input="@:{update.prop}({key:'{{=e.key}}',use:'value',write:{{#e.write}}})"/>
+        {{else if e.type==types['@:{enum#prop.collection}']}}
+            <mx-dropdown class="width-150 flex" *disabled="{{#disabled}}" *selected="{{=data}}" *list="{{#e.items}}" *dock="right" *l="{{=l}}" mx-change="@:{update.prop}({key:'{{=e.key}}',use:'value'})"/>
+        {{else if e.type==types['@:{enum#prop.color}']}}
+            <mx-color *clear="{{#e.clear}}" class="width-150" *color="{{#data}}" *align="right" *disabled="{{#disabled}}??" *alpha="{{#e.alpha}}??" mx-input="@:{update.prop}({key:'{{=e.key}}',use:'color'})"/>
+        {{else if e.type==types['@:{enum#prop.text.area}']}}
+            <textarea class="textarea margin-0 designer-ff overflow-auto width-150 height-100" disabled="{{=disabled}}?" mx-input="@:{update.prop}({key:'{{=e.key}}',native:'value'})">{{=data}}</textarea>
+        {{else if e.type==types['@:{enum#prop.text.input}']}}
+            <input class="margin-0 input width-150" value="{{=data}}" disabled="{{=disabled}}?" mx-input="@:{update.prop}({key:'{{=e.key}}',native:'value'})"/>
+        {{else if e.type==types['@:{enum#prop.boolean}']}}
+            <label class="display-inline-block font-weight-normal mwp100 cursor-pointer flex align-items-center">
+                <input class="switch-input pa" type="checkbox" checked="{{=data}}?" disabled="{{=disabled}}?" mx-change="@:{update.prop}({key:'{{=e.key}}',native:'checked'})"/>
+                <i class="switch-button display-inline-block transition unselectable pr"></i>
+            </label>
+        {{else}}
+            <mx-vframe class="flex-fill-rest" src="../{{=e.type}}" *props="{{#cell}}" *disabled="{{#disabled}}" *defined="{{#e}}" mx-change="@:{update.prop}({write:{{#e.write}}})"/>
+        {{/if}}
+    </div>
+    {{/if}}
+{{/each}}

@@ -1,0 +1,22 @@
+<div class="pa z-index-1 todo outline touch-action-none" style="left:{{=props.x}}{{=unit}};top:{{=props.y}}{{=unit}};height:{{=props.height/scale}}{{=unit}};opacity:{{=props.alpha}};width:{{=props.width/scale}}{{=unit}};{{if scale!=1}}transform:scale({{=scale}});transform-origin:0 0;{{/if}}{{=am(props.animations)}}" mx-pointerdown="@:{stop}()" mx-contextmenu="@:{stop}()" id="todo_{{= $viewId }}">
+    <div class="padding-4 border-bottom-1px-solid-ccc9">
+        <input class="margin-0 input wp100 height-26" placeholder="准备做什么?回车添加待办事项" mx-keydown="@:{watch.key.down}()"/>
+    </div>
+    <div class="padding-4 min-height-40 background-color-fff{{if !props.todos.length}} color-third{{/if}}">
+        {{if props.todos.length}}
+            <div class="outline border-radius-x">
+                {{each props.todos as todo todoIndex by desc}}
+                    <div class="todo-item flex align-items-center  border-bottom-1px-solid-ccc9">
+                        <label class="flex align-items-center flex-fill-rest ellipsis white-space-nowrap{{if todo.complete}} color-third text-decoration-line-through{{/if}}">
+                            <input type="checkbox" checked="{{=todo.complete}}?" mx-change="@:{change.task.status}({index:{{=todoIndex}}})"/>
+                            {{=todo.task}}
+                        </label>
+                        <i class="iconfont fontsize-12 cursor-pointer color-third color-third-hover remove-icon" mx-click="@:{remove.task.at}({index:{{=todoIndex}}})">&#xe6b3;</i>
+                    </div>
+                {{/each}}
+            </div>
+        {{else}}
+            暂无待办事项
+        {{/if}}
+    </div>
+</div>

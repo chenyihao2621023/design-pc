@@ -1,0 +1,13 @@
+<div class="pa z-index-1 flex-direction-column flex" style="left:{{=props.x}}{{=unit}};{{if stage}}bottom:0;{{else}}top:{{=props.y}}{{=unit}};{{/if}}opacity:{{=props.alpha}};width:{{=props.width}}{{=unit}};height:{{=props.height}}{{=unit}};{{=am(props.animations)}}">
+    {{each props.rows as row ri}}
+    <div class="flex">
+        {{each row.cols as col ci}}
+            <div class="wp100 hp100 pr overflow-hidden" style="height:{{=row.height}}{{=unit}};width:{{=col.width}}{{=unit}};border-top:{{=col.borderTopStyle}} {{=col.borderTopWidth}}{{=unit}} {{=col.borderTopColor}};border-right:{{=col.borderRightStyle}} {{=col.borderRightWidth}}{{=unit}} {{=col.borderRightColor}};border-bottom:{{=col.borderBottomStyle}} {{=col.borderBottomWidth}}{{=unit}} {{=col.borderBottomColor}};border-left:{{=col.borderLeftStyle}} {{=col.borderLeftWidth}}{{=unit}} {{=col.borderLeftColor}};border-radius:{{=col.borderRadius}};">
+                {{each col.elements as e}}
+                    <mx-vframe class="display-contents" src="../{{=e.type}}/index" *props="{{#e.props}}" *unit="{{#unit}}"/>
+                {{/each}}
+            </div>
+        {{/each}}
+    </div>
+    {{/each}}
+</div>

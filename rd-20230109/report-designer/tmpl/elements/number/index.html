@@ -1,0 +1,12 @@
+{{set {type,width,height}=props;}}
+
+<div class="pa z-index-1 flex overflow-hidden word-break-break-all{{if type=='qrcode'}} align-items-center justify-content-center{{/if}}" style="left:{{=props.x}}{{=unit}};top:{{=props.y}}{{=unit}};width:{{=width}}{{=unit}};transform:rotate({{=props.rotate}}deg);{{if type=='text'}}color:{{=props.forecolor}};{{if props.background}}background:{{=props.background}};{{/if}}font-size:{{=props.fontsize}}{{=unit}};min-height:{{=height}}{{=unit}};letter-spacing:{{=props.letterspacing}}{{=unit}};opacity:{{=props.alpha}};line-height:{{=props.lineheight}};{{if props.styleBold}}font-weight:bold;{{/if}}{{if props.styleItalic}}font-style:italic;{{/if}}{{if props.styleUnderline||props.styleStrike||props.styleOverline}}text-decoration:{{if props.styleStrike}}line-through{{else if props.styleOverline}}overline{{else}}underline{{/if}};{{/if}}align-items:{{=props.vpos}};justify-content:{{=props.hpos}};font-family:{{=props.fontfamily}};{{if bw}}border:{{=bw}}{{=unit}} {{=props.bordertype}} {{=props.bordercolor}};{{/if}}{{if props.autoHeight}}transform-origin:{{=width/2}}{{=unit}} {{=height/2}}{{=unit}};{{else}}max-height:{{=height}}{{=unit}};{{/if}}{{else}}height:{{=height}}{{=unit}};{{/if}}{{=am(props.animations)}};">
+    {{if type=='text'}}
+        <div x-html="{{=text?(props.richText?safeHTML(text):enHTML(text)):i18n('@:{lang#elements.text.content}')}}"></div>
+    {{else if type=='bwip'}}
+        <mx-vframe class="wp100 hp100 flex align-items-center justify-content-center pointer-events-none" src="../subs/bwip" *props="{{#props}}" *value="{{=text}}"/>
+    {{else}}
+        {{set ms=mmin(width,height)}}
+        <mx-vframe style="height:{{=ms}}{{=unit}};width:{{=ms}}{{=unit}};" src="../subs/qrcode" *props="{{#props}}" *value="{{=text}}"/>
+    {{/if}}
+</div>

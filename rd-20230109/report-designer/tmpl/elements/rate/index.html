@@ -1,0 +1,14 @@
+<div class="pa" style="left:{{=props.x}}{{=unit}};top:{{=props.y}}{{=unit}};height:{{=props.height}}{{=unit}};opacity:{{=props.alpha}};width:{{=props.width}}{{=unit}};transform:rotate({{=props.rotate}}deg);color:{{=props.background}};{{=am(props.animations)}}">
+    <div class="hp100 flex justify-content-space-between align-items-center">
+        {{for(let i=0;props.stars>i;i++)}}
+        <i class="iconfont" style="font-size:{{=props.starSize}}{{=unit}};">&#xe60c;</i>
+        {{/for}}
+    </div>
+    <div class="pa full-fill overflow-hidden transition" style="width:{{=value}}%;color:{{=props.fillcolor}}">
+        <div class="flex hp100 justify-content-space-between align-items-center" style="width:{{=props.width}}{{=unit}};">
+            {{for(let i=0;props.stars>i;i++)}}
+            <i class="iconfont" style="font-size:{{=props.starSize}}{{=unit}};">&#xe60c;</i>
+            {{/for}}
+        </div>
+    </div>
+</div>

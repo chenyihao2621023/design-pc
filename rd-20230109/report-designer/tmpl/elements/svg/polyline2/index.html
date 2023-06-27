@@ -1,0 +1,6 @@
+
+{{set {x,y,width,height,fillcolor,color,linewidth,alpha,dash,cap,linejoin,closed,animations}=props;}}
+
+<svg class="overflow-visible pa z-index-1" style="left:{{=x}}{{=unit}};top:{{=y}}{{=unit}};width:{{=mmax(width,mu)}}{{=unit}};height:{{=mmax(height,mu)}}{{=unit}};{{=am(animations)}}">
+    <path d="{{=path}}{{=closed?'z':''}}" style="fill:{{=fillcolor||'none'}};stroke:{{=color}};stroke-width:{{=linewidth}}{{=unit}};opacity:{{=alpha}};" stroke-dasharray="{{=dash}}{{=unit}}" stroke-linejoin="{{=linejoin}}" stroke-linecap="{{cap}}?round"/>
+</svg>

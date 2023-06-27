@@ -1,0 +1,116 @@
+<div class="flex align-items-center fontsize-16 hp100 cursor-default {{if mini}}site-logo-standalone{{else}}site-logo-with-name{{/if}}">
+    {{if siteLogo}}
+        <img class="site-logo" src="{{=siteLogo}}" alt="{{=siteName||i18n('@:{lang#site.name}')}}"/>
+    {{else}}
+        <i class="iconfont mr5 fontsize-20">&#xe627;</i>
+    {{/if}}
+    {{if !mini}}
+        {{=siteName||i18n('@:{lang#site.name}')}}
+    {{/if}}
+</div>
+<div class="flex align-items-center unselectable flex-fill-rest{{if c}} mr10 justify-content-center{{/if}}">
+    {{each elements as e}}
+        {{set {bar,subs,icon,title,image,ctrl,large}=e;}}
+        {{if bar}}
+            <div class="header-item-spliter width-1"></div>
+        {{else if subs}}
+            <div class="header-item margin-0-2 justify-items-center grid align-items-center header-item-has-subs header-item-z-index pr cursor-pointer{{if readonly}} contrast-color-60{{/if}}">
+                <i class="iconfont header-item-icon" x-html="{{=icon}}"></i>
+                <b class="header-item-text font-weight-normal fontsize-12">{{=i18n(title)}}</b>
+                <i class="header-item-arrow contrast-color-60 transition iconfont fontsize-12">&#xe73a;</i>
+                <div class="header-item-more padding-4 cursor-default pa none{{if large}} header-item-large-more{{/if}}">
+                    {{each subs as es}}
+                    {{set {image,icon,ctrl,title}=es}}
+                    <div class="sub-item margin-0-2 justify-items-center grid border-radius-x align-items-center fl touch-action-none{{if readonly}} cursor-not-allowed contrast-color-60 item-disabled{{else}} cursor-pointer{{/if}}" mx-pointerdown="{{=!readonly}}?@:{add.element}({src:{{#es}}})">
+                        {{if image}}
+                        <img class="tag-img item-image mwp100" src="{{=image}}"/>
+                        {{else}}
+                        <i class="iconfont header-item-icon" x-html="{{=icon||ctrl.icon}}"></i>
+                        {{/if}}
+                        <b class="header-item-text font-weight-normal fontsize-12">{{=i18n(title||ctrl.title)}}</b>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        {{else}}
+            <div class="header-item margin-0-2 justify-items-center grid align-items-center pr touch-action-none{{if readonly}} cursor-not-allowed contrast-color-60 item-disabled{{else}} cursor-pointer{{/if}}" mx-pointerdown="{{=!readonly}}?@:{add.element}({src:{{#e}}})">
+                {{if image}}
+                <img class="tag-img item-image mwp100" src="{{=image}}"/>
+                {{else}}
+                <i class="iconfont header-item-icon" x-html="{{=icon||ctrl.icon}}"></i>
+                {{/if}}
+                <b class="header-item-text font-weight-normal fontsize-12">{{=i18n(title||ctrl.title)}}</b>
+            </div>
+        {{/if}}
+    {{/each}}
+</div>
+<div class="flex align-items-center unselectable">
+    {{if su||dd}}
+    <div class="header-item margin-0-2 justify-items-center grid align-items-center{{if readonly}} cursor-not-allowed contrast-color-60{{else}} cursor-pointer{{/if}}{{if dd}} header-item-has-subs{{/if}}" title="{{= i18n('@:{lang#save}') }}(Ctrl+S)" mx-click="{{=!readonly}}?@:{save}()">
+        <i class="iconfont">&#xe66c;</i>
+        <b class="header-item-text font-weight-normal fontsize-12">{{= i18n('@:{lang#save}') }}</b>
+    </div>
+        {{if dd}}
+            <div class="header-item pr flex header-item-dd header-item-z-index">
+                <i class="contrast-color-60 iconfont fontsize-12 cursor-pointer hp100 wp100 flex align-items-center justify-content-center" title="{{=i18n('@:{lang#save.more.options}')}}">&#xe699;</i>
+                <div class="pa header-item-dd-shim top-0 none cursor-pointer"></div>
+                <div class="header-item-more-menu padding-2 cursor-default pa none right-0" mx-click="@:{stop.event}()">
+                    {{if cuas && su && !readonly}}
+                        <div class="menu-item margin-2 border-radius-x flex align-items-center" mx-view="./header-as"></div>
+                    {{/if}}
+                    {{if cssc}}
+                        <div class="menu-item margin-2 border-radius-x flex align-items-center cursor-pointer" mx-click="@:{show.stage.content}()">
+                            <i class="iconfont menu-icon fontsize-14">&#xe664;</i>
+                            <span class="flex-fill-rest menu-text" title="{{=i18n('@:{lang#save.content.title}')}}">
+                                {{=i18n('@:{lang#save.content.title}')}}
+                            </span>
+                            <code class="short contrast-color-60 fontsize-12" title="{{= i18n('@:{lang#shortcuts}') }}Ctrl+Shift+S">Ctrl+Shift+S</code>
+                        </div>
+                    {{/if}}
+                    {{if cunf}}
+                        <div class="menu-item margin-2 border-radius-x flex align-items-center cursor-pointer" mx-click="@:{save.to.local}()">
+                            <i class="iconfont menu-icon fontsize-14">&#xe7e4;</i>
+                            <span class="flex-fill-rest menu-text" title="{{=i18n('@:{lang#save.to.local}')}}">
+                                {{=i18n('@:{lang#save.to.local}')}}
+                            </span>
+                        </div>
+                        <div class="menu-item margin-2 border-radius-x flex align-items-center pr cursor-pointer" mx-click="@:{read.from.local}()">
+                            <i class="iconfont menu-icon fontsize-14">&#xe807;</i>
+                            <span class="flex-fill-rest menu-text" title="{{=i18n('@:{lang#menu.import.from.local}')}}">
+                                {{=i18n('@:{lang#menu.import.from.local}')}}
+                            </span>
+                            {{if native}}
+                                <input title="{{=i18n('@:{lang#menu.import.from.local}')}}" type="file" accept=".rd" class="pa full-fill opacity-0" mx-change="@:{read.file.from.input}()"/>
+                            {{/if}}
+                        </div>
+                    {{/if}}
+                </div>
+            </div>
+        {{/if}}
+    {{/if}}
+    <div class="header-item margin-0-2 justify-items-center grid cursor-pointer align-items-center" mx-click="@:{print}()" title="{{=i18n('@:{lang#click.show}','@:{lang#preview}')}}(Ctrl+P)">
+        <i class="iconfont">&#xe679;</i>
+        <b class="header-item-text font-weight-normal fontsize-12">{{= i18n('@:{lang#preview}') }}</b>
+    </div>
+    {{if (help && !mini) || (theme && !mini) || template}}
+    <div class="header-item-spliter width-1"></div>
+    {{/if}}
+    {{if template}}
+    <div class="header-item margin-0-2 justify-items-center grid cursor-pointer align-items-center" mx-click="@:{show.examples}()" title="{{=i18n('@:{lang#click.show}','@:{lang#template}')}}(Ctrl+E)">
+        <i class="iconfont">&#xe63f;</i>
+        <b class="header-item-text font-weight-normal fontsize-12">{{= i18n('@:{lang#template}') }}</b>
+    </div>
+    {{/if}}
+    {{if theme && !mini}}
+    <div class="header-item margin-0-2 justify-items-center grid cursor-pointer align-items-center" mx-click="@:{show.theme}()" title="{{=i18n('@:{lang#click.show}','@:{lang#theme}')}}(Shift+T)">
+        <i class="iconfont">&#xe683;</i>
+        <b class="header-item-text font-weight-normal fontsize-12">{{= i18n('@:{lang#theme}') }}</b>
+    </div>
+    {{/if}}
+    {{if help && !mini}}
+    <div class="header-item margin-0-2 justify-items-center grid cursor-pointer align-items-center" mx-click="@:{help}()" title="{{=i18n('@:{lang#click.show}','@:{lang#help}')}}(Shift+/)">
+        <i class="iconfont">&#xe657;</i>
+        <b class="header-item-text font-weight-normal fontsize-12">{{= i18n('@:{lang#help}') }}</b>
+    </div>
+    {{/if}}
+</div>

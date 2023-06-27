@@ -1,0 +1,10 @@
+
+{{set {x,y,width,height,alpha,rotate,animations,bind}=props}}
+<div class="pa z-index-1 overflow-hidden{{if enter}} hod-drop-tip{{/if}}" style="left:{{=x}}{{=unit}};top:{{=y}}{{=unit}};width:{{=width}}{{=unit}};height:{{=height}}{{=unit}};opacity:{{=alpha}};transform:rotate({{=rotate}}deg);{{=am(animations)}}" mx-dragenter="@:{when.data.field.enter}()" mx-dragleave="@:{when.data.field.leave}()" mx-drop="@:{when.data.field.drop}()">
+    <mx-vframe class="wp100 hp100 flex align-items-center justify-content-center pointer-events-none" src="../subs/bwip" *props="{{#props}}"/>
+    <div class="pa pointer-events-none white-space-nowrap left-0 bottom-0 background-color-brand-a10 padding-2 fontsize-12 line-height-14">
+        {{if bind.id}}
+            绑定[{{=bind.fields?.[0]?.name||''}}]
+        {{/if}}
+    </div>
+</div>

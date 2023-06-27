@@ -1,0 +1,36 @@
+<div class="padding-4 unselectable">
+    <div class="flex flex-wrap-wrap">
+        {{each elements as e}}
+            {{if !e.subs && !e.bar && !e.gap }}
+                <div class="fl element-item justify-items-center grid border-radius-x align-items-center pr touch-action-none{{if readonly}} cursor-not-allowed opacity-40 element-item-disabled{{else}} cursor-pointer{{/if}}" mx-pointerdown="{{=!readonly}}?@:{add.element}({src:{{#e}}})">
+                    {{if e.image}}
+                        <img class="tag-img item-image mwp100" src="{{=e.image}}"/>
+                    {{else}}
+                        <i class="iconfont element-item-icon" x-html="{{=e.icon||e.ctrl.icon}}"></i>
+                    {{/if}}
+                    <b class="element-item-text fontsize-12">{{=i18n(e.title||e.ctrl.title)}}</b>
+                </div>
+            {{/if}}
+        {{/each}}
+    </div>
+    {{each elements as e}}
+        {{if e.subs}}
+            <div class="flex align-items-center element-title border-radius-x cursor-pointer" mx-click="@:{toggle.children}({item:{{#e}}})">
+                <i class="iconfont fontsize-12 transition{{if e.opened}} r90{{/if}}">&#xe63b;</i>
+                <span>{{=e.title}}</span>
+            </div>
+            <div class="flex flex-wrap-wrap{{if !e.opened}} none{{/if}}">
+                {{each e.subs as se}}
+                    <div class="fl element-item justify-items-center grid border-radius-x align-items-center pr touch-action-none{{if readonly}} cursor-not-allowed opacity-40 element-item-disabled{{else}} cursor-pointer{{/if}}" mx-pointerdown="{{=!readonly}}?@:{add.element}({src:{{#se}}})">
+                        {{if se.image}}
+                            <img class="tag-img item-image mwp100" src="{{=se.image}}"/>
+                        {{else}}
+                            <i class="iconfont element-item-icon" x-html="{{=se.icon||se.ctrl.icon}}"></i>
+                        {{/if}}
+                        <b class="element-item-text fontsize-12">{{=i18n(se.title||se.ctrl.title)}}</b>
+                    </div>
+                {{/each}}
+            </div>
+        {{/if}}
+    {{/each}}
+</div>

@@ -1,0 +1,29 @@
+{{each cs as h i}}
+    <canvas width="{{=w*dpr}}" height="{{= h*dpr }}" style="width:{{=w}}px;height:{{= h }}px;" id="_rd_{{=i}}_{{= $viewId }}"></canvas>
+{{/each}}
+<!-- <svg class="pa cursor-default" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 {{=height}}" style="width:19px;height:{{=height}}px">
+    {{set temp}}
+    {{for(let i=step;i<yStart;i+=step)}}
+    {{temp=round(i/scale*enlarge)}}
+    {{if temp%(space*enlarge)===0}}
+        <rect width="{{=hbar}}" height="1" x="{{=20-hbar}}" y="{{=yStart-i}}" style="fill:{{=barColor}};"/>
+        <text x="14" y="{{=yStart-i+2}}" class="fontsize-10 color-fill-999" transform="rotate(-90,13,{{=yStart-i}})">{{=-toUnit(temp/enlarge)}}</text>
+    {{else}}
+        <rect width="{{=bar}}" height="1" x="{{=20-bar}}" y="{{=yStart-i}}" style="fill:{{=barColor}};"/>
+    {{/if}}
+    {{/for}}
+    {{for(let i=0;i<yEnd;i+=step)}}
+    {{temp=round(i/scale*enlarge)}}
+    {{if temp%(space*enlarge)===0}}
+        <rect width="{{=hbar}}" height="1" x="{{=20-hbar}}" y="{{=yStart+i}}" style="fill:{{=barColor}};"/>
+        <text x="14" y="{{=yStart+i}}" class="fontsize-10 color-fill-999" transform="rotate(-90,13,{{=yStart+i-2}})">{{=toUnit(temp/enlarge)}}</text>
+    {{else}}
+        <rect width="{{=bar}}" height="1" x="{{=20-bar}}" y="{{=yStart+i}}" style="fill:{{=barColor}};"/>
+    {{/if}}
+    {{/for}}
+</svg> -->
+{{if y}}
+    {{each y as t}}
+        <div class="pa width-4 right-0 background-color-brand-a30 transition" style="top:{{=t[0]+ys}}px;height:{{=t[1]-t[0]}}px"></div>
+    {{/each}}
+{{/if}}

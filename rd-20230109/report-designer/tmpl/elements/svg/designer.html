@@ -1,0 +1,57 @@
+{{set {props,ctrl,id}=element}}
+{{set modifier=ctrl['@:{modifier}']}}
+{{set {x,y,height,width,rotate,locked,readonly}=props}}
+<mx-vframe class="unselectable display-contents{{if readonly || !(modifier & denum['@:{enum#modifier.nomask}'])}} pointer-events-none{{/if}}" src="{{=view}}" *props="{{#props}}" *unit="{{#unit}}" />
+
+{{set r=((rotate||0)+360)%360}}
+{{set pxWidth=toPx(width),pxHeight=toPx(height)}}
+{{set showIcon=hmSize>=pxWidth||hmSize>=pxHeight}}
+<!--当前被选中，且选中元素只有1个，未处于锁定及组合状态下-->
+{{set showCtrls=selected&&count==1&&!locked&&!grouped&&!selfGrouped&&!readonly}}
+<div id="_rdm_{{=element.id}}" style="left:{{=x}}{{=unit}};top:{{=y}}{{=unit}};width:{{=width}}{{=unit}};height:{{=height}}{{=unit}};transform:rotate({{=r}}deg)" class="pa unselectable z-index-1 normal{{if selected}}{{if locked}} locked-line{{else}} focus-line{{/if}}{{if selfGrouped}} grouped-self{{/if}}{{/if}}{{if grouped}}{{if locked}} grouped-locked-line{{else}} grouped-line{{/if}}{{/if}}">
+    <!--撑开元素，在靠近底或右边时，保留空隙-->
+    <div class="pa pointer-events-none preserve-size"></div>
+    {{if locked}}
+        <i class="iconfont color-third pa right-0 top-0 fontsize-12">&#xe63e;</i>
+    {{/if}}
+    {{if !locked && selected}}
+        <div class="cross pa pointer-events-none"></div>
+    {{/if}}
+    {{if !readonly && (showIcon || (modifier & denum['@:{enum#modifier.icon}']) || (selected && (modifier & denum['@:{enum#modifier.selected.show.icon}'])))}}
+        <!--如果需要显示icon且元素非只读，则显示icon-->
+        <i data-as="icon" class="iconfont pa touch-action-none border-radius-x padding-2{{if locked}} background-color-disabled{{else}} cursor-move color-third color-third-hover background-color-brand-a10{{/if}}{{if (modifier & denum['@:{enum#modifier.top.icon}'])}} left-0 top-icon{{else}} left-icon top-0{{/if}}" x-html="{{=ctrl.icon}}"></i>
+    {{/if}}
+    {{if showCtrls}}
+        <svg class="wp100 hp100 overflow-visible pointer-events-none pa">
+            {{set pxOfX=toPx(x),pxOfY=toPx(y)}}
+            {{if pos}}<!--点旋转效果-->
+                <path d="M{{=pxWidth/2}} -14L{{=pxWidth/2}} {{=pxHeight/2}}L{{=pos.x-pxOfX}} {{=pos.y-pxOfY}}" class="svg-path{{if solid}} svg-ctrl-solid-line{{else}} svg-ctrl-dahsed-line{{/if}}"/>
+                <circle r="4.5" cx="{{=pos.x-pxOfX}}" cy="{{=pos.y-pxOfY}}" class="cursor-pointer" fill="var(@:(--scoped-color-brand))"/>
+            {{/if}}
+            {{if ctrl['@:{circle.paths}']}}<!--圆形路径效果-->
+                {{each ctrl['@:{circle.paths}'] as [r,c]}}
+                    <circle r="{{=toPx(props[r])}}" cx="{{=toPx(props[c+'X']-x)}}" cy="{{=toPx(props[c+'Y']-y)}}"  class="svg-path svg-ms-dashed"/>
+                {{/each}}
+            {{/if}}
+            {{if ctrl['@:{path.points}']}}<!--普通路径效果-->
+                <path d="{{each ctrl['@:{path.points}'] as p}}{{if p=='M'||p=='L'}}{{=p}}{{else}}{{=toPx(props[p+'X']-x)}} {{=toPx(props[p+'Y']-y)}}{{/if}}{{/each}}" class="svg-path" />
+            {{/if}}
+        </svg>
+        <div class="ctrl-rotate transition mod-rect ctrl-size transform-x-n50 circle background-color-contrast pa pointer-events-all touch-action-none" mx-pointerdown="{{if ctrl['@:{modifier}'] & denum['@:{enum#modifier.protate}']}}@:{start.points.rotate}{{else}}@:{start.rotate}{{/if}}()" title="{{=i18n('@:{lang#press.drag.element.rotate}')}}"></div>
+
+        <!--特殊的点，比如圆形拖动修改半径的点-->
+        {{each ctrl['@:{key.special.points}'] as key}}
+            <div mx-pointerdown="@:{drag.svg.special.key.point}({key:'{{=key}}'})" title="{{=i18n('@:{lang#press.drag.modify.point}')}}" style="left:{{=props[key+'X']-x}}{{=unit}};top:{{=props[key+'Y']-y}}{{=unit}}" class="pa z-index-1 mod-rect ctrl-size circle cursor-pointer touch-action-none transform-xy-n50 background-color-contrast"></div>
+        {{/each}}
+        <!--核心关键点，比如bezier的修改控制点-->
+        {{set keyPoints=ctrl['@:{get.key.points}']?.(props)}}
+        {{each keyPoints as key}}
+            <div mx-pointerdown="@:{drag.svg.key.point}({key:'{{=key}}'})" title="{{=i18n('@:{lang#press.drag.ctrl.point}')}}" style="left:{{=props[key+'X']-x}}{{=unit}};top:{{=props[key+'Y']-y}}{{=unit}}" class="pa z-index-1 mod-rect ctrl-size circle cursor-pointer touch-action-none transform-xy-n50{{if key==props['@:{focus.ctrl}']}} background-color-brand{{else}} background-color-contrast{{/if}}"></div>
+        {{/each}}
+        <!--修改点，饼图中心修改点-->
+        {{set ctrlPoints=ctrl['@:{get.ctrl.points}']?.(props)}}
+        {{each ctrlPoints as key}}
+            <div style="left:{{=key.x}}{{=unit}};top:{{=key.y}}{{=unit}}" class="pa z-index-1 mod-rect ctrl-size cursor-move touch-action-none transform-xy-n50{{if key.c==props['@:{focus.mod}']}} background-color-brand{{else}} background-color-contrast{{/if}}" mx-pointerover="@:{focus.mod.point}({key:'{{=key.c}}'})" title="{{=i18n('@:{lang#press.drag.modify.point}')}}" mx-pointerdown="@:{drag.mod.point}({key:'{{=key.c}}'})"></div>
+        {{/each}}
+    {{/if}}
+</div>

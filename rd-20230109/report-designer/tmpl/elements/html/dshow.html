@@ -1,0 +1,8 @@
+<div class="pa z-index-1 touch-action-none" style="left:{{=props.x}}{{=unit}};top:{{=props.y}}{{=unit}};height:{{=props.height}}{{=unit}};opacity:{{=props.alpha}};width:{{=props.width}}{{=unit}};{{=am(props.animations)}}" mx-pointerdown="@:{stop}()" mx-contextmenu="@:{stop}()">
+    <mx-codemirror style="border:solid 1px #ddd" class="wp100 hp100 cursor-text" *mode="htmlmixed" *value="{{#props.text}}" mx-cmchange="@:{update.value}()">
+        loading...
+    </mx-codemirror>
+    <!-- <mx-monaco style="border:solid 1px #ddd" class="wp100 hp100 cursor-text" *mode="html" *value="{{#props.value}}" mx-mchange="@:{update.value}()">
+        loading...
+    </mx-monaco> -->
+</div>

@@ -1,0 +1,20 @@
+{{set hasField = fields?.length}}
+<div class="padding-2 simulator-container border-radius-x background-color-fff width-150{{if enter}} drop-zone-enter{{/if}}{{if disabled}} notallowed simulator-container-disabled cursor-not-allowed{{/if}}">
+    <div class="drop-zone pr{{if enter && index==-1 && !hasField}} drop-first-place{{/if}}" mx-dragleave="@:{drag.exit}()" mx-dragenter="@:{drag.enter}()" mx-contextmenu="@:{prevent}()" id="_rd_{{= $viewId }}">
+        {{if hasField}}
+            {{each fields as field i}}
+                <div class="item-draggable border-radius-x flex align-items-center background-color-fff pr fontsize-12 line-height-14{{if i}} margin-top-2{{/if}}{{if i==dragIndex}} opacity-40{{else if i==index}} item--{{=onTop?'top':'bottom'}}{{/if}}" draggable="{{=!disabled}}?true" mx-dragstart="@:{drag.start}({index:{{=i}}})" mx-dragover="@:{drag.over}({index:{{=i}}})" mx-dragend="@:{drag.end}()" title="{{=field.name}}">
+                    <span class="iconfont fontsize-12">&#xe69c;</span>
+                    <span class="ellipsis white-space-nowrap flex-fill-rest{{if outside && i==dragIndex}} item-removed{{/if}}">{{=field.name}}</span>
+                    {{if !disabled}}
+                        <i class="iconfont element-icon fontsize-12 fontsize-scale-10 color-third color-third-hover cursor-pointer" title="{{=i18n('@:{lang#remove.bind.by.clicked}',field.name)}}" mx-click="@:{remove.at}({at:{{=i}}})">&#xe6b3;</i>
+                    {{/if}}
+                </div>
+            {{/each}}
+        {{else}}
+            <div class="drop-tip drop-zone color-third flex align-items-center">
+                {{=i18n('@:{lang#mx-gallery.field.drag.tip}')}}
+            </div>
+        {{/if}}
+    </div>
+</div>

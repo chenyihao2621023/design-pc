@@ -1,0 +1,14 @@
+<div class="flex justify-content-center fontsize-16">FPS</div>
+<div class="flex justify-content-center fontsize-12" id="{{= $viewId }}_fps_text"></div>
+<canvas width="{{=w*2}}" height="60" id="{{= $viewId }}_fps_canvas" style="width:{{=w}}px;height:30px;"></canvas>
+{{if m}}
+<div class="flex justify-content-center fontsize-16">Memory(MB)</div>
+<div class="flex justify-content-center fontsize-12" id="{{= $viewId }}_mem_text"></div>
+<canvas width="{{=w*2}}" height="60" id="{{= $viewId }}_mem_canvas" style="width:{{=w}}px;height:30px;"></canvas>
+{{/if}}
+
+{{if po}}
+<div class="flex justify-content-center fontsize-16">LongTask</div>
+<div class="flex justify-content-center fontsize-12" id="{{= $viewId }}_lt_text"></div>
+<canvas width="{{=w*2}}" height="60" id="{{= $viewId }}_lt_canvas" style="width:{{=w}}px;height:30px;"></canvas>
+{{/if}}

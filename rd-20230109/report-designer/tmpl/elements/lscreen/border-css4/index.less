@@ -1,0 +1,36 @@
+.outer {
+    border: 1px solid #19ba8b2b;
+    background: #0001;
+}
+
+.top::before, .top::after, .bottom::before, .bottom::after {
+    position: absolute;
+    content: '';
+    width: 10px;
+    height: 10px;
+}
+
+.top::before {
+    border-left: 2px solid #02a6b5;
+    left: 0;
+    border-top: 2px solid #02a6b5;
+}
+
+.top::after {
+    border-right: 2px solid #02a6b5;
+    right: 0;
+    border-top: 2px solid #02a6b5;
+}
+.bottom::before {
+    border-left: 2px solid #02a6b5;
+    left: 0;
+    bottom: 0;
+    border-bottom: 2px solid #02a6b5;
+}
+
+.bottom::after {
+    border-right: 2px solid #02a6b5;
+    right: 0;
+    bottom: 0;
+    border-bottom: 2px solid #02a6b5;
+}

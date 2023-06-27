@@ -1,0 +1,43 @@
+
+{{set {rules}=props;}}
+{{each rules as rule i last}}
+    <div class="flex align-items-center margin-bottom-4">
+        <span class="width-90 mr2 tr pr10">
+            {{if i}}按下{{else}}普通{{/if}}展示
+        </span>
+        <div class="width-150">
+            <mx-vframe src="../picture/index" *props="{{#rule}}" *disabled="{{#disabled}}" *defined="{{#idf}}" mx-change="@:{update.prop}({at:{{=i}},rules:{{#rules}}})"/>
+        </div>
+    </div>
+    <div class="flex align-items-center margin-bottom-4">
+        <span class="width-90 pr10 mr2 tr">
+            {{=i18n('@:{lang#props.rotate.x}')}}
+        </span>
+        <div class="width-150">
+            <label class="display-inline-block font-weight-normal mwp100 cursor-pointer flex align-items-center">
+                <input class="switch-input pa" type="checkbox" checked="{{=rule.mx}}?" disabled="{{=disabled}}?" mx-change="@:{update.mirror}({key:'x',at:{{=i}},rules:{{#rules}}})"/>
+                <i class="switch-button display-inline-block transition unselectable pr"></i>
+            </label>
+        </div>
+    </div>
+    <div class="flex align-items-center margin-bottom-4">
+        <span class="width-90 mr2 tr pr10">
+            {{=i18n('@:{lang#props.rotate.y}')}}
+        </span>
+        <div class="width-150">
+            <label class="display-inline-block font-weight-normal mwp100 cursor-pointer flex align-items-center">
+                <input class="switch-input pa" type="checkbox" checked="{{=rule.my}}?" disabled="{{=disabled}}?" mx-change="@:{update.mirror}({key:'y',at:{{=i}},rules:{{#rules}}})"/>
+                <i class="switch-button display-inline-block transition unselectable pr"></i>
+            </label>
+        </div>
+    </div>
+    <div class="flex align-items-center margin-bottom-4">
+        <span class="width-90 mr2 tr pr10">
+            发送数据
+        </span>
+        <textarea class="textarea margin-0 designer-ff overflow-auto width-150 height-100" placeholder="请输入发送的数据" mx-input="@:{update.textarea}({at:{{=i}},rules:{{#rules}}})">{{=rule.sval}}</textarea>
+    </div>
+    {{if !last}}
+        <div class="item-spliter"></div>
+    {{/if}}
+{{/each}}

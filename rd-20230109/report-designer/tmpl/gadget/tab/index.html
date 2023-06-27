@@ -1,0 +1,17 @@
+{{set cols=props.rows[0].cols}}
+{{set total=cols.length}}
+{{each cols as p i}}
+<div class="flex align-items-center margin-bottom-4">
+    <span class="width-90 pr10 mr2 tr{{if disabled}} cursor-not-allowed{{/if}}">
+        {{if total>1}}
+        <span class="iconfont mr5 fontsize-12 color-third{{if disabled}} cursor-not-allowed opacity-40{{else}} color-third-hover cursor-pointer{{/if}}" mx-click="{{=!disabled}}?@:{remove.tab}({at:{{=i}}})" title="删除Tab">&#xe6b3;</span>
+        {{/if}}
+        名称
+    </span>
+    <input value="{{=p.text}}" class="margin-0 input width-150" disabled="{{=disabled}}?" mx-change="@:{stop}()" mx-input="@:{update.tab}({at:{{=i}}})"/>
+</div>
+{{/each}}
+
+<div class="flex align-items-center width-242 justify-content-flex-end">
+    <button class="btn white-space-nowrap btn-brand cursor-pointer outline-none" disabled="{{=disabled}}?" mx-click="@:{add.tab}()">添加Tab</button>
+</div>

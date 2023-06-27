@@ -1,0 +1,94 @@
+{{set unitMin=toUnit(1);}}
+{{set {x,y,width,height,alpha,lineType,
+    endArrow,color,startArrow,startX,startY,endX,endY,
+    ctrl1X,ctrl1Y,ctrl2X,ctrl2Y,linewidth,dash,cap,
+    textRotate,textPointX,textOffsetX,textPointY,textOffsetY,
+    textX,textY,textWidth,textHeight,points,
+    textFontsize,textForecolor,textBackground,textLetterspacing,
+    textFontfamily,text}=props;}}
+<svg class="overflow-visible pa z-index-1" style="left:{{=x}}{{=unit}};top:{{=y}}{{=unit}};width:{{=mmax(toNormalScale(width),unitMin)}}{{=unit}};height:{{=mmax(toNormalScale(height),unitMin)}}{{=unit}};opacity:{{=alpha}};">
+    <defs>
+        {{if endArrow==2}}
+        <marker id="a_{{=$viewId}}" viewBox="0 0 8 6" refX="7" refY="3" orient="auto" markerWidth="8" markerHeight="6">
+            <path d="M2 1L8 3L2 5z" style="fill:{{=color}}" />
+        </marker>
+        {{else if endArrow==3}}
+        <marker id="a_{{=$viewId}}" viewBox="0 0 8 6" refX="7" refY="3" orient="auto" markerWidth="8" markerHeight="6">
+            <path d="M2 1L7 3L2 5z" style="fill:#fff;stroke:{{=color}}" />
+        </marker>
+        {{else if endArrow==4}}
+        <marker id="a_{{=$viewId}}" viewBox="0 0 8 6" refX="7" refY="3" orient="auto" markerWidth="8" markerHeight="6">
+            <path d="M2 1L8 3L2 5" style="fill:none;stroke:{{=color}}" />
+        </marker>
+        {{else if endArrow==5}}
+        <marker id="a_{{=$viewId}}" viewBox="0 0 8 6" refX="7" refY="3" orient="auto" markerWidth="8" markerHeight="6">
+            <path d="M4 1L7 3L4 5L1 3z" style="fill:{{=color}}" />
+        </marker>
+        {{else if endArrow==6}}
+        <marker id="a_{{=$viewId}}" viewBox="0 0 8 6" refX="8" refY="3" orient="auto" markerWidth="8" markerHeight="6">
+            <path d="M4 1L7 3L4 5L1 3z" style="fill:#fff;stroke:{{=color}}" />
+        </marker>
+        {{else if endArrow==7}}
+        <marker id="a_{{=$viewId}}" viewBox="0 0 6 6" refX="5" refY="3" orient="auto" markerWidth="6" markerHeight="6">
+            <circle cx="3" cy="3" r="2" style="fill:{{=color}}" />
+        </marker>
+        {{else if endArrow==8}}
+        <marker id="a_{{=$viewId}}" viewBox="0 0 6 6" refX="6" refY="3" orient="auto" markerWidth="6" markerHeight="6">
+            <circle cx="3" cy="3" r="2" style="fill:#fff;stroke:{{=color}}" />
+        </marker>
+        {{else if endArrow==9}}
+        <marker id="a_{{=$viewId}}" viewBox="0 0 6 8" refX="6" refY="4" orient="auto" markerWidth="6" markerHeight="8">
+            <path d="M2 4L6 1M2 4L6 7" style="fill:none;stroke:{{=color}}" />
+        </marker>
+        {{/if}}
+        {{if startArrow==2}}
+        <marker id="as_{{=$viewId}}" viewBox="0 0 8 6" refX="1" refY="3"
+            markerWidth="8" markerHeight="6" orient="auto">
+            <path d="M6 1L0 3L6 5z" style="fill:{{=color}}" />
+        </marker>
+        {{else if startArrow==3}}
+        <marker id="as_{{=$viewId}}" viewBox="0 0 8 6" refX="1" refY="3"
+            markerWidth="8" markerHeight="6" orient="auto">
+            <path d="M6 1L1 3L6 5z" style="fill:#fff;stroke:{{=color}}" />
+        </marker>
+        {{else if startArrow==4}}
+        <marker id="as_{{=$viewId}}" viewBox="0 0 8 6" refX="1" refY="3" orient="auto" markerWidth="8" markerHeight="6">
+            <path d="M6 1L0 3L6 5" style="fill:none;stroke:{{=color}}" />
+        </marker>
+        {{else if startArrow==5}}
+        <marker id="as_{{=$viewId}}" viewBox="0 0 8 6" refX="1" refY="3" orient="auto" markerWidth="8" markerHeight="6">
+            <path d="M4 1L7 3L4 5L1 3z" style="fill:{{=color}}" />
+        </marker>
+        {{else if startArrow==6}}
+        <marker id="as_{{=$viewId}}" viewBox="0 0 8 6" refX="0" refY="3" orient="auto" markerWidth="8" markerHeight="6">
+            <path d="M4 1L7 3L4 5L1 3z" style="fill:#fff;stroke:{{=color}}" />
+        </marker>
+        {{else if startArrow==7}}
+        <marker id="as_{{=$viewId}}" viewBox="0 0 6 6" refX="1" refY="3" orient="auto" markerWidth="6" markerHeight="6">
+            <circle cx="3" cy="3" r="2" style="fill:{{=color}}" />
+        </marker>
+        {{else if startArrow==8}}
+        <marker id="as_{{=$viewId}}" viewBox="0 0 6 6" refX="0" refY="3" orient="auto" markerWidth="6" markerHeight="6">
+            <circle cx="3" cy="3" r="2" style="fill:#fff;stroke:{{=color}}" />
+        </marker>
+        {{else if startArrow==9}}
+        <marker id="as_{{=$viewId}}" viewBox="0 0 6 8" refX="0" refY="4" orient="auto" markerWidth="6" markerHeight="8">
+            <path d="M4 4L0 1M4 4L0 7" style="fill:none;stroke:{{=color}}" />
+        </marker>
+        {{/if}}
+    </defs>
+    <path d="M{{=toPx(startX-x+ox)}} {{=toPx(startY-y+oy)}}{{if lineType=='line'}}L{{else if lineType=='bezier'}}C{{=toPx(ctrl1X-x+ox)}} {{=toPx(ctrl1Y-y+oy)}} {{=toPx(ctrl2X-x+ox)}} {{=toPx(ctrl2Y-y+oy)}} {{else}}{{each points as p}}L{{=toPx(p.x-x+ox)}} {{=toPx(p.y-y+oy)}}{{/each}}L{{/if}}{{=toPx(endX-x+ox)}} {{=toPx(endY-y+oy)}}" style="fill:none;stroke:{{=color}};stroke-width:{{=linewidth}}{{=unit}}" stroke-dasharray="{{=dash}}{{=unit}}" stroke-linecap="{{cap}}?round" marker-start="{{=startArrow!=1}}?url(#as_{{=$viewId}})" marker-end="{{=endArrow!=1}}?url(#a_{{=$viewId}})"/><!--id="p_{{=$viewId}}"/>-->
+    <!-- {{if animation}}
+    <circle r="{{=4*scale}}" fill="var(--scoped-color-brand)">
+        <animateMotion dur="{{=time/scale}}s" repeatCount="indefinite">
+            <mpath xlink:href="#p_{{=$viewId}}"/>
+        </animateMotion>
+    </circle>
+    {{/if}} -->
+    <foreignObject transform="rotate({{=textRotate}},{{=toPx(textPointX-x+textOffsetX+ox)}},{{=toPx(textPointY-y+textOffsetY+oy)}})" x="{{=textX-x+textOffsetX+ox}}{{=unit}}" y="{{=textY-y+textOffsetY+oy}}{{=unit}}" width="{{=textWidth}}{{=unit}}" height="{{=textHeight}}{{=unit}}">
+        <div class="tc" style="line-height:{{=textHeight}}{{=unit}};font-size:{{=textFontsize}}{{=unit}};width:{{=textWidth}}{{=unit}};height:{{=textHeight}}{{=unit}};color:{{=textForecolor}};{{if textBackground}}background:{{=textBackground}};{{/if}}letter-spacing:{{=textLetterspacing}}{{=unit}};font-family:{{=textFontfamily}}" x-html="{{=enHTML(text)}}"></div>
+    </foreignObject>
+
+
+    <!-- <rect x="{{=cx-x}}" y="{{=cy-y}}" width="2" height="2" style="fill:red"/> -->
+</svg>

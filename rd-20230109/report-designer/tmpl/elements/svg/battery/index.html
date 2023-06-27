@@ -1,0 +1,5 @@
+
+{{set {x,y,width,height,alpha,rotate,charging,
+    fill,lightning,outline,power,animations}=props;}}
+{{set barT=8.1*(100-power),barH=8.1*power;}}
+<svg viewBox="0 0 1024 1024" class="pa z-index-1" style="left:{{=x}}{{=unit}};top:{{=y}}{{=unit}};width:{{=width}}{{=unit}};height:{{=height}}{{=unit}};opacity:{{=alpha}};transform:rotate({{=rotate}}deg);{{=am(animations)}}"><path fill="{{=fill}}" d="M330 {{=140+barT}}h350v{{=barH}}H330z"/>{{if charging}}<path fill="{{=lightning}}" d="M499.712 801.131l97.445-324.376-97.445 12.783V266.735l-93.415 314.798 93.415-29.927zm50.077-772.228h-94.704z" stroke="{{=fill}}" stroke-width="10px"/>{{/if}}<path fill="{{=outline}}" d="M440 0c-47.368 0-47.368 76.338-48.788 76.338h190.86S582.072 0 534.704 0z"/><path fill="{{=outline}}" d="M247.742 168.663V919.75c0 99.328 93.712 100.121 93.712 100.121h327.879s93.712 0 93.712-100.12V168.662c0-100.121-93.712-100.121-93.712-100.121H341.454s-93.712 0-93.712 100.12zm427.206-60.45s48.458-.065 48.458 51.234V928.9c0 51.3-48.458 51.3-48.458 51.3H335.84s-48.458 0-48.458-51.3V159.48c0-52.885 48.458-51.3 48.458-51.3h339.11z"/></svg>

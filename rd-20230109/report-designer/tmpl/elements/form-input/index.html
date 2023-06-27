@@ -1,0 +1,8 @@
+<div class="pa z-index-1 flex align-items-center overflow-hidden" style="left:{{=props.x}}{{=unit}};top:{{=props.y}}{{=unit}};height:{{=props.height}}{{=unit}};opacity:{{=props.alpha}};width:{{=props.width}}{{=unit}};transform:rotate({{=props.rotate}}deg);{{=am(props.animations)}}">
+    {{set isReadonly=readonly||props.readonly}}
+    {{if props.multiline}}
+        <textarea id="ipt_{{=$viewId}}" readonly="{{=isReadonly===true}}?" class="overflow-auto wp100 hp100 margin-0 textarea{{if props.className}} {{=props.className}}{{/if}}" style="color:{{=props.forecolor}};font-size:{{=props.fontsize}}{{=unit}};letter-spacing:{{=props.letterspacing}}{{=unit}};font-family:{{=props.fontfamily}};text-align:{{=props.textAlign}}" name="{{=props.inputName}}" placeholder="{{=props.placeholder}}" mx-input="@:{update.value}()">{{=props.userValue||text}}</textarea>
+    {{else}}
+        <input name="{{=props.inputName}}" id="ipt_{{=$viewId}}" readonly="{{=isReadonly===true}}?" class="margin-0 wp100 hp100 input{{if props.className}} {{=props.className}}{{/if}}" style="color:{{=props.forecolor}};font-size:{{=props.fontsize}}{{=unit}};letter-spacing:{{=props.letterspacing}}{{=unit}};font-family:{{=props.fontfamily}};text-align:{{=props.textAlign}}" placeholder="{{=props.placeholder}}" value="{{=props.userValue||text}}" mx-input="@:{update.value}()"/>
+    {{/if}}
+</div>

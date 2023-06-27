@@ -1,0 +1,37 @@
+<div class="pr flex" id="_rd_so">
+    <!-- style="{{if fs}}transform:scaleX({{=rx}}) scaleY({{=ry}});transform-origin:0 0;margin:{{=marginTop}}px 0 0 {{=marginLeft}}px{{else}}padding:{{=spad.join('px ')}}px{{/if}}"-->
+    {{set {pages:count,width,height,radius,background,backgroundImage,backgroundRepeat,backgroundWidth,backgroundHeight,backgroundXOffset,backgroundYOffset,xOffset,yOffset,grid,gridWidth,gridHeight,gridColor}=page}}
+    <div style="padding:{{=spad.join('px ')}}px{{if center}};margin:0 auto{{/if}}" id="_rd_sw">
+        <div class="pr touch-action-none" style="width:{{=width*scale}}{{=unit}};height:{{=height*scale*count}}{{=unit}};" data-as="hod" id="_rd_sc">
+            {{for(let i=0;count>i;i++)}}
+            <div class="pa pointer-events-none fake-canvas{{if i}} stage-page-break-line{{/if}}" style="top:{{=height*scale*i}}{{=unit}};width:{{=width*scale}}{{=unit}};height:{{=height*scale}}{{=unit}};background:{{=background}};border-radius:{{=sr(radius,scale)}};{{if backgroundImage}}background-image:url({{=backgroundImage}});background-repeat:{{=backgroundRepeat=='full'?'no-repeat':backgroundRepeat}};background-size:{{if backgroundRepeat=='full'}}100% 100%{{else}}{{=backgroundWidth*scale}}{{=unit}} {{=backgroundHeight*scale}}{{=unit}};background-position:{{=backgroundXOffset}}{{=unit}} {{=backgroundYOffset}}{{=unit}}{{/if}}{{/if}}">
+                {{if grid}}
+                    <div class="pa wp100 hp100 grid-background" style="background-size:{{=gridWidth*scale}}{{=unit}} {{=gridHeight*scale}}{{=unit}};border-radius:{{=sr(radius,scale)}};--scoped-grid-color:{{=gridColor}}"></div>
+                {{/if}}
+                {{if xOffset!=0||yOffset!=0}}
+                    <div class="pa wp100 hp100 stage-offset z-index-9{{if i}} stage-page-break-line{{else}} stage-offset-top{{/if}}{{if i==count-1}} stage-offset-bottom{{/if}}" style="transform:translate({{=-xOffset*scale}}{{=unit}},{{=-yOffset*scale}}{{=unit}});border-radius:{{=sr(radius,scale)}}"></div>
+                {{/if}}
+                {{each hfs as e}}
+                    {{if i && e.type=='hod-header'}}
+                    <mx-vframe class="opacity-40 display-contents" src="../elements/hod-header/stage" *props="{{# e.props}}" *unit="{{#unit}}" *l="{{=lang}}"/>
+                    {{else if count-1>i && e.type=='hod-footer'}}
+                    <mx-vframe class="opacity-40 display-contents" src="../elements/hod-footer/stage" *props="{{# e.props}}" *unit="{{#unit}}" *l="{{=lang}}"/>
+                    {{/if}}
+                {{/each}}
+            </div>
+            {{/for}}
+            {{each elements as e}}
+                <mx-vframe id="{{=e.id}}"
+                    src="../elements/{{=e.type}}/designer"
+                    *element="{{#e}}"
+                    *owner-id="s"
+                    *unit="{{#unit}}"
+                    *l="{{=lang}}"
+                    class="touch-action-none display-contents"
+                    mx-pointerdown="@:{element.start.drag}({element:{{#e}}})"/>
+            {{/each}}
+            <mx-vframe class="pointer-events-none" src="./align"/>
+        </div>
+    </div>
+</div>
+<div id="_rd_pole_{{=$viewId}}" style="margin-top:calc(-{{=spad[0]+spad[2]}}px - {{=height*scale*count}}{{=unit}});display:none"></div>

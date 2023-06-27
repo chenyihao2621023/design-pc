@@ -1,0 +1,2 @@
+<i class="iconfont toolbar-item margin-0-2 border-radius-x align-items-center justify-content-center{{if canUndo}} cursor-pointer{{else}} toolbar-item-disabled cursor-not-allowed{{/if}}" title="{{=i18n('@:{lang#undo}')}}" mx-click="@:{do.exec}({s:'-',b:{{=canUndo}}})">&#xe682;</i>
+<i class="iconfont toolbar-item margin-0-2 border-radius-x align-items-center justify-content-center flipx{{if canRedo}} cursor-pointer{{else}} toolbar-item-disabled cursor-not-allowed{{/if}}" title="{{=i18n('@:{lang#redo}')}}" mx-click="@:{do.exec}({s:'+',b:{{=canRedo}}})">&#xe682;</i>

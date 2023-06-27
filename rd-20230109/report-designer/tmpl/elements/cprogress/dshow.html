@@ -1,0 +1,36 @@
+{{set {bind,width,height}=props;}}
+<svg class="z-index-1 overflow-hidden pa{{if enter}} hod-drop-tip{{/if}}" mx-dragenter="@:{when.data.field.enter}()" mx-dragleave="@:{when.data.field.leave}()" mx-drop="@:{when.data.field.drop}()" style="width:{{=props.width}}{{=unit}};height:{{=props.height}}{{=unit}};opacity:{{=props.alpha}};left:{{=props.x}}{{=unit}};top:{{=props.y}}{{=unit}};{{=am(props.animations)}}">
+    <circle
+        cx="50%"
+        cy="50%"
+        r="{{=radius}}"
+        fill="none"
+        stroke="{{=props.background}}"
+        stroke-width="{{=border}}"/>
+    <circle
+        cx="50%"
+        cy="50%"
+        r="{{=radius}}"
+        fill="none"
+        stroke="{{=props.fillcolor}}"
+        transform="rotate(-90 {{=center}} {{=center}})"
+        stroke-width="{{=border}}"
+        stroke-linecap="{{if props.roundCap}}round{{else}}butt{{/if}}"
+        stroke-dasharray="{{=d1}},{{=d2}}" id="_rd_{{=$viewId}}"/>
+    {{if props.showText}}
+    <text
+        x="50%"
+        y="50%"
+        style="text-anchor:middle;dominant-baseline:middle;"
+        font-family="{{=props.fontfamily}}"
+        font-size="{{=props.fontsize}}{{=unit}}"
+        fill="{{=props.forecolor}}">{{=text||value+'%'}}</text>
+    {{/if}}
+    <foreignObject x="0" y="0" width="{{=width}}{{=unit}}" height="{{=height}}{{=unit}}" class="pointer-events-none">
+        <div class="pa white-space-nowrap left-0 bottom-0 background-color-brand-a10 padding-2 fontsize-12 line-height-14">
+            {{if bind.id}}
+                绑定[{{=bind.fields?.[0]?.name||''}}]
+            {{/if}}
+        </div>
+    </foreignObject>
+</svg>

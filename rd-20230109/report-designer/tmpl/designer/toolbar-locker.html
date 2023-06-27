@@ -1,0 +1,3 @@
+<i class="toolbar-spliter fl"></i>
+<i class="iconfont toolbar-item margin-0-2 border-radius-x align-items-center justify-content-center{{if canLock}} cursor-pointer{{else}} toolbar-item-disabled cursor-not-allowed{{/if}}" title="{{=i18n('@:{lang#menu.lock}')}}(Ctrl+L)" mx-click="{{canLock}}?@:{lock.elements}()">&#xe63e;</i>
+<i class="iconfont toolbar-item margin-0-2 border-radius-x align-items-center justify-content-center{{if canUnlock}} cursor-pointer{{else}} toolbar-item-disabled cursor-not-allowed{{/if}}" title="{{=i18n('@:{lang#menu.unlock}')}}(Shift+L)" mx-click="{{canUnlock}}?@:{lock.elements}({un:1})">&#xe637;</i>

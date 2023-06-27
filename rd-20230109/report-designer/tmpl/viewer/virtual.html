@@ -1,0 +1,11 @@
+{{if page}}
+    {{if pages}}
+        {{each pages as item pageIndex last}}
+        <div class="designer-root designer-ff pr page overflow-hidden{{if !last}} page-break{{/if}}" style="width:{{=page.width}}{{=unit}};height:{{=page.height}}{{=unit}};border-radius:{{=page.radius}};background:{{=page.background}};{{if !page.preformat&&page.backgroundImage}}background-image:url({{=page.backgroundImage}});background-repeat:{{=page.backgroundRepeat=='full'?'no-repeat':page.backgroundRepeat}};background-size:{{if page.backgroundRepeat=='full'}}100% 100%{{else}}{{=page.backgroundWidth}}{{=unit}} {{=page.backgroundHeight}}{{=unit}};background-position:{{=page.backgroundXOffset}}{{=unit}} {{=page.backgroundYOffset}}{{=unit}}{{/if}}{{/if}}">
+            {{each item as e}}
+                <mx-vframe class="display-contents" src="../elements/{{=e.type}}/index" *props="{{#e.props}}" *unit="{{#unit}}"/>
+            {{/each}}
+        </div>
+        {{/each}}
+    {{/if}}
+{{/if}}

@@ -1,0 +1,41 @@
+{{if !hideHeader}}
+    <mx-vframe src="./header" class="header background-color-brand flex contrast-color pr white-space-nowrap" mx-contextmenu="@:{prevent}()"/>
+{{/if}}
+{{if !hideToolbar}}
+    <!--!!pr for z index-->
+    <mx-vframe src="./toolbar" class="pr toolbar panel-background flex{{if union}} left-right-borders{{/if}}" mx-contextmenu="@:{prevent}()"/>
+{{/if}}
+<div class="overflow-hidden{{if union}} left-right-borders{{/if}}{{if hideToolbar && hideHeader}} axis-stage-wrapper-without-header-toolbar{{else if hideToolbar}} axis-stage-wrapper-without-toolbar{{else if hideHeader}} axis-stage-wrapper-without-header{{else}} axis-stage-wrapper{{/if}}">
+    <mx-vframe src="./axis" class="axis unselectable pr" mx-contextmenu="@:{prevent}()"/>
+    <!--三栏实现的不太好，代码保留，不推荐使用了-->
+    <!--如果需要三栏模式，视频教程：https://www.bilibili.com/video/BV1NL41147VZ?spm_id_from=333.999.0.0 则需要注释或删除下面这个mx-vframe标签-->
+    <mx-vframe src="./stage" id="_rd_stage" style="{{=!so}}?{{=snv}}:#0000" class="stage scrollable unselectable pr overflow-auto stage-wrapper scrollbar-gutter-stable" mx-scroll="@:{stage.scroll}()" mx-wheel="@:{stage.wheel}()"/>
+    
+    <!--如果需要三栏模式，需要放开下面的注释内容，同时修改index.less中的左右宽度样式，具体可查看视频教程-->
+    <!-- <div class="flex stage-wrapper"> -->
+        <!--开启左右2侧的固定内容时，需要修改index.less中@stage-left及@stage-right宽度以下内容才有效果-->
+        <!-- <div class="flex stage-left flex-direction-column background-color-fff overflow-hidden"> -->
+            <!-- 把 mx-view="../panels/element/index" 属性添加到下面这个div上查看效果-->
+            <!-- <div class="scrollable overflow-scroll stage-left-content overflow-x-hidden flex-fill-rest"> -->
+                <!--设置区左侧内容-->
+            <!-- </div> -->
+            <!-- mx-view="../panels/outline/index" -->
+            <!-- <div> -->
+                <!--设置左下角内容-->
+            <!-- </div> -->
+        <!-- </div> -->
+        <!-- <mx-vframe src="./stage" id="_rd_stage" class="stage scrollable unselectable pr flex-fill-rest overflow-scroll"/> -->
+        <!-- mx-view="../panels/props/index"-->
+        <!-- <div class="stage-right scrollable background-color-fff overflow-scroll overflow-x-hidden"> -->
+            <!--设置区右侧内容-->
+        <!-- </div> -->
+    <!-- </div> -->
+    <div class="stage-drag-scroll-zone none unselectable pa pointer-events-none" id="_rd_sdsz"></div>
+</div>
+<div class="flex foot panel-background color-third pr fontsize-12 align-items-center overflow-hidden cursor-default{{if union}} left-right-borders{{/if}}">
+    {{if !copyright}}
+    <div class="iconfont fontsize-14 mr5 foot-logo" id="_rd_flogo">&#xe627;</div>
+    {{/if}}
+    <div class="flex-fill-rest" x-html="{{=copyright||i18n('@:{lang#site.copy.right}')}}"></div>
+    <div class="unselectable" id="_rd_ss"></div>
+</div>

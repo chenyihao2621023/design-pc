@@ -1,0 +1,28 @@
+{{each list as item}}
+    {{set {children,disabled:idisabled,
+        id,key,expand,name,tag,headless} = item}}
+    <div class="{{=indent}}?ml10">
+        <!--树形需要考虑父级禁用disabled-->
+        <!--当前元素被禁用 idisabled-->
+        <!--整体只读readonly-->
+        <!--当前元素已经绑定过当前数据字段bindMap[id]-->
+        <!--以上情形均需要禁用及禁止拖动-->
+        {{set canDrag=!children && !(ownerId==bindId&&bindMap[key]) && !readonly && !disabled && !idisabled}}
+        {{if !headless}}
+        <div class="flex align-items-center border-radius-x{{if disabled||idisabled||readonly||(ownerId==bindId&&bindMap[key])}}{{if !children}} cursor-not-allowed{{/if}} opacity-40{{/if}}{{if children}} branch-title cursor-pointer{{else}} item-draggable background-color-fff{{/if}}" mx-click="{{=children}}?@:{toggle.children}({item:'{{#item}}'})" draggable="{{= canDrag }}?true" mx-dragstart="{{= !children }}?@:{drag.field.start}({tag:'{{#ownerTag}}',field:'{{#item}}',id:'{{=ownerId}}',name:'{{=ownerName}}'})" mx-dragend="@:{drag.field.end}()" mx-pointerdown="{{= canDrag }}?@:{fix.drag.clip.bug}()">
+            <!-- !children && !bindMap[key] && !readonly && !disabled && !idisabled -->
+            <!-- 无子节点可拖动  选中元素还未绑定当前字段 非只读 父级非禁用 当前未禁用 -->
+            <!-- 元素只要无draggable属性，相关的dragstart dragend事件不会触发 -->
+            {{if children}}
+                <i class="iconfont fontsize-12 transition{{if expand}} r90{{/if}}">&#xe63b;</i>
+            {{else}}
+                <i class="iconfont">&#xe69c;</i>
+            {{/if}}
+            <span title="{{=name}}" class="ellipsis white-space-nowrap" x-html="{{=highlight(name,kw)}}"></span>
+        </div>
+        {{/if}}
+        {{if children && expand}}
+            <mx-vframe src="./branch" *bind-id="{{=bindId}}" *indent="{{#!headless}}" *list="{{#children}}" *bind-map="{{#bindMap}}" *owner-id="{{=id}}" *owner-tag="{{#tag}}" *owner-name="{{=name}}" *disabled="{{#disabled||idisabled}}" *readonly="{{#readonly}}" *kw="{{#kw}}" class="{{=!headless}}?ml5"/>
+        {{/if}}
+    </div>
+{{/each}}

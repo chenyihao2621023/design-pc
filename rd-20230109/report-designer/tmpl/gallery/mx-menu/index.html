@@ -1,0 +1,23 @@
+<div style="width:{{=width}}px;"
+    class="container pf overflow-auto background-color-fff border-radius-x scrollable thin-scrollable padding-4 scroll-behavior-smooth offscreen-holder"
+    id="_mx_cnt_{{=$viewId}}"
+    mx-contextmenu="@:{prevent}()">
+    <ul class="tag-ul padding-0 margin-0 unselectable cursor-default">
+        {{each list as one}}
+            {{set {bar,id,r90,r180,icon,text,short}=one}}
+            {{if bar}}
+                <li class="spliter"></li>
+            {{else}}
+                <li class="flex align-items-center items-li border-radius-x cursor-default{{if disabled[id]}} item-disabled cursor-not-allowed{{/if}}" mx-click="{{=!disabled[id]}}?@:{select}({item:{{#one}}})">
+                    <i class="iconfont mr5 icon overflow-hidden fontsize-14 color-secondary{{if r180}} r180{{else if r90}} r90{{/if}}" x-html="{{=icon}}??"></i>
+                    <b class="flex-fill-rest font-weight-normal">
+                        {{=text}}
+                    </b>
+                    {{if short}}
+                        <code class="color-third fontsize-12 short" title="快捷键:{{=short}}">{{=short}}</code>
+                    {{/if}}
+                </li>
+            {{/if}}
+        {{/each}}
+    </ul>
+</div>

@@ -1,0 +1,85 @@
+{{set {props,ctrl,id}=element}}
+{{set modifier=ctrl['@:{modifier}']}}
+{{set {locked,readonly,x,y,width,height,rotate}=props}}
+<!--是否允许鼠标穿透，优化拖动连接时，交叠在一起的元素也可以连接-->
+{{set passThrough= readonly || forceShowLinks}}
+<!--能否展示各种手柄，只有未锁定、选中且未组合状态下才显示-->
+{{set canDispalyHandles= !locked && selected && count==1 && !grouped && !selfGrouped}}
+{{set pxOfWidth=toPx(width),pxOfHeight=toPx(height)}}
+{{set showIcon=12>=pxWidth||12>=pxHeight}}
+
+<mx-vframe class="unselectable display-contents{{if passThrough|| !(modifier & denum['@:{enum#modifier.nomask}'])}} pointer-events-none{{/if}}" src="{{=view}}" *props="{{#props}}" *unit="{{#unit}}" *e-id="{{=id}}" />
+
+{{set r=((rotate||0)+360)%360}}
+{{if !readonly}}
+<div id="_rdm_{{=element.id}}" style="left:{{=x}}{{=unit}};top:{{=y}}{{=unit}};width:{{=width}}{{=unit}};height:{{=height}}{{=unit}};transform:rotate({{=r}}deg)" class="pa flow-ctrl-root unselectable normal{{if selected}}{{if locked}} locked-line{{else}} focus-line{{/if}}{{if selfGrouped}} grouped-self{{/if}}{{/if}}{{if grouped}}{{if locked}} grouped-locked-line{{else}} grouped-line{{/if}}{{/if}}{{if !locked && passThrough}} pointer-events-none{{/if}}{{if canDispalyHandles||forceShowLinks}} z-index-9{{else}} z-index-1{{/if}}">
+    <!--撑开元素，在靠近底或右边时，保留空隙-->
+    <div class="pa pointer-events-none preserve-size"></div>
+    <svg class="pa overflow-visible pointer-events-none wp100 hp100">
+        <!--拖动时，显示鼠标当前拖动的虚线(不能与其它节点连接)或实线(能与其它节点连接)-->
+        {{if forceShowLinks&&current}}
+            <path d="M{{=toPx(startX-x)}} {{=toPx(startY-y)}}L{{=current.x-toPx(x)}} {{=current.y-toPx(y)}}" class="svg-path{{if solid}} svg-ctrl-solid-line{{else}} svg-ctrl-dahsed-line{{/if}}"/>
+        {{/if}}
+        {{if canDispalyHandles}}
+            <!--三次bezier的展示与修改点处理-->
+            {{set points=ctrl['@:{get.path.points}']?.(props)}}
+            {{if points?.length}}
+                <path d="{{each points as p}}{{if p=='M'||p=='L'}}{{=p}}{{else}}{{=toPx(props[p+'X']-x)}} {{=toPx(props[p+'Y']-y)}}{{/if}}{{/each}}" class="svg-path" />
+            {{/if}}
+        {{/if}}
+    </svg>
+    {{if locked}}
+        <i class="iconfont color-third pa right-0 top-0 fontsize-12 pointer-events-none">&#xe63e;</i>
+    {{/if}}
+    {{if !locked && selected}}
+        <div class="cross pa pointer-events-none"></div>
+        <!--如果允许快捷文本修改，且已指示需要展示文本输入框-->
+        {{if (ctrl['@:{modifier}'] & denum['@:{enum#modifier.inputext}']) &&
+            props['@:{show.text}']}}
+            <textarea data-as="da" id="_rd_ta_{{=$viewId}}" class="textarea margin-0 padding-0-2 border-none overflow-auto wp100 hp100 touch-action-none pa full-fill" mx-pointerdown="@:{stop}()" mx-contextmenu="@:{stop}()" mx-wheel="@:{stop}()" mx-input="@:{update.text}()" mx-keyup="@:{watch.input}()" mx-focusout="@:{watch.input}()" style="font-size:{{=props.textFontsize}}{{=unit}};font-size:{{=props.textFontfamily}}">{{=props.text}}</textarea>
+        {{/if}}
+    {{/if}}
+    {{if showIcon || (modifier & denum['@:{enum#modifier.icon}']) || (selected && (modifier & denum['@:{enum#modifier.selected.show.icon}']))}}
+        <!--如果需要显示icon且元素非只读，则显示icon-->
+        <i data-as="icon" class="iconfont pa pointer-events-all touch-action-none border-radius-x padding-2{{if locked}} background-color-disabled{{else}} cursor-move color-third color-third-hover background-color-brand-a10{{/if}}{{if (modifier & denum['@:{enum#modifier.top.icon}'])}} left-0 top-icon{{else}} left-icon top-0{{/if}}" x-html="{{=ctrl.icon}}"></i>
+    {{/if}}
+    <!--非拖动且有修改器选项-->
+    <!--当前被选中，且只有一个元素，只能是当前元素。非组合状态下的元素才显示修改宽高手柄-->
+    {{if canDispalyHandles}}
+        <!--核心关键点，比如bezier的修改控制点-->
+        {{set keyPoints=ctrl['@:{get.key.points}']?.(props)}}
+        {{each keyPoints as key}}
+            <div mx-pointerdown="@:{drag.svg.key.point}({key:'{{=key}}'})" title="{{=i18n('@:{lang#press.drag.ctrl.point}')}}" style="left:{{=props[key+'X']-x}}{{=unit}};top:{{=props[key+'Y']-y}}{{=unit}}" class="pa mod-rect ctrl-size circle cursor-pointer touch-action-none transform-xy-n50{{if key==props['@:{focus.ctrl}']}} background-color-brand{{else}} background-color-contrast{{/if}}"></div>
+        {{/each}}
+        {{if  !forceShowLinks && ctrl['@:{modifier}']}}
+        {{set h=mmax(mmin(40,pxOfHeight)-10,0)}}
+        {{set w=mmax(mmin(40,pxOfWidth)-10,0)}}
+        {{set top=(pxOfHeight-h)/2}}
+        {{set left=(pxOfWidth-w)/2}}
+        {{if ctrl['@:{modifier}'] & denum['@:{enum#modifier.width}']}}
+            <!--允许修改宽度，安装左右2个修改手柄-->
+            <div class="pa z-index-1 left touch-action-none border-radius-x" style="height:{{=h}}px;top:{{=top}}px;cursor:{{=cursor(r,0)}}-resize" title="{{=i18n('@:{lang#press.drag.element.width}')}}" mx-pointerdown="@:{start.resize}({key:'ml'})"></div>
+            <div class="pa z-index-1 right touch-action-none border-radius-x" style="height:{{=h}}px;top:{{=top}}px;cursor:{{=cursor(r,0)}}-resize" title="{{=i18n('@:{lang#press.drag.element.width}')}}" mx-pointerdown="@:{start.resize}({key:'mr'})"></div>
+        {{/if}}
+        {{if ctrl['@:{modifier}'] & denum['@:{enum#modifier.height}']}}
+            <!--允许修改高度，安装上下2个修改手柄-->
+            <div class="pa z-index-1 top touch-action-none border-radius-x" style="width:{{=w}}px;left:{{=left}}px;cursor:{{=cursor(r,90)}}-resize" title="{{=i18n('@:{lang#press.drag.element.height}')}}" mx-pointerdown="@:{start.resize}({key:'tm'})"></div>
+            <div class="pa z-index-1 bottom touch-action-none border-radius-x" style="width:{{=w}}px;left:{{=left}}px;cursor:{{=cursor(r,90)}}-resize" title="{{=i18n('@:{lang#press.drag.element.height}')}}" mx-pointerdown="@:{start.resize}({key:'bm'})"></div>
+        {{/if}}
+        {{if ctrl['@:{modifier}'] & denum['@:{enum#modifier.inputext}']}}
+            <!--允许旋转，安装旋转手柄-->
+            <div class="ctrl-rotate mod-rect ctrl-size transform-x-n50 circle background-color-contrast pa touch-action-none" mx-pointerdown="@:{start.rotate}()" title="{{=i18n('@:{lang#press.drag.element.rotate}')}}"></div>
+        {{/if}}
+        {{/if}}
+    {{/if}}
+
+    {{if !locked && ctrl['@:{link.points}']}}
+        {{each ctrl['@:{link.points}'] as key}}
+            <!--只有同一个设计区或自身的当前节点在拖动时才显示-->
+            {{if sameOwner && (!isSelf||key==linkKey) }}
+                <div mx-pointerover="@:{link.point.over}({key:'{{=key}}'})" mx-pointerout="@:{link.point.out}({key:'{{=key}}'})" mx-pointerdown="@:{drag.svg.link.point}({key:'{{=key}}'})" style="left:{{=props[key+'X']-x}}{{=unit}};top:{{=props[key+'Y']-y}}{{=unit}}" class="pa z-index-1 mod-rect ctrl-size pointer-events-all background-color-contrast transform-xy-n50 cursor-crosshair touch-action-none{{if !forceShowLinks && !selected}} flow-link-rect{{/if}}" title="{{=i18n('@:{lang#press.drag.link.point}')}}"></div>
+            {{/if}}
+        {{/each}}
+    {{/if}}
+</div>
+{{/if}}

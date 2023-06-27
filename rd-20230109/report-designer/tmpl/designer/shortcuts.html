@@ -1,0 +1,33 @@
+<div class="dialog-header-shadow position-sticky z-index-7"></div>
+<div class="dialog-header margin-0 background-color-fff position-sticky top-0 margin-top-m-20 z-index-8 flex align-items-center">
+    <h5 class="padding-0 fontsize-14 margin-0">{{=i18n('@:{lang#all.shortcuts}')}}</h5>
+    {{if hl}}
+    <a class="tag-a ml10" href="//github.com/xinglie/report-designer/issues" rel="noopener noreferrer" target="_blank">技术方案及元素介绍</a>
+    {{/if}}
+</div>
+<div class="dialog-body">
+    <div class="flex align-items-center line panel-background">
+        <div class="width-242 fontsize-16 padding-left-14">按键</div>
+        <div class="flex-fill-rest fontsize-16 pl10">功能</div>
+    </div>
+    {{each list as st sti}}
+    <div class="flex align-items-center line{{if sti%2}} panel-background{{/if}}">
+        <div class="width-242">
+            {{each st['@:{ks#keys}'] as keys ki last}}
+                <div class="keys-group padding-2 border-radius-x display-inline-block" title="{{=modTitle(keys)}}">
+                    {{each keys as k}}
+                    <kbd class="display-inline-block key margin-2 color-secondary background-color-fff tc">{{=modKey(k)}}</kbd>
+                    {{/each}}
+                </div>
+            {{/each}}
+        </div>
+        <div class="flex-fill-rest pl10">
+            {{if st['@:{ks#dest.is.fn}']}}
+                {{=st['@:{ks#desc}']()}}
+            {{else}}
+                {{=st['@:{ks#desc}']}}
+            {{/if}}
+        </div>
+    </div>
+    {{/each}}
+</div>

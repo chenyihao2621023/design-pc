@@ -1,0 +1,14 @@
+
+{{set {x,y,width,height,rotate,alpha,connected,animations,
+    strength,fill,background,disconnect}=props;}}
+<svg viewBox="0 0 1294 1024" class="pa z-index-1" style="left:{{=x}}{{=unit}};top:{{=y}}{{=unit}};width:{{=width}}{{=unit}};height:{{=height}}{{=unit}};opacity:{{=alpha}};transform:rotate({{=rotate}}deg);{{=am(animations)}}">
+    <path class="transition" d="M112.88 689.631h155.428v244.244h-155.428v-244.244z" fill="{{if !connected||1>strength}}{{=background}}{{else}}{{=fill}}{{/if}}"/>
+    <path class="transition" d="M334.921 556.409h155.428v377.467h-155.428v-377.467z" fill="{{if !connected||2>strength}}{{=background}}{{else}}{{=fill}}{{/if}}"/>
+    <path class="transition" d="M579.164 400.98h133.223v532.895h-133.223v-532.895z" fill="{{if !connected||3>strength}}{{=background}}{{else}}{{=fill}}{{/if}}"/>
+    <path class="transition" d="M801.202 245.553h155.428v688.323h-155.428v-688.323z" fill="{{if !connected||4>strength}}{{=background}}{{else}}{{=fill}}{{/if}}"/>
+    <path class="transition" d="M1023.242 90.125h155.427v843.75h-155.428v-843.75z" fill="{{if !connected||5>strength}}{{=background}}{{else}}{{=fill}}{{/if}}"/>
+    {{if !connected}}
+    <path fill="{{=disconnect}}" d="M301.188 81.702l83.042 82.935-251.446 252.884-83.042-82.935z"/>
+    <path fill="{{=disconnect}}" d="M47.262 160.271l78.843-78.265L381.75 334.009l-78.842 78.264z"/>
+    {{/if}}
+</svg>

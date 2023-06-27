@@ -1,0 +1,7 @@
+<div class="z-index-1 pa{{if enter}} hod-drop-tip{{/if}}" style="left:{{=props.x}}{{=unit}};top:{{=props.y}}{{=unit}};height:{{=props.height}}{{=unit}};opacity:{{=props.alpha}};width:{{=props.width}}{{=unit}};transform:rotate({{=props.rotate}}deg);background-color:{{=props.background}};border-radius:{{=props.radius}}{{=unit}};{{=am(props.animations)}}" mx-dragenter="@:{when.data.field.enter}()" mx-dragleave="@:{when.data.field.leave}()" mx-drop="@:{when.data.field.drop}()">
+    <div style="width:{{=value}}%;background-color:{{=props.barcolor}};border-radius:{{=props.radius}}{{=unit}}" class="hp100 pr pointer-events-none transition">
+        {{if props.showText||text}}
+        <span class="pa pointer-events-none" style="transform:translate(50%,-100%);right:0;color:{{=props.textColor}};font-size:{{=props.textFontsize}}{{=unit}}">{{=text||value+'%'}}</span>
+        {{/if}}
+    </div>
+</div>

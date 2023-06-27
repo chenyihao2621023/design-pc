@@ -1,0 +1,15 @@
+<div class="pa z-index-1 flex{{if props.overflow=='hidden'}} overflow-hidden{{else if props.overflow=='visible'}} overflow-visible{{else}} scrollable thin-scrollable overflow-auto scroll-behavior-smooth{{/if}}{{if props.rank=='column'}} flex-direction-column{{/if}}{{if enter}} hod-drop-tip{{/if}}" style="left:{{=props.x}}{{=unit}};top:{{=props.y}}{{=unit}};height:{{=props.height}}{{=unit}};opacity:{{=props.alpha}};width:{{=props.width}}{{=unit}};transform:rotate({{=props.rotate}}deg);{{=am(props.animations)}}" mx-dragenter="@:{when.data.field.enter}()" mx-dragleave="@:{when.data.field.leave}()" mx-drop="@:{when.data.field.drop}()">
+    {{if props.bind && props.bind.fields && props.bind.fields.length}}
+        <div class="flex align-items-center justify-content-center wp100 hp100">
+            [bind:{{=props.bind.fields[0].key}}]
+        </div>
+    {{else}}
+        {{each props.items as item ii last first}}
+        <label class="flex align-items-center flex-shrink-0" style="{{if !first}}margin-{{if props.rank=='row'}}left{{else}}top{{/if}}:{{=props.itemSpace}}{{=unit}}{{/if}}">
+            <input name="{{=props.inputName}}" class="margin-0" type="checkbox" checked="{{=item.checked}}?" disabled="{{=item.disabled}}?" value="{{=item.value}}"/>
+            <span style="color:{{=props.forecolor}};font-size:{{=props.fontsize}}{{=unit}};letter-spacing:{{=props.letterspacing}}{{=unit}};font-family:{{=props.fontfamily}};margin-left:{{=props.textSpace}}{{=unit}}">{{=item.text}}</span>
+        </label>
+        {{/each}}
+    {{/if}}
+    <div class="pa full-fill z-index-6"></div>
+</div>

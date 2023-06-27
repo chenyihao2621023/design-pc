@@ -1,0 +1,11 @@
+{{set {alpha,x,y,width,height,fillColor,cap,rotate,
+    color,linewidth,dash,textX,textY,textWidth,textHeight,padding,
+    textFontsize,textForecolor,textBackground,textLetterspacing,
+    textFontfamily,text}=props;}}
+<svg class="overflow-visible pa z-index-1" style="opacity:{{=alpha}};left:{{=x}}{{=unit}};top:{{=y}}{{=unit}};width:{{=width}}{{=unit}};height:{{=height}}{{=unit}};transform:rotate({{=rotate}}deg)">
+    {{set pxOfWidth=toPx(width),pxOfHeight=toPx(height)}}
+    <path d="M0 0L0 {{=pxOfHeight}}L{{=pxOfWidth}} {{=pxOfHeight}}L{{=pxOfWidth}} 0ZM{{=pxOfWidth*.1}} 0L{{=pxOfWidth*.1}} {{=pxOfHeight}}M{{=pxOfWidth*.9}} 0L{{=pxOfWidth*.9}} {{=pxOfHeight}}" style="fill:{{=fillColor||'none'}};stroke:{{=color}};stroke-width:{{=linewidth}}{{=unit}}" stroke-dasharray="{{=dash}}{{=unit}}" stroke-linecap="{{cap}}?round"/>
+    <foreignObject x="{{=textX-x+ox}}{{=unit}}" y="{{=textY-y+oy}}{{=unit}}" width="{{=textWidth}}{{=unit}}" height="{{=textHeight}}{{=unit}}">
+        <div class="flex hp100 align-items-center justify-content-center word-break-break-all" style="padding:{{=padding}}{{=unit}};font-size:{{=textFontsize}}{{=unit}};width:{{=textWidth}}{{=unit}};color:{{=textForecolor}};{{if textBackground}}background:{{=textBackground}};{{/if}}letter-spacing:{{=textLetterspacing}}{{=unit}};font-family:{{=textFontfamily}}" x-html="{{=enHTML(text)}}"></div>
+    </foreignObject>
+</svg>

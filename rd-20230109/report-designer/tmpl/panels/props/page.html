@@ -1,0 +1,57 @@
+{{if useGroup && groups.length>1}}
+    <div class="flex tabs background-color-fff z-index-1 position-sticky top-0">
+        {{each groups as g}}
+        <div class="tabs-item tc cursor-pointer{{if g==selected}} tabs-active color-brand{{/if}}" title="{{=g!=selected}}?{{=i18n('@:{lang#click.show}',g)}}" mx-click="{{g!=selected}}?@:{change.tab}({to:'{{=g}}'})">{{=g}}</div>
+        {{/each}}
+    </div>
+{{/if}}
+<ul class="tag-ul padding-0 margin-0 props padding-4 unselectable props-padding-bottom">
+    <li class="props-item padding-2 flex align-items-center">
+        <span class="width-90 mr2 tr pr10">{{=i18n('@:{lang#props.type}')}}</span>
+        <span>{{=i18n(ctrl.title)}}</span>
+    </li>
+    {{each ctrl.props as p}}
+        {{set {type,'@:{if.show}':ifShow,
+            '@:{if.disabled}':ifDisabled,
+            group,read,key,tip,write}=p}}
+        {{if (!useGroup||group==selected) &&
+            type&&(!ifShow||ifShow(page)) }}
+            {{if type==types['@:{enum#prop.spliter}']}}
+                <li mx-key="{{=type}}" class="item-spliter"></li>
+            {{else}}
+                {{set value=page[key]}}
+                {{if read}}
+                    {{value=read(value)}}
+                {{/if}}
+                {{set disabled = page.readonly || ifDisabled && ifDisabled(page)}}
+                <li mx-key="{{=type}}" class="props-item padding-2 flex align-items-center">
+                    {{if tip}}
+                        <span class="width-90 pr10 mr2 tr">
+                            {{=i18n(tip)}}
+                        </span>
+                    {{/if}}
+                    {{if type==types['@:{enum#prop.label}']}}
+                        <span class="{{if disabled}}color-third{{/if}}">{{=value}}</span>
+                    {{else if type==types['@:{enum#prop.number}']}}
+                        <mx-number class="width-150 input pr" *disabled="{{#disabled}}" *value="{{#value}}" *max="{{#p.max}}??" *step="{{#p.step}}??" *props="{{#page}}" *fixed="{{#p.fixed}}??" *min="{{#p.min}}??" mx-input="@:{update.prop}({key:'{{=key}}',write:{{#write}},use:'value'})"/>
+                    {{else if type==types['@:{enum#prop.text.input}']}}
+                        <input class="margin-0 input width-150" value="{{=value}}" mx-input="@:{update.prop}({key:'{{=key}}',native:'value'})" disabled="{{disabled}}?"/>
+                    {{else if type==types['@:{enum#prop.color}']}}
+                        <mx-color *clear="{{#p.clear}}??" class="width-150" *color="{{#value}}" *align="right" *disabled="{{#disabled}}" *alpha="{{#p.alpha}}??" *l="{{=lang}}" mx-input="@:{update.prop}({key:'{{=key}}',use:'color'})"/>
+                    {{else if type==types['@:{enum#prop.collection}']}}
+                        <mx-dropdown class="width-150" *selected="{{=value}}" *list="{{#p.items}}" *props="{{#page}}" *dock="right" *disabled="{{#disabled}}" *l="{{=lang}}" mx-change="@:{update.prop}({key:'{{=key}}',use:'value',write:'{{#write}}'})"/>
+                    {{else if type==types['@:{enum#prop.boolean}']}}
+                        <label class="display-inline-block font-weight-normal mwp100 cursor-pointer flex align-items-center">
+                            <input class="switch-input pa" type="checkbox" disabled="{{=disabled}}?" checked="{{=value}}?" mx-change="@:{update.prop}({key:'{{=key}}',native:'checked',write:'{{#write}}'})"/>
+                            <i class="switch-button display-inline-block transition unselectable pr"></i>
+                        </label>
+                    {{else if type==types['@:{enum#prop.image.reset}']}}
+                        <button class="btn white-space-nowrap outline-none cursor-pointer btn-brand" disabled="{{=disabled}}?" mx-click="@:{update.image.size}()">{{=i18n('@:{lang#elements.image.reset}')}}</button>
+                    {{else}}
+                        <mx-vframe class="flex-fill-rest" src="../../gadget/{{=type}}" *props="{{#page}}" *disabled="{{#disabled}}" *defined="{{#p}}" *l="{{=lang}}" mx-change="@:{update.prop}({write:{{#write}}})"/>
+                    {{/if}}
+                </li>
+            {{/if}}
+        {{/if}}
+    {{/each}}
+</ul>

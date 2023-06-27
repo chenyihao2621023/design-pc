@@ -1,0 +1,21 @@
+<div class="pa z-index-1{{if props.overflow=='hidden'}} overflow-hidden{{else if props.overflow=='visible'}} overflow-visible{{else}} scrollable thin-scrollable overflow-auto scroll-behavior-smooth{{/if}}{{if enter}} hod-drop-tip{{/if}}" style="left:{{=props.x}}{{=unit}};top:{{=props.y}}{{=unit}};height:{{=props.height}}{{=unit}};opacity:{{=props.alpha}};width:{{=props.width}}{{=unit}};transform:rotate({{=props.rotate}}deg);{{=am(props.animations)}}" mx-dragenter="@:{when.data.field.enter}()" mx-dragleave="@:{when.data.field.leave}()" mx-drop="@:{when.data.field.drop}()">
+    {{if props.words.length}}
+        {{each props.words as w}}
+            {{if w.text}}
+                {{if w.url}}
+                    <a class="tag white-space-nowrap" style="background:{{=w.background}};color:{{=w.forecolor}}" href="{{=w.url}}" rel="noopener noreferrer" target="_blank">{{=w.text}}</a>
+                {{else}}
+                    <span class="tag white-space-nowrap" style="background:{{=w.background}};color:{{=w.forecolor}}">{{=w.text}}</span>
+                {{/if}}
+            {{/if}}
+        {{/each}}
+    {{else}}
+        <div class="flex align-items-center justify-content-center wp100 hp100">
+            {{if props.bind.fields?.length}}
+                [bind:{{=props.bind.fields[0].key}}]
+            {{else}}
+                {{=i18n('@:{lang#elements.empty.tip}')}}
+            {{/if}}
+        </div>
+    {{/if}}
+</div>

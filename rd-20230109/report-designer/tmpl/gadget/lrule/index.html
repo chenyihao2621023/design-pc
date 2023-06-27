@@ -1,0 +1,43 @@
+
+{{set {rules}=props;}}
+{{each rules as rule i last first}}
+    <div class="flex align-items-center margin-bottom-4">
+        <span class="width-90 pr10 mr2 flex align-items-center justify-content-flex-end">
+            {{set canUp=!disabled&&!first}}
+            {{set canDown=!disabled&&!last}}
+            <div class="flex flex-direction-column mr2">
+                <span class="iconfont r180 fontsize-12 color-third{{if canUp}} color-third-hover cursor-pointer{{else}} cursor-not-allowed opacity-40{{/if}}" mx-click="{{=canUp}}?@:{move.at}({at:{{=i}},rules:{{#rules}},d:-1})" title="{{if !canUp}}不能{{/if}}向上交换规则">&#xe73a;</span>
+                <span class="iconfont fontsize-12 color-third{{if canDown}} color-third-hover cursor-pointer{{else}} cursor-not-allowed opacity-40{{/if}}" mx-click="{{=canDown}}?@:{move.at}({at:{{=i}},rules:{{#rules}},d:1})" title="{{if !canDown}}不能{{/if}}向下交换规则">&#xe73a;</span>
+            </div>
+            <span class="iconfont mr2 fontsize-12 color-third{{if disabled}} cursor-not-allowed opacity-40{{else}} color-third-hover cursor-pointer{{/if}}" mx-click="{{=!disabled}}?@:{remove.at}({at:{{=i}},rules:{{#rules}}})" title="删除规则">&#xe6b3;</span>
+            当值
+        </span>
+        <div class="width-150 flex">
+            <mx-dropdown class="width-90 mr5 flex-shrink-0" *disabled="{{#disabled}}" *list="{{#cRules}}" *selected="{{=rule.use}}" mx-change="@:{change.value}({key:'use',at:{{=i}},rules:{{#rules}}})"/>
+            <mx-number class="wp100 input pr" *disabled="{{#disabled}}" *value="{{#rule.value}}" mx-change="@:{stop}()" mx-input="@:{change.value}({key:'value',at:{{=i}},rules:{{#rules}}})"/>
+        </div>
+    </div>
+    <div class="flex align-items-center margin-bottom-4{{if 2>rule.colors.length}} none{{/if}}">
+        <span class="width-90 mr2 tr pr10">
+            {{=i18n('@:{lang#props.speed}')}}
+        </span>
+        <div class="width-150">
+            <mx-number *min="1" *max="10" *value="{{#rule.speed}}" mx-input="@:{change.value}({key:'speed',at:{{=i}},rules:{{#rules}}})" mx-change="@:{stop}()" *disabled="{{#disabled}}" class="input pr"/>
+        </div>
+    </div>
+    <div class="flex align-items-center margin-bottom-4">
+        <span class="width-90 mr2 tr pr10">
+            {{=i18n('@:{lang#props.color}')}}
+        </span>
+        <div class="width-150">
+            <mx-vframe src="../color/series" *props="{{#rule}}" *disabled="{{#disabled}}" *defined="{{#cd}}" mx-change="@:{update.prop}({at:{{=i}},rules:{{#rules}}})"/>
+        </div>
+    </div>
+    {{if !last}}
+        <div class="item-spliter"></div>
+    {{/if}}
+{{/each}}
+
+<div class="flex align-items-center width-242 justify-content-flex-end">
+    <button class="btn white-space-nowrap btn-brand cursor-pointer" disabled="{{=disabled}}?" mx-click="@:{add.rule}({rules:{{#rules}}})" title="向尾部添加规则，按下Ctrl键则添加到头部">添加规则</button>
+</div>

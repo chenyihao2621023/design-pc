@@ -1,0 +1,9 @@
+<div class="pa z-index-1 touch-action-none" style="left:{{=props.x}}{{=unit}};top:{{=props.y}}{{=unit}};opacity:{{=props.alpha}};width:{{=props.width/scale}}{{=unit}};height:{{=props.height/scale}}{{=unit}};{{if scale!=1}}transform:scale({{=scale}});transform-origin:0 0;{{/if}}{{=am(props.animations)}}" mx-pointerdown="@:{stop}()" mx-contextmenu="@:{stop}()" mx-wheel="@:{stop}()">
+    {{if !readonly}}
+        <i class="pa iconfont cursor-pointer color-secondary" style="top:-20px;left:2px{{if scale!=1}};transform:scale({{=1/scale}});transform-origin:0 100%{{/if}}" title="{{=pv?'编辑':'预览'}}" mx-click="@:{toggle.state}()" mx-html="{{=pv?'&#xe638;':'&#xe75a;'}}"></i>
+    {{/if}}
+    <div id="{{=$viewId}}_pv" class="hp100 overflow-auto{{if !pv}} none{{/if}}" mx-html="{{=text}}??"></div>
+    <div id="{{=$viewId}}_e" class="hp100{{if pv}} none{{/if}}">
+        <div id="{{=$viewId}}_ed" class="flex hp100 align-items-center justify-content-center">正在加载编辑器插件...</div>
+    </div>
+</div>

@@ -1,0 +1,37 @@
+<div class="pa z-index-1" style="left:{{=props.x}}{{=unit}};top:{{=props.y}}{{=unit}};opacity:{{=props.alpha}};width:{{=props.width}}{{=unit}};{{=am(props.animations)}}">
+    {{set findLabelRow,findTotalRow}}
+    {{set {borderwidth,bordertype,bordercolor,borderdeed,rows,bind}=props}}
+    {{set bwn=(borderdeed=='collapse'?1:2)*borderwidth}}
+    <table class="wp100 table" style="border-collapse:{{=borderdeed}}">
+        <tbody>
+        {{each rows as row ri}}
+            {{if (!row.label && !findLabelRow && bind._showHead) ||
+                (row.label && !props.hideLabel) ||
+                row.data || 
+                (row.total && !props.hideTotal) ||
+                (findTotalRow && bind._showFoot) }}
+            <tr>
+                {{each row.cols as col ci}}
+                <td class="table-cell padding-0 word-break-break-all overflow-hidden pr" colspan="{{=col.colspan!=1}}?{{=col.colspan}}" rowspan="{{=col.rowspan!=1}}?{{=col.rowspan}}" style="width:{{=col.width}}{{=unit}};height:{{=col.height}}{{=unit}};border-left:{{=borderwidth?bordertype:'dotted'}} {{=borderwidth}}{{=unit}} {{=borderwidth&&col.bLeft?bordercolor:'#0000'}};border-top:{{=borderwidth?bordertype:'dotted'}} {{=borderwidth}}{{=unit}} {{=borderwidth&&col.bTop?bordercolor:'#0000'}};border-right:{{=borderwidth?bordertype:'dotted'}} {{=borderwidth}}{{=unit}} {{=borderwidth&&col.bRight?bordercolor:'#0000'}};border-bottom:{{=borderwidth?bordertype:'dotted'}} {{=borderwidth}}{{=unit}} {{=borderwidth&&col.bBottom?bordercolor:'#0000'}}">
+                    {{if bind._tip}}
+                        {{=bind._tip}}
+                    {{else}}
+                        {{if col.elements?.length}}
+                            {{each col.elements as e}}
+                                <mx-vframe src="../{{=e.type}}/index" *props="{{#e.props}}" *unit="{{=unit}}"/>
+                            {{/each}}
+                        {{/if}}
+                    {{/if}}
+                </td>
+                {{/each}}
+            </tr>
+            {{/if}}
+            {{if row.total}}
+                {{findTotalRow=1}}
+            {{else if row.label}}
+                {{findLabelRow=1}}
+            {{/if}}
+        {{/each}}
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,20 @@
+{{set {bind,stars,width}=props}}
+<div class="z-index-1 overflow-hidden pa{{if enter}} hod-drop-tip{{/if}}" style="left:{{=props.x}}{{=unit}};top:{{=props.y}}{{=unit}};height:{{=props.height}}{{=unit}};opacity:{{=props.alpha}};width:{{=width}}{{=unit}};transform:rotate({{=props.rotate}}deg);{{=am(props.animations)}}" mx-dragenter="@:{when.data.field.enter}()" mx-dragleave="@:{when.data.field.leave}()" mx-drop="@:{when.data.field.drop}()">
+    <div class="hp100 flex justify-content-space-between align-items-center" style="color:{{=props.background}};">
+        {{for(let i=0;stars>i;i++)}}
+        <i class="iconfont" style="font-size:{{=props.starSize}}{{=unit}};">&#xe60c;</i>
+        {{/for}}
+    </div>
+    <div class="pa full-fill overflow-hidden transition" style="width:{{=value}}%;color:{{=props.fillcolor}}">
+        <div class="flex hp100 justify-content-space-between align-items-center" style="width:{{=width}}{{=unit}}">
+            {{for(let i=0;stars>i;i++)}}
+            <i class="iconfont" style="font-size:{{=props.starSize}}{{=unit}};">&#xe60c;</i>
+            {{/for}}
+        </div>
+    </div>
+    <div class="pa pointer-events-none white-space-nowrap left-0 bottom-0 background-color-brand-a10 padding-2 fontsize-12 line-height-14">
+        {{if bind.id}}
+            绑定[{{=bind.fields?.[0]?.name||''}}]
+        {{/if}}
+    </div>
+</div>

@@ -1,0 +1,13 @@
+{{each points as p i}}
+<div class="flex align-items-center{{if i}} margin-top-4{{/if}}">
+    <span class="width-90 mr2 pr10 border-radius-x tr{{if disabled}} cursor-not-allowed{{else}} cursor-pointer{{if props['@:{focus.mod}']==p}} background-color-brand-a20{{/if}}{{/if}}" mx-pointerover="@:{focus.mod.point}({key:'{{=p}}'})">调整点</span>
+    <div class="width-150 flex flex-direction-column">
+        {{if props[p+'X']!=null}}
+            <mx-number class="wp100 input pr{{if props[p+'Y']!=null}} margin-bottom-4{{/if}}" *min="{{=props[p+'Type']!='int'}}?0.00" *max="{{=props[p+'Type']!='int'}}?1.00" *step="{{#props[p+'Type']!='int'?0.01:step}}" *fixed="{{#props[p+'Type']!='int'?2:fixed}}" *disabled="{{#disabled}}" *value="{{#props[p+'Type']!='int'?props[p+'X']:read(props[p+'X'])}}" mx-change="@:{stop}()" mx-input="@:{update.mod.point}({i:{{=i+1}},type:'X'})"/>
+        {{/if}}
+        {{if props[p+'Y']!=null}}
+            <mx-number class="wp100 input pr" *min="{{=props[p+'Type']!='int'}}?0.00" *max="{{=props[p+'Type']!='int'}}?1.00" *step="{{#props[p+'Type']!='int'?0.01:step}}" *fixed="{{#props[p+'Type']!='int'?2:fixed}}" *disabled="{{#disabled}}" *value="{{#props[p+'Type']!='int'?props[p+'Y']:read(props[p+'Y'])}}" mx-change="@:{stop}()" mx-input="@:{update.mod.point}({i:{{=i+1}},type:'Y'})"/>
+        {{/if}}
+    </div>
+</div>
+{{/each}}

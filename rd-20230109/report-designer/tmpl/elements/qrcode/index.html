@@ -1,0 +1,10 @@
+{{if error||text}}
+<div class="pa z-index-1 overflow-hidden" style="left:{{=props.x}}{{=unit}};top:{{=props.y}}{{=unit}};height:{{=props.height}}{{=unit}};opacity:{{=props.alpha}};width:{{=props.width}}{{=unit}};transform:rotate({{=props.rotate}}deg);{{=am(props.animations)}}">
+    {{if error}}
+        <div class="flex align-items-center justify-content-center hp100">
+            {{=error}}
+        </div>
+    {{/if}}
+    <div id="_rd_{{=$viewId}}_qr"></div>
+</div>
+{{/if}}

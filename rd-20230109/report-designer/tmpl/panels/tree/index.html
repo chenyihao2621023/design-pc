@@ -1,0 +1,25 @@
+<div class="items unselectable" mx-dragend="@:{drag.end}()">
+    {{each elements as e ei by desc}}
+    {{set {props,ctrl,id}=e}}
+    {{set {locked,readonly,rows,ename}=props}}
+    {{if !ename}}
+        {{ename=i18n(ctrl.title)}}
+    {{/if}}
+    <div id="_rdte_{{=id}}" class="item background-color-fff flex flex-direction-column pr{{if current==ei}} opacity-40{{/if}}{{if drag&&ei==index}}{{if onTop}} item-top{{else}} item-bottom{{/if}}{{/if}}" mx-dragstart="@:{drag.start}({index:{{=ei}},row:0,col:0})" mx-dragover="@:{drag.over}({index:{{=ei}},row:0,col:0})" draggable="{{=!locked&&!readonly}}?true" mx-pointerdown="{{=!locked && !readonly && !(ctrl.as & hodEnum)}}?@:{fix.drag.clip.bug}()">
+        <div class="item-text border-radius-x{{if readonly}} cursor-not-allowed opacity-40{{else}} cursor-pointer{{/if}} flex align-items-center{{if map[id]}} {{if locked}}item-locked-selected{{else}}background-color-brand-lighter item-selected{{/if}}{{/if}}" mx-pointerover="@:{show.rect}({element:{{#e}}})" mx-pointerout="@:{hide.rect}()" mx-click="{{=!readonly}}?@:{select.element}({element:{{#e}}})" title="{{if readonly}}{{=i18n('@:{lang#panel.readonly.can.not.drag}')}}{{else}}{{=ename}}{{/if}}">
+            {{if icon}}
+            <i class="iconfont element-icon fontsize-12" x-html="{{=ctrl.icon}}"></i>
+            {{/if}}
+            <div class="ellipsis white-space-nowrap flex-fill-rest">
+                {{=ename}}
+            </div>
+            {{if !readonly && !locked}}
+                <i class="iconfont element-icon fontsize-12 fontsize-scale-10 color-third color-third-hover remove-icon" title="{{=i18n('@:{lang#remove.element}')}}" mx-click="@:{remove.element}({element:{{#e}}})">&#xe6b3;</i>
+            {{/if}}
+        </div>
+        {{if ctrl.as & hodEnum}}
+            <mx-vframe class="ml10" src="./branch" *rows="{{#rows}}" *map="{{#map}}" *icon="{{#icon}}" *l="{{=lang}}" mx-treeitemdown="@:{fix.drag.clip.bug}()"/>
+        {{/if}}
+    </div>
+    {{/each}}
+</div>
